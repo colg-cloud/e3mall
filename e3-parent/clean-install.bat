@@ -13,7 +13,7 @@ echo off
 
 ::if %flag% == y (
 	cls
-	echo [INFO]开始打包... e3-paremt, e3-common, e3-manager, e3-content, e3-search, e3-sso, e3-cart, e3-order
+	echo [INFO]开始clean... e3-paremt, e3-common, e3-manager, e3-content, e3-search, e3-sso, e3-cart, e3-order
 
 ::	cd %project%
 	call mvn clean install
