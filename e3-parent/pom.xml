@@ -41,6 +41,7 @@
 		<freemarker.version>2.3.23</freemarker.version>
 		<quartz.version>2.3.0</quartz.version>
 		<fastdfs_client.version>1.25</fastdfs_client.version>
+		<hutool.version>4.0.10</hutool.version>
 	</properties>
 	
 	<!-- 集中管理依赖 -->
@@ -222,6 +223,12 @@
 				<groupId>fastdfs_client</groupId>
 				<artifactId>fastdfs_client</artifactId>
 				<version>${fastdfs_client.version}</version>
+			</dependency>
+			<!-- hutool 工具类 -->
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
 			</dependency>
 
 		</dependencies>
