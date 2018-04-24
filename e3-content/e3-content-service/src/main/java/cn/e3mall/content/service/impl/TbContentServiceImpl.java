@@ -26,7 +26,7 @@ public class TbContentServiceImpl extends BaseServiceImpl implements TbContentSe
 
 	/** 内容列表在 redis 中缓存的key */
 	@Value("${CONTENT_LIST}")
-	private String CONTENT_LIST;
+	private String contentList;
 
 	@Override
 	public EasyUIDataGridResult queryListByCategoryId(Long categoryId, Integer page, Integer rows) {
@@ -42,19 +42,19 @@ public class TbContentServiceImpl extends BaseServiceImpl implements TbContentSe
 		tbContentMapper.insert(tbContent);
 
 		// 缓存同步，删除缓存中对应的数据
-		jedisClient.hdel(CONTENT_LIST, tbContent.getCategoryId() + "");
+		jedisClient.hdel(contentList, tbContent.getCategoryId() + "");
 		return E3Result.ok();
 	}
 
 	@Override
 	public E3Result editContent(Long id, TbContent tbContent) {
-		TbContent tbContent_db = tbContentMapper.selectByPrimaryKey(id);
-		tbContent.setCreated(tbContent_db.getCreated());
+		TbContent dbTbContent = tbContentMapper.selectByPrimaryKey(id);
+		tbContent.setCreated(dbTbContent.getCreated());
 		tbContent.setUpdated(new Date());
 		tbContentMapper.updateByPrimaryKey(tbContent);
 
 		// 缓存同步，删除缓存中对应的数据
-		jedisClient.hdel(CONTENT_LIST, tbContent.getCategoryId() + "");
+		jedisClient.hdel(contentList, tbContent.getCategoryId() + "");
 		return E3Result.ok();
 	}
 
@@ -64,7 +64,7 @@ public class TbContentServiceImpl extends BaseServiceImpl implements TbContentSe
 		tbContentMapper.deleteByIds(contentIds);
 		// TODO colg redis 未删除缓存
 		// 缓存同步，删除缓存中对应的数据
-		jedisClient.hdel(CONTENT_LIST, contentIds);
+		jedisClient.hdel(contentList, contentIds);
 		return E3Result.ok();
 	}
 
@@ -76,7 +76,7 @@ public class TbContentServiceImpl extends BaseServiceImpl implements TbContentSe
 		// 使用缓存查询，缓存查不到也不要影响业务
 		try {
 			// 查询缓存
-			String json = jedisClient.hget(CONTENT_LIST, categoryId + "");
+			String json = jedisClient.hget(contentList, categoryId + "");
 			// 如果缓存中有直接响应结果
 			if (StringUtils.isNotBlank(json)) {
 				List<TbContent> list = JSON.parseArray(json, TbContent.class);
@@ -91,7 +91,7 @@ public class TbContentServiceImpl extends BaseServiceImpl implements TbContentSe
 
 		// 把结果添加到缓存
 		try {
-			jedisClient.hset(CONTENT_LIST, categoryId + "", JSON.toJSONString(list));
+			jedisClient.hset(contentList, categoryId + "", JSON.toJSONString(list));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

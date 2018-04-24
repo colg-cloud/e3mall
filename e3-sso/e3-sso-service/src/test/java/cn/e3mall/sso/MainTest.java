@@ -7,6 +7,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import cn.e3mall.manager.pojo.TbUser;
 import cn.e3mall.sso.service.TbUserService;
 
+/**
+ * 
+ *
+ * @author colg
+ */
 public class MainTest {
 
 	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");

@@ -20,7 +20,7 @@ import com.alibaba.fastjson.JSON;
  *
  * @author colg
  */
-public class TestSolr {
+public class SolrTest {
 
 	/**
 	 * Solr服务器的URL。
@@ -99,7 +99,8 @@ public class TestSolr {
 
 	/**
 	 * 查询索引库 - 复杂
-	 * @throws SolrServerException 
+	 * 
+	 * @throws SolrServerException
 	 */
 	@Test
 	public void queryIndexFuza() throws SolrServerException {
@@ -107,17 +108,21 @@ public class TestSolr {
 		SolrQuery query = new SolrQuery();
 		// 查询条件
 		query.setStart(0).setRows(10).setQuery("手机");
-		query.set("df", "item_title"); // 默认搜索域
-		query.setHighlight(true);// 高亮显示
-		query.addHighlightField("item_title");// 高亮显示字段
-		query.setHighlightSimplePre("<em>").setHighlightSimplePost("</em>");// 高亮显示标签
-		
+		// 默认搜索域
+		query.set("df", "item_title");
+		// 高亮显示
+		query.setHighlight(true);
+		// 高亮显示字段
+		query.addHighlightField("item_title");
+		// 高亮显示标签
+		query.setHighlightSimplePre("<em>").setHighlightSimplePost("</em>");
+
 		// 执行查询
 		QueryResponse queryResponse = solrServer.query(query);
-		
+
 		SolrDocumentList solrDocumentList = queryResponse.getResults();
 		System.out.println(JSON.toJSONString(solrDocumentList));
-		
+
 		// 高亮结果
 		Map<String, Map<String, List<String>>> map = queryResponse.getHighlighting();
 		System.out.println(JSON.toJSON(map));

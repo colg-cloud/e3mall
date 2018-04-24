@@ -43,7 +43,7 @@ public class TokenController extends BaseController {
 	 * @return
 	 * @throws IOException
 	 */
-	@GetMapping(value = "/user2/{token}"/*, produces = MediaType.APPLICATION_JSON_UTF8_VALUE*/)
+	@GetMapping(value = "/user2/{token}")
 	public void getUserByToken2(@PathVariable String token, String callback, HttpServletResponse response) {
 		E3Result e3Result = tokenService.getUserByToken(token);
 		PrintWriter out = null;

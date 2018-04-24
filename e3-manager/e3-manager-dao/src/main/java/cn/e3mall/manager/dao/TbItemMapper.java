@@ -6,6 +6,11 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.e3mall.manager.pojo.TbItem;
 
+/**
+ * 
+ *
+ * @author colg
+ */
 public interface TbItemMapper {
 	
 	int deleteByPrimaryKey(Long id);

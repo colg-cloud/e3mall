@@ -7,6 +7,11 @@ import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
 
+/**
+ * 
+ *
+ * @author colg
+ */
 public class E3ResultTest {
 
 	@Test
@@ -29,7 +34,7 @@ public class E3ResultTest {
 		e3Result.setData(dataGridResult);
 		System.out.println(JSON.toJSONString(e3Result, true));
 		
-		EasyUITreeNode easyUITreeNode = new EasyUITreeNode();
+		EasyUiTreeNode easyUITreeNode = new EasyUiTreeNode();
 		easyUITreeNode.setId((long) 1);
 		easyUITreeNode.setState("closed");
 		easyUITreeNode.setText("名字");

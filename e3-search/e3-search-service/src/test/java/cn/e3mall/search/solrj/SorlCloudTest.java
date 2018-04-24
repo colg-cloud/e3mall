@@ -17,7 +17,7 @@ import com.alibaba.fastjson.JSON;
  *
  * @author colg
  */
-public class TestSorlCloud {
+public class SorlCloudTest {
 
 	/**
 	 * zkHost： zookeeper的地址列表

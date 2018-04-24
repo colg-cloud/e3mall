@@ -18,6 +18,9 @@ import org.apache.commons.lang3.StringUtils;
  */
 public final class CookieUtils {
 
+	/** 本机地址 */
+	private static final String HOST = "127.0.0.1";
+
 	/**
 	 * 根据cookie名称获取Cookie的值, 不编码
 	 * 
@@ -100,21 +103,24 @@ public final class CookieUtils {
 	/**
 	 * 设置Cookie的值 不设置生效时间默认浏览器关闭即失效,也不编码
 	 */
-	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue) {
+	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
+			String cookieValue) {
 		setCookie(request, response, cookieName, cookieValue, -1);
 	}
 
 	/**
 	 * 设置Cookie的值 在指定时间内生效,但不编码
 	 */
-	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage) {
+	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
+			String cookieValue, int cookieMaxage) {
 		setCookie(request, response, cookieName, cookieValue, cookieMaxage, false);
 	}
 
 	/**
 	 * 设置Cookie的值 不设置生效时间,但编码
 	 */
-	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, boolean isEncode) {
+	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
+			String cookieValue, boolean isEncode) {
 		setCookie(request, response, cookieName, cookieValue, -1, isEncode);
 	}
 
@@ -129,8 +135,8 @@ public final class CookieUtils {
 	 * @param isEncode
 	 *            true: UTF-8编码, false: 不编码
 	 */
-	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-			boolean isEncode) {
+	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
+			String cookieValue, int cookieMaxage, boolean isEncode) {
 		doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, isEncode);
 	}
 
@@ -144,8 +150,8 @@ public final class CookieUtils {
 	 * @param cookieMaxage
 	 * @param encodeString
 	 */
-	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-			String encodeString) {
+	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
+			String cookieValue, int cookieMaxage, String encodeString) {
 		doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, encodeString);
 	}
 
@@ -171,8 +177,8 @@ public final class CookieUtils {
 	 *            cookie生效的最大秒数
 	 * @param isEncode
 	 */
-	private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-			boolean isEncode) {
+	private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
+			String cookieValue, int cookieMaxage, boolean isEncode) {
 		if (cookieValue == null) {
 			cookieValue = "";
 		} else {
@@ -190,7 +196,7 @@ public final class CookieUtils {
 		if (null != request) {
 			// 设置域名的cookie
 			String domainName = getDomainName(request);
-			if (!"127.0.0.1".equals(domainName)) {
+			if (!HOST.equals(domainName)) {
 				cookie.setDomain(domainName);
 			}
 		}
@@ -209,8 +215,8 @@ public final class CookieUtils {
 	 *            cookie生效的最大秒数
 	 * @param encodeString
 	 */
-	private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-			String encodeString) {
+	private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName,
+			String cookieValue, int cookieMaxage, String encodeString) {
 		if (cookieValue == null) {
 			cookieValue = "";
 		} else {
@@ -228,7 +234,7 @@ public final class CookieUtils {
 		if (null != request) {
 			// 设置域名的cookie
 			String domainName = getDomainName(request);
-			if (!"127.0.0.1".equals(domainName)) {
+			if (!HOST.equals(domainName)) {
 				cookie.setDomain(domainName);
 			}
 		}
@@ -251,10 +257,11 @@ public final class CookieUtils {
 			serverName = serverName.substring(0, end);
 			final String[] domains = serverName.split("\\.");
 			int len = domains.length;
-			if (len > 3) {
+			int domainLength = 3;
+			if (len > domainLength) {
 				// www.xxx.com.cn
-				domainName = "." + domains[len - 3] + "." + domains[len - 2] + "." + domains[len - 1];
-			} else if (len <= 3 && len > 1) {
+				domainName = "." + domains[len - domainLength] + "." + domains[len - 2] + "." + domains[len - 1];
+			} else if (len <= domainLength && len > 1) {
 				// xxx.com or xxx.cn
 				domainName = "." + domains[len - 2] + "." + domains[len - 1];
 			} else {
@@ -262,7 +269,8 @@ public final class CookieUtils {
 			}
 		}
 
-		if (domainName != null && domainName.indexOf(":") > 0) {
+		String colon = ":";
+		if (domainName != null && domainName.indexOf(colon) > 0) {
 			String[] ary = domainName.split("\\:");
 			domainName = ary[0];
 		}

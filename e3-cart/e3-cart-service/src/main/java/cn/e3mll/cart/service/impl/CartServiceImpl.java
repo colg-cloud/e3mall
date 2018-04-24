@@ -24,7 +24,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 
 	/** # redis存放的购物车信息前缀 */
 	@Value("${CART_LIST_PRE}")
-	private String CART_LIST_PRE;
+	private String cartListPre;
 
 	@Override
 	public E3Result addCart(Long userId, Long itemId, Integer num) {
@@ -38,7 +38,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		 * 2. 返回成功
 		 */
 
-		String key = CART_LIST_PRE + ":" + userId;
+		String key = cartListPre + ":" + userId;
 		String field = itemId + "";
 		Boolean hexists = jedisClient.hexists(key, field);
 		// 商品存在
@@ -87,7 +87,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	@Override
 	public List<TbItem> getCartList(Long userId) {
 		// 根据用户id查询redis购物车列表
-		String key = CART_LIST_PRE + ":" + userId;
+		String key = cartListPre + ":" + userId;
 		List<String> jsonArrayString = jedisClient.hvals(key);
 		List<TbItem> cartList = new ArrayList<>();
 		for (String string : jsonArrayString) {
@@ -99,7 +99,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	@Override
 	public E3Result updateCartNum(Long userId, Long itemId, Integer num) {
 		// 从redis中取商品信息
-		String key = CART_LIST_PRE + ":" + userId;
+		String key = cartListPre + ":" + userId;
 		String field = itemId + "";
 		String jsonString = jedisClient.hget(key, field);
 		TbItem tbItem = JSON.parseObject(jsonString, TbItem.class);
@@ -113,7 +113,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	@Override
 	public E3Result deleteCartItem(Long userId, Long itemId) {
 		// 从redis中删除购车商品
-		String key = CART_LIST_PRE + ":" + userId;
+		String key = cartListPre + ":" + userId;
 		String field = itemId + "";
 		jedisClient.hdel(key, field);
 		return E3Result.ok();
@@ -122,7 +122,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	@Override
 	public E3Result deleteBathCart(Long userId, String itemId) {
 		// 从redis中删除购车商品
-		String key = CART_LIST_PRE + ":" + userId;
+		String key = cartListPre + ":" + userId;
 		jedisClient.hdel(key, itemId.split(","));
 		return E3Result.ok();
 	}
@@ -130,7 +130,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	@Override
 	public E3Result deleteAllCart(Long userId) {
 		// 从redis中当前用户的购物车列表
-		String key = CART_LIST_PRE + ":" + userId;
+		String key = cartListPre + ":" + userId;
 		jedisClient.del(key);
 		return E3Result.ok();
 	}

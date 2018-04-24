@@ -6,6 +6,11 @@ import cn.e3mall.manager.pojo.TbOrder;
 import cn.e3mall.manager.pojo.TbOrderItem;
 import cn.e3mall.manager.pojo.TbOrderShipping;
 
+/**
+ * 订单信息
+ *
+ * @author colg
+ */
 public class OrderInfo extends TbOrder {
 
 	private static final long serialVersionUID = 1L;

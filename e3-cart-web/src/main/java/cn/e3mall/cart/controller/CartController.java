@@ -36,10 +36,10 @@ public class CartController extends BaseController {
 
 	/** 购物车列表在cookie中存放的名字 */
 	@Value("${COOKIE_CART}")
-	private String COOKIE_CART;
+	private String cookieCart;
 	/** 购物车列表在cookie中保存时间, 单位:秒 3600*24*5=43200 5天 */
 	@Value("${COOKIE_CART_EXPIRE}")
-	private Integer COOKIE_CART_EXPIRE;
+	private Integer cookieCartExpire;
 
 	/**
 	 * 添加商品到购物车, 返回购物车添加成功页面
@@ -51,7 +51,8 @@ public class CartController extends BaseController {
 	 * @return 购物车页面
 	 */
 	@GetMapping("/add/{itemId}")
-	private String addCart(@PathVariable Long itemId, @RequestParam(defaultValue = "1") Integer num, HttpServletRequest request, HttpServletResponse response) {
+	private String addCart(@PathVariable Long itemId, @RequestParam(defaultValue = "1") Integer num,
+			HttpServletRequest request, HttpServletResponse response) {
 		/*
 		 * 	1. 判断用户是否登录
 		 * 		登录状态: 把购物车写入redis, 保存到服务端, 返回逻辑视图
@@ -72,9 +73,11 @@ public class CartController extends BaseController {
 
 		// 用户未登录, 把购物车写入cookie, 保存到客户端
 		List<TbItem> cartList = this.getCartListFromCookie(request);
-		boolean flag = false; // 标识是存在商品
+		// 标识是存在商品
+		boolean flag = false;
 		for (TbItem tbItem : cartList) {
-			if (tbItem.getId() == itemId.longValue()) { // 包装类型互相比较, 必须转成基础类型, 有一方为基础类型,另一方会自动拆箱
+			// 包装类型互相比较, 必须转成基础类型, 有一方为基础类型,另一方会自动拆箱
+			if (tbItem.getId() == itemId.longValue()) {
 				flag = true;
 				// 存在商品, 数量相加
 				tbItem.setNum(tbItem.getNum() + num);
@@ -86,7 +89,8 @@ public class CartController extends BaseController {
 		// 不存在
 		if (!flag) {
 			TbItem tbItem = tbItemService.getTbItemById(itemId);
-			tbItem.setNum(num); // 设置商品数量
+			// 设置商品数量
+			tbItem.setNum(num); 
 			// 取得第一张图片
 			String image = tbItem.getImage();
 			if (StringUtils.isNotBlank(image)) {
@@ -96,7 +100,7 @@ public class CartController extends BaseController {
 			cartList.add(tbItem);
 		}
 		// 写入cookie
-		CookieUtils.setCookie(request, response, COOKIE_CART, JSON.toJSONString(cartList), COOKIE_CART_EXPIRE, true);
+		CookieUtils.setCookie(request, response, cookieCart, JSON.toJSONString(cartList), cookieCartExpire, true);
 		// 返回添加购物车成功页面
 		return "cartSuccess";
 	}
@@ -129,7 +133,7 @@ public class CartController extends BaseController {
 			Long userId = tbUser.getId();
 			cartService.mergeCart(userId, cartList);
 			// 删除cookie中的购物车
-			CookieUtils.deleteCookie(request, response, COOKIE_CART);
+			CookieUtils.deleteCookie(request, response, cookieCart);
 			// 从redis中获取购物车列表
 			cartList = cartService.getCartList(userId);
 		}
@@ -151,7 +155,8 @@ public class CartController extends BaseController {
 	 */
 	@PostMapping("/update/num/{itemId}/{num}")
 	@ResponseBody
-	public E3Result updateCartNum(@PathVariable Long itemId, @PathVariable Integer num, HttpServletRequest request, HttpServletResponse response) {
+	public E3Result updateCartNum(@PathVariable Long itemId, @PathVariable Integer num, HttpServletRequest request,
+			HttpServletResponse response) {
 		// 判断用户是否登录
 		TbUser tbUser = (TbUser) request.getAttribute("user");
 		if (tbUser != null) {
@@ -171,7 +176,7 @@ public class CartController extends BaseController {
 		}
 
 		// 把购物车列表写回cookie
-		CookieUtils.setCookie(request, response, COOKIE_CART, JSON.toJSONString(cartList), COOKIE_CART_EXPIRE, true);
+		CookieUtils.setCookie(request, response, cookieCart, JSON.toJSONString(cartList), cookieCartExpire, true);
 
 		// 返回成功
 		return E3Result.ok();
@@ -207,7 +212,7 @@ public class CartController extends BaseController {
 		}
 
 		// 把购物车列表写入cookie
-		CookieUtils.setCookie(request, response, COOKIE_CART, JSON.toJSONString(cartList), COOKIE_CART_EXPIRE, true);
+		CookieUtils.setCookie(request, response, cookieCart, JSON.toJSONString(cartList), cookieCartExpire, true);
 		// 重定向到逻辑视图, 绝对路径 在项目后面拼接 /cart/cart.html
 		return "redirect:/cart/cart.html";
 	}
@@ -219,7 +224,8 @@ public class CartController extends BaseController {
 	 * @return
 	 */
 	private List<TbItem> getCartListFromCookie(HttpServletRequest request) {
-		String cookieName = COOKIE_CART; // 购物车列表在cookie中存放的名字
+		// 购物车列表在cookie中存放的名字
+		String cookieName = cookieCart;
 		String jsonString = CookieUtils.getCookieValue(request, cookieName, true);
 
 		if (StringUtils.isBlank(jsonString)) {

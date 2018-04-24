@@ -51,6 +51,7 @@ public interface TbContentService {
 	/**
 	 * 根据内容类目ID查询内容列表
 	 * 
+	 * @param categoryId
 	 * @return
 	 */
 	List<TbContent> getContentListByCategoryId(Long categoryId);

@@ -26,9 +26,9 @@ import cn.e3mall.sso.service.TbUserService;
 public class TbUserServiceImpl extends BaseServiceImpl implements TbUserService {
 
 	@Value("${TOKEN_KEY}")
-	private String TOKEN_KEY;
+	private String tokenKey;
 	@Value("${TOKEN_EXPIRE}")
-	private int TOKEN_EXPIRE;
+	private int tokenExpire;
 
 	@Override
 	public TbUser findById(Long id) {
@@ -38,7 +38,8 @@ public class TbUserServiceImpl extends BaseServiceImpl implements TbUserService 
 	@Override
 	public E3Result checkData(String param, Integer type) {
 		// 参数类型 - 1:用户名, 2:手机, 3:邮箱
-		if (type == null || (type != 1 && type != 2 && type != 3)) {
+		boolean existed = (type == null || (type != 1 && type != 2 && type != 3));
+		if (existed) {
 			return E3Result.fail(400, "非法的参数");
 		}
 		// 执行查询
@@ -67,10 +68,12 @@ public class TbUserServiceImpl extends BaseServiceImpl implements TbUserService 
 		}
 
 		// 数据库校验
-		if (!(boolean) this.checkData(tbUser.getUsername(), 1).getData()) {
+		int userId = 1;
+		if (!(boolean) this.checkData(tbUser.getUsername(), userId).getData()) {
 			return E3Result.fail(400, "此用户名已经被注册！请重新输入。");
 		}
-		if (!(boolean) this.checkData(tbUser.getPhone(), 2).getData()) {
+		int phone = 2;
+		if (!(boolean) this.checkData(tbUser.getPhone(), phone).getData()) {
 			return E3Result.fail(400, "此手机号已经被注册！");
 		}
 
@@ -119,11 +122,12 @@ public class TbUserServiceImpl extends BaseServiceImpl implements TbUserService 
 		}
 
 		// 生成token
-		tbUser.setPassword(null);// 密码不要存redis
+		// 密码不要存redis
+		tbUser.setPassword(null);
 		String token = UUID.randomUUID().toString().replace("-", "").toUpperCase();
-		String key = TOKEN_KEY + ":" + token;
+		String key = tokenKey + ":" + token;
 		jedisClient.set(key, JSON.toJSONString(tbUser));
-		jedisClient.expire(key, TOKEN_EXPIRE);
+		jedisClient.expire(key, tokenExpire);
 		return E3Result.ok(token);
 	}
 

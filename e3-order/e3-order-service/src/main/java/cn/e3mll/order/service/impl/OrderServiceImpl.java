@@ -24,24 +24,24 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 	/** 订单号id */
 	@Value("${ORDER_ID_GEN_KEY}")
-	private String ORDER_ID_GEN_KEY;
+	private String orderIdGenKey;
 	/** 订单号初始值 */
 	@Value("${ORDER_ID_BEGIN}")
-	private String ORDER_ID_BEGIN;
+	private String orderIdBegin;
 	/** 订单明细id */
 	@Value("${ORDER_ITEM_ID_GEN_KEY}")
-	private String ORDER_ITEM_ID_GEN_KEY;
+	private String orderItemIdGenKey;
 
 	@Override
 	public E3Result createOrder(OrderInfo orderInfo, TbUser tbUser) {
 		// 判断是否有orderId
-		if (!jedisClient.exists(ORDER_ID_GEN_KEY)) {
+		if (!jedisClient.exists(orderIdGenKey)) {
 			// 设置初始值
-			jedisClient.set(ORDER_ID_GEN_KEY, ORDER_ID_BEGIN);
+			jedisClient.set(orderIdGenKey, orderIdBegin);
 		}
 
 		// 生成订单号, 使用redis的incr生成
-		String orderId = jedisClient.incr(ORDER_ID_GEN_KEY).toString();
+		String orderId = jedisClient.incr(orderIdGenKey).toString();
 
 		// 补全orderInfo的属性
 		orderInfo.setOrderId(orderId);
@@ -58,7 +58,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		List<TbOrderItem> orderItems = orderInfo.getOrderItems();
 		for (TbOrderItem tbOrderItem : orderItems) {
 			// 生成订单明细id
-			String orderItemId = jedisClient.incr(ORDER_ITEM_ID_GEN_KEY).toString();
+			String orderItemId = jedisClient.incr(orderItemIdGenKey).toString();
 			tbOrderItem.setId(orderItemId);
 			tbOrderItem.setOrderId(orderId);
 			// 插入数据

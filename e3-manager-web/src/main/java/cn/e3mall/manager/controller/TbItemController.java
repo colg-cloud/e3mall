@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.e3mall.common.pojo.E3Result;
 import cn.e3mall.common.pojo.EasyUIDataGridResult;
 import cn.e3mall.common.pojo.PictureResult;
-import cn.e3mall.common.utils.FastDFSClient;
+import cn.e3mall.common.utils.FastDfsClient;
 import cn.e3mall.manager.core.BaseController;
 import cn.e3mall.manager.pojo.TbItem;
 
@@ -31,7 +31,7 @@ public class TbItemController extends BaseController {
 
 	/** 获取图片服务器的地址 */
 	@Value("${IMAGE_SERVER_URL}")
-	private String IMAGE_SERVER_URL;
+	private String imageServerUrl;
 
 	/**
 	 * 根据商品id查询商品
@@ -66,20 +66,23 @@ public class TbItemController extends BaseController {
 	@PostMapping("/pic/upload")
 	public PictureResult uploadFile(MultipartFile uploadFile) {
 		// 把图片上传到图片服务器
-		FastDFSClient fastDFSClient = new FastDFSClient(CLASSPATH_CONF_STORAGE_CLIENT_CONF);
+		FastDfsClient fastDFSClient = new FastDfsClient(CLASSPATH_CONF_STORAGE_CLIENT_CONF);
 		// 得到一个图片地址和文件名
 		String url = null;
-		Integer error = 0; // 成功
-		String message = null; // 错误消息
+		// 成功
+		Integer error = 0;
+		// 错误消息
+		String message = null;
 		try {
 			url = fastDFSClient.uploadFile(uploadFile.getBytes(), FilenameUtils.getExtension(uploadFile.getOriginalFilename()));
 		} catch (IOException e) {
 			e.printStackTrace();
-			error = 1; // 失败
+			// 失败
+			error = 1;
 			message = "图片上传失败！";
 		}
 		// 补充为完整的url
-		url = IMAGE_SERVER_URL + url;
+		url = imageServerUrl + url;
 		// 响应json
 		return new PictureResult().setError(error).setUrl(url).setMessage(message);
 	}

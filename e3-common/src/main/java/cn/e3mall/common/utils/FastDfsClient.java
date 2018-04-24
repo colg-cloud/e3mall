@@ -15,17 +15,18 @@ import org.csource.fastdfs.TrackerServer;
  *
  * @author colg
  */
-public class FastDFSClient {
+public class FastDfsClient {
 
 	private TrackerClient trackerClient = null;
 	private TrackerServer trackerServer = null;
 	private StorageServer storageServer = null;
 	private StorageClient1 storageClient = null;
 
-	public FastDFSClient(String conf) {
-		if (conf.contains("classpath:")) {
+	public FastDfsClient(String conf) {
+		String classPath = "classpath:";
+		if (conf.contains(classPath)) {
 			System.out.println(this.getClass().getResource("/").getPath());
-			conf = conf.replace("classpath:", this.getClass().getResource("/").getPath());
+			conf = conf.replace(classPath, this.getClass().getResource("/").getPath());
 		}
 		try {
 			ClientGlobal.init(conf);
@@ -114,18 +115,18 @@ public class FastDFSClient {
 	/**
 	 * 从存储服务器删除文件
 	 * 
-	 * @param file_id
+	 * @param fileId
 	 *            文件ID（包括组名和文件名）
 	 * @return 0表示成功，没有表示失败为零（错误代码）
 	 */
-	public int deleteFile(String file_id) {
-		int delete_file1 = 0;
+	public int deleteFile(String fileId) {
+		int deleteFile1 = 0;
 		try {
-			delete_file1 = storageClient.delete_file1(file_id);
+			deleteFile1 = storageClient.delete_file1(fileId);
 		} catch (IOException | MyException e) {
 			e.printStackTrace();
 		}
-		return delete_file1;
+		return deleteFile1;
 	}
 
 }

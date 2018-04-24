@@ -15,13 +15,18 @@ import cn.e3mall.common.utils.CookieUtils;
 import cn.e3mall.manager.pojo.TbUser;
 import cn.e3mall.sso.core.BaseController;
 
+/**
+ * 用户Controller
+ *
+ * @author colg
+ */
 @RestController
 @RequestMapping("/tb/user")
 public class TbUserController extends BaseController {
 
 	/** cookie中保存token的key */
 	@Value("${TOKEN_KEY}")
-	private String TOKEN_KEY;
+	private String tokenKey;
 
 	@GetMapping("/{id}")
 	public E3Result find(@PathVariable Long id) {
@@ -69,7 +74,7 @@ public class TbUserController extends BaseController {
 		if (e3Result.isSuccess()) {
 			String token = e3Result.getData().toString();
 			// 如果登录成功需要把token写入cookie
-			CookieUtils.setCookie(request, response, TOKEN_KEY, token);
+			CookieUtils.setCookie(request, response, tokenKey, token);
 		}
 		return e3Result;
 	}

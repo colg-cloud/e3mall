@@ -46,7 +46,9 @@ public class IDUtils {
 	}
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 100; i++)
+		int length = 100;
+		for (int i = 0; i < length; i++) {
 			System.out.println(genItemId());
+		}
 	}
 }

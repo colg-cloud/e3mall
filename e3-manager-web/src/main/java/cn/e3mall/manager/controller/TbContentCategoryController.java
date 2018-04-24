@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.e3mall.common.pojo.E3Result;
-import cn.e3mall.common.pojo.EasyUITreeNode;
+import cn.e3mall.common.pojo.EasyUiTreeNode;
 import cn.e3mall.manager.core.BaseController;
 
 /**
@@ -28,7 +28,7 @@ public class TbContentCategoryController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public List<EasyUITreeNode> getContentCatList(@RequestParam(value = "id", defaultValue = "0") Long parentId) {
+	public List<EasyUiTreeNode> getContentCatList(@RequestParam(value = "id", defaultValue = "0") Long parentId) {
 		return tbContentCategoryService.getContentCategoryList(parentId);
 	}
 

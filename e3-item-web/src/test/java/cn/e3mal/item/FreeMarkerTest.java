@@ -13,6 +13,11 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+/**
+ * freeMarker 测试类
+ *
+ * @author colg
+ */
 public class FreeMarkerTest {
 
 	@Test
@@ -26,7 +31,7 @@ public class FreeMarkerTest {
 		// 4. 加载一个模版文件,创建一个模版对象
 		Template template = configuration.getTemplate("hello.ftl");
 		// 5. 创建一个数据集,可以是pojo也可以是map,推荐使用map
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<>(1);
 		data.put("hello", "hello freemarker!");
 		// 6. 创建一个Writer对象,指定输出文件的路径及文件名
 		Writer out = new FileWriter("html/hello.txt");

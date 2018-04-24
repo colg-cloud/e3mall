@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.e3mall.common.pojo.EasyUITreeNode;
+import cn.e3mall.common.pojo.EasyUiTreeNode;
 import cn.e3mall.manager.core.BaseController;
 
 /**
@@ -26,7 +26,7 @@ public class TbItemCatController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("/list")
-	public List<EasyUITreeNode> list(@RequestParam(value = "id", defaultValue = "0") Long parentId) {
+	public List<EasyUiTreeNode> list(@RequestParam(value = "id", defaultValue = "0") Long parentId) {
 		// 调用服务查询节点列表
 		return tbItemCatService.getItemCatList(parentId);
 	}

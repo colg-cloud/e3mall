@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import cn.e3mall.common.pojo.E3Result;
-import cn.e3mall.common.pojo.EasyUITreeNode;
+import cn.e3mall.common.pojo.EasyUiTreeNode;
 import cn.e3mall.content.core.BaseServiceImpl;
 import cn.e3mall.content.service.TbContentCategoryService;
 import cn.e3mall.manager.pojo.TbContentCategory;
@@ -20,7 +20,7 @@ import cn.e3mall.manager.pojo.TbContentCategory;
 public class TbContentCategoryServiceImpl extends BaseServiceImpl implements TbContentCategoryService {
 
 	@Override
-	public List<EasyUITreeNode> getContentCategoryList(Long parentId) {
+	public List<EasyUiTreeNode> getContentCategoryList(Long parentId) {
 		return tbContentCategoryMapper.getContentCategoryList(parentId);
 	}
 
@@ -44,11 +44,11 @@ public class TbContentCategoryServiceImpl extends BaseServiceImpl implements TbC
 
 		// 判断父节点的isParent，如果不是true改为true
 		// 根据parentId查询父节点
-		TbContentCategory tbContentCategory_db = tbContentCategoryMapper.selectByPrimaryKey(parentId);
-		if (!tbContentCategory_db.getIsParent()) {
-			tbContentCategory_db.setIsParent(true);
+		TbContentCategory dbTbContentCategory = tbContentCategoryMapper.selectByPrimaryKey(parentId);
+		if (!dbTbContentCategory.getIsParent()) {
+			dbTbContentCategory.setIsParent(true);
 			// 更新到数据库
-			tbContentCategoryMapper.updateByPrimaryKey(tbContentCategory_db);
+			tbContentCategoryMapper.updateByPrimaryKey(dbTbContentCategory);
 		}
 		// 返回E3Reqult，包含pojo
 		return E3Result.ok(tbContentCategory);
@@ -78,10 +78,10 @@ public class TbContentCategoryServiceImpl extends BaseServiceImpl implements TbC
 		Long parentId = tbContentCategory.getParentId();
 		List<TbContentCategory> list = tbContentCategoryMapper.selectByParentId(parentId);
 		if (list == null || list.isEmpty()) {
-			TbContentCategory tbContentCategory_db = tbContentCategoryMapper.selectByPrimaryKey(parentId);
-			tbContentCategory_db.setIsParent(false);
-			tbContentCategory_db.setUpdated(new Date());
-			tbContentCategoryMapper.updateByPrimaryKey(tbContentCategory_db);
+			TbContentCategory dbTbContentCategory = tbContentCategoryMapper.selectByPrimaryKey(parentId);
+			dbTbContentCategory.setIsParent(false);
+			dbTbContentCategory.setUpdated(new Date());
+			tbContentCategoryMapper.updateByPrimaryKey(dbTbContentCategory);
 		}
 		return E3Result.ok();
 	}

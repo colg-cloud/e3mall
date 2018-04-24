@@ -7,7 +7,7 @@ import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 import org.junit.Test;
 
-import cn.e3mall.common.utils.FastDFSClient;
+import cn.e3mall.common.utils.FastDfsClient;
 
 /**
  * FastDFS 分布式文件系统测试
@@ -40,7 +40,7 @@ public class FastDfsTest {
 
 	@Test
 	public void testUpload1() {
-		FastDFSClient fastDFSClient = new FastDFSClient(
+		FastDfsClient fastDFSClient = new FastDfsClient(
 				"D:\\spring-tool-suite-3.7.3\\sts-3.7.3-workspace\\e3\\e3-manager-web\\src\\main\\resources\\conf\\storage-client.conf");
 		String uploadFile = fastDFSClient.uploadFile("C:\\Users\\Black Cloud\\Pictures\\IMG20180222212349.jpg");
 		System.out.println(uploadFile);
@@ -48,7 +48,7 @@ public class FastDfsTest {
 
 	@Test
 	public void testDelete1() {
-		FastDFSClient fastDFSClient = new FastDFSClient(
+		FastDfsClient fastDFSClient = new FastDfsClient(
 				"D:\\spring-tool-suite-3.7.3\\sts-3.7.3-workspace\\e3\\e3-manager-web\\src\\main\\resources\\conf\\storage-client.conf");
 		int uploadFile = fastDFSClient.deleteFile("group1/M00/00/00/wKgVblqlOjuAB4ENAABdrZgsqUU889_big.jpg");
 		System.out.println(uploadFile);

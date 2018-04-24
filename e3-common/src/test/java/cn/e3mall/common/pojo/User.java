@@ -1,5 +1,10 @@
 package cn.e3mall.common.pojo;
 
+/**
+ * 
+ *
+ * @author colg
+ */
 public class User {
 
 	private Integer id;

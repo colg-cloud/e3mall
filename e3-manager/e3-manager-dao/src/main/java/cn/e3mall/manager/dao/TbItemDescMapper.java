@@ -4,6 +4,11 @@ import java.util.List;
 
 import cn.e3mall.manager.pojo.TbItemDesc;
 
+/**
+ * 
+ *
+ * @author colg
+ */
 public interface TbItemDescMapper {
     int deleteByPrimaryKey(Long itemId);
 

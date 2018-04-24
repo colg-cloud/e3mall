@@ -8,9 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class MessageConsumer {
+/**
+ * 
+ *
+ * @author colg
+ */
+public class MessageConsumerTest {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MessageConsumer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MessageConsumerTest.class);
 
 	private String[] configLocations = { "classpath:spring/applicationContext-dao.xml", "classpath:spring/applicationContext-activemq.xml" };
 

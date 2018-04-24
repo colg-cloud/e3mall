@@ -21,7 +21,7 @@ import cn.e3mall.sso.service.TokenService;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Value("${TOKEN_KEY}")
-	private String TOKEN_KEY;
+	private String tokenKey;
 
 	@Autowired
 	private TokenService tokenService;
@@ -42,7 +42,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		 */
  
 		// 从cookie中取token
-		String token = CookieUtils.getCookieValue(request, TOKEN_KEY);
+		String token = CookieUtils.getCookieValue(request, tokenKey);
 		// 如果没有token,直接放行
 		if (StringUtils.isBlank(token)) {
 			return true;

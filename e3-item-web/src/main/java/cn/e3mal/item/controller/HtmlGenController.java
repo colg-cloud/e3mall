@@ -34,7 +34,7 @@ public class HtmlGenController {
 		try {
 			Template template = configuration.getTemplate("hello.ftl");
 			// 创建一个数据集
-			Map<String, Object> map = new HashMap<>();
+			Map<String, Object> map = new HashMap<>(1);
 			map.put("hello", 123456);
 			// 指定文件输出路径以及文件名
 			Writer out = new FileWriter(new File("hello2.html"));

@@ -29,7 +29,7 @@ import freemarker.template.TemplateException;
 public class HtmlGenListener extends BaseController implements MessageListener {
 
 	@Value("${HTML_GEN_PATH}")
-	private String HTML_GEN_PATH;
+	private String htmlGenPath;
 
 	@Override
 	public void onMessage(Message message) {
@@ -49,14 +49,14 @@ public class HtmlGenListener extends BaseController implements MessageListener {
 			TbItemDto tbItemDto = new TbItemDto(tbItem);
 			TbItemDesc tbItemDesc = tbItemDescService.findById(itemId);
 			// 创建一个数据集,把商品数据封装
-			Map<String, Object> map = new HashMap<>();
+			Map<String, Object> map = new HashMap<>(2);
 			map.put("item", tbItemDto);
 			map.put("itemDesc", tbItemDesc);
 			// 加载模版对象
 			Configuration configuration = freeMarkerConfig.getConfiguration();
 			Template template = configuration.getTemplate("item.ftl");
 			// 创建一个输出流,指定输出的目录及文件名
-			Writer out = new FileWriter(HTML_GEN_PATH + itemId + ".html");
+			Writer out = new FileWriter(htmlGenPath + itemId + ".html");
 			// 生成静态页面
 			template.process(map, out);
 		} catch (JMSException e) {

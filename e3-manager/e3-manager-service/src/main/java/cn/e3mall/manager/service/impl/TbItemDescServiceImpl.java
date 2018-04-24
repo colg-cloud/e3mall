@@ -19,14 +19,14 @@ import cn.e3mall.manager.service.TbItemDescService;
 public class TbItemDescServiceImpl extends BaseServiceImpl implements TbItemDescService {
 
 	@Value("${ITEM_INFO_PRE}")
-	private String ITEM_INFO_PRE;
+	private String itemInfoPre;
 	@Value("${ITEM_INFO_EXPIRE}")
-	private Integer ITEM_INFO_EXPIRE;
+	private Integer itemInfoExpire;
 
 	@Override
 	public TbItemDesc findById(Long itemId) {
 		// 查询缓存
-		String key = ITEM_INFO_PRE + ":" + itemId + ":DESC";
+		String key = itemInfoPre + ":" + itemId + ":DESC";
 		try {
 			String jsonString = jedisClient.get(key);
 			if (StringUtils.isNotBlank(jsonString)) {
@@ -44,7 +44,7 @@ public class TbItemDescServiceImpl extends BaseServiceImpl implements TbItemDesc
 				// 添加缓存
 				jedisClient.set(key, JSON.toJSONString(tbItemDesc));
 				// 设置缓存过期时间
-				jedisClient.expire(key, ITEM_INFO_EXPIRE);
+				jedisClient.expire(key, itemInfoExpire);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

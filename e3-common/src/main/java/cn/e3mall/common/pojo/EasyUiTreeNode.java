@@ -9,7 +9,7 @@ import cn.e3mall.common.core.BaseEntity;
  *
  * @author colg
  */
-public class EasyUITreeNode extends BaseEntity implements Serializable {
+public class EasyUiTreeNode extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,10 +17,10 @@ public class EasyUITreeNode extends BaseEntity implements Serializable {
 	private String text;
 	private String state;
 
-	public EasyUITreeNode() {
+	public EasyUiTreeNode() {
 	}
 
-	public EasyUITreeNode(Long id, String text, String state) {
+	public EasyUiTreeNode(Long id, String text, String state) {
 		this.id = id;
 		this.text = text;
 		this.state = state;

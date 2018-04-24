@@ -19,7 +19,7 @@ public class TbItemSearchController extends BaseController {
 
 	/** 搜索结果，每页显示的记录数 */
 	@Value("${SEARCH_RESULT_ROWS}")
-	private Integer SEARCH_RESULT_ROWS;
+	private Integer searchResultRows;
 
 	/**
 	 * 搜索
@@ -35,7 +35,7 @@ public class TbItemSearchController extends BaseController {
 //		keyword = StringUtil.iso2Utf(keyword);
 
 		// 查询商品列表
-		SearchResult searchResult = tbItemService.search(keyword, page, SEARCH_RESULT_ROWS);
+		SearchResult searchResult = tbItemService.search(keyword, page, searchResultRows);
 
 		// 把结果传递给页面
 		model.addAttribute("query", keyword);

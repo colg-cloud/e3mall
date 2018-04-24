@@ -4,6 +4,11 @@ import java.util.List;
 
 import cn.e3mall.manager.pojo.TbOrder;
 
+/**
+ * 
+ *
+ * @author colg
+ */
 public interface TbOrderMapper {
     int deleteByPrimaryKey(String orderId);
 

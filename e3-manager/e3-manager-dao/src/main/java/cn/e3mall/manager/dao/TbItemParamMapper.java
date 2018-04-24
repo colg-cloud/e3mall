@@ -4,6 +4,11 @@ import java.util.List;
 
 import cn.e3mall.manager.pojo.TbItemParam;
 
+/**
+ * 
+ *
+ * @author colg
+ */
 public interface TbItemParamMapper {
     int deleteByPrimaryKey(Long id);
 

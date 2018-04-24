@@ -25,12 +25,12 @@ import cn.e3mll.cart.service.CartService;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Value("${TOKEN_KEY}")
-	private String TOKEN_KEY;
+	private String tokenKey;
 	/** sso 系统的url地址 */
 	@Value("${SSO_URL}")
-	private String SSO_URL;
+	private String ssoUrl;
 	@Value("${COOKIE_CART}")
-	private String COOKIE_CART;
+	private String cookieCart;
 
 	@Autowired
 	private TokenService tokenService;
@@ -47,10 +47,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		 * 	token不存在:	未登录状态, 跳转到sso系统的登录页面, 用户登录成功后, 跳转到当前请求的url
 		 */
 
-		String token = CookieUtils.getCookieValue(request, TOKEN_KEY);
+		String token = CookieUtils.getCookieValue(request, tokenKey);
 		if (StringUtils.isBlank(token)) {
 			// token不存在
-			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
+			response.sendRedirect(ssoUrl + "/page/login?redirect=" + request.getRequestURL());
 			// 拦截
 			return false;
 		}
@@ -59,7 +59,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		E3Result e3Result = tokenService.getUserByToken(token);
 		if (!e3Result.isSuccess()) {
 			// 取不到
-			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
+			response.sendRedirect(ssoUrl + "/page/login?redirect=" + request.getRequestURL());
 			// 拦截
 			return false;
 		}
@@ -67,7 +67,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		TbUser tbUser = (TbUser) e3Result.getData();
 		request.setAttribute("user", tbUser);
 		// 判断cookie中是否有购物车数据
-		String jsonString = CookieUtils.getCookieValue(request, COOKIE_CART, true);
+		String jsonString = CookieUtils.getCookieValue(request, cookieCart, true);
 		if (StringUtils.isNotBlank(jsonString)) {
 			// 合并购物车
 			cartService.mergeCart(tbUser.getId(), JSON.parseArray(jsonString, TbItem.class));

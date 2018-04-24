@@ -33,14 +33,14 @@ import cn.e3mall.manager.service.TbItemService;
 public class TbItemServiceImpl extends BaseServiceImpl implements TbItemService {
 
 	@Value("${ITEM_INFO_PRE}")
-	private String ITEM_INFO_PRE;
+	private String itemInfoPre;
 	@Value("${ITEM_INFO_EXPIRE}")
-	private Integer ITEM_INFO_EXPIRE;
+	private Integer itemInfoExpire;
 
 	@Override
 	public TbItem getTbItemById(Long id) {
 		// 查询缓存
-		String key = ITEM_INFO_PRE + ":" + id + ":BASE";
+		String key = itemInfoPre + ":" + id + ":BASE";
 		try {
 			String jsonString = jedisClient.get(key);
 			if (StringUtils.isNotBlank(jsonString)) {
@@ -58,7 +58,7 @@ public class TbItemServiceImpl extends BaseServiceImpl implements TbItemService 
 				// 把结果添加到缓存
 				jedisClient.set(key, JSON.toJSONString(tbItem));
 				// 设置缓存的有效期
-				jedisClient.expire(key, ITEM_INFO_EXPIRE);
+				jedisClient.expire(key, itemInfoExpire);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -115,9 +115,9 @@ public class TbItemServiceImpl extends BaseServiceImpl implements TbItemService 
 
 	@Override
 	public E3Result updateItem(Long id, TbItem tbItem, String desc) {
-		TbItem db_tbItem = tbItemMapper.selectByPrimaryKey(id);
-		tbItem.setStatus(db_tbItem.getStatus());
-		tbItem.setCreated(db_tbItem.getCreated());
+		TbItem dbTbItem = tbItemMapper.selectByPrimaryKey(id);
+		tbItem.setStatus(dbTbItem.getStatus());
+		tbItem.setCreated(dbTbItem.getCreated());
 		tbItem.setUpdated(new Date());
 		tbItemMapper.updateByPrimaryKey(tbItem);
 

@@ -2,7 +2,7 @@ package cn.e3mall.manager.service;
 
 import java.util.List;
 
-import cn.e3mall.common.pojo.EasyUITreeNode;
+import cn.e3mall.common.pojo.EasyUiTreeNode;
 
 /**
  * 
@@ -11,6 +11,6 @@ import cn.e3mall.common.pojo.EasyUITreeNode;
  */
 public interface TbItemCatService {
 
-	List<EasyUITreeNode> getItemCatList(Long parentId);
+	List<EasyUiTreeNode> getItemCatList(Long parentId);
 	
 }
