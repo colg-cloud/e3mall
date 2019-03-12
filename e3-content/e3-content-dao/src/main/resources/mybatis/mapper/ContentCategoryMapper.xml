@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.e3mall.content.dao.ContentCategoryMapper">
+    <resultMap id="BaseResultMap" type="cn.e3mall.common.base.entity.ContentCategory">
+    <!--
+      WARNING - @mbg.generated
+    -->
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
+        <result column="is_parent" jdbcType="BIT" property="isParent" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    </resultMap>
+    
+    <select id="getContentCategoryList" resultType="cn.e3mall.common.base.pojo.EasyUiTreeNode">
+        SELECT
+            cc.id, cc.name `text`, IF(cc.is_parent = 1, 'closed', 'open') state
+        FROM
+            tb_content_category cc
+            <!-- 状态。可选值:1(正常),2(删除) -->
+        WHERE cc.parent_id = #{parentId} AND cc.status = 1
+        ORDER BY cc.sort_order
+    </select>
+    
+    <select id="selectCountByParentId" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_content_category cc
+            <!-- 状态。可选值:1(正常),2(删除) -->
+        WHERE cc.parent_id = #{parentId} AND cc.status = 1
+    </select>
+    
+    <insert id="insertContentCategory" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            tb_content_category (parent_id, `name`, `status`, sort_order, is_parent, created, updated)
+        VALUES (#{parentId}, #{name}, #{status}, #{sortOrder}, #{isParent}, #{created}, #{updated})
+    </insert>
+</mapper>

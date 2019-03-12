@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 组件扫描: 扫描所有标记@Service的类 -->
+    <context:component-scan base-package="cn.e3mall.sso.service" />
+    
+	<!-- 应用信息配置; name: 当前应用名称, 用于注册中心计算应用间依赖关系 -->
+    <dubbo:application name="${dubbo.name}" />
+	<!-- 注册中心配置; address: 注册中心服务器地址 -->
+    <dubbo:registry address="${dubbo.address}" />
+    <!-- 服务提供者协议配置; name: 协议名称; port: dubbo协议缺省端口为20880 -->
+    <dubbo:protocol name="dubbo" port="${dubbo.port}" />
+    <!-- 服务提供者缺省值配置; timeout: 远程服务调用超时时间(毫秒), 缺省值1000 -->
+    <dubbo:provider timeout="${dubbo.timeout}" />
+	<!-- 服务提供者暴露服务配置; interface: 服务接口名; ref: 服务对象实现引用 -->
+    <dubbo:service interface="cn.e3mall.sso.service.UserService" ref="userServiceImpl" />
+</beans>

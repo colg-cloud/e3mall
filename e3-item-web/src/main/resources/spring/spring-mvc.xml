@@ -1,67 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-						http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+						   http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<!-- 组件扫描 扫描所有标记@Controller类 -->
-	<!-- 不同的工程用不同的包名 -->
-	<context:component-scan base-package="cn.e3mal.item.controller" />
+	<!-- 组件扫描: 扫描所有标记@Controller类 -->
+    <context:component-scan base-package="cn.e3mall.item.web.controller" />
 	
 	<!-- 加载配置文件 -->
-	<context:property-placeholder location="classpath:conf/*.properties"/>
+    <context:property-placeholder location="classpath:conf/*.properties" />
 	
-	<!-- 引用 dubbo 服务 -->
-	<dubbo:application name="e3-item-web" />
-	<!-- 注册中心 -->
-	<dubbo:registry protocol="zookeeper" address="192.168.21.101:2181" />
-	<!-- 消费服务 -->
-	<dubbo:reference interface="cn.e3mall.manager.service.TbItemService" id="tbItemServiceImpl" />
-	<dubbo:reference interface="cn.e3mall.manager.service.TbItemDescService" id="tbItemDescServiceImpl" />
+	<!-- 内部视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
 	
-	
-	<!-- 内部视图解析器 --> 
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
-	<!-- FreeMarker配置 -->
-	<bean id="freeMarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="/WEB-INF/ftl/" />
-		<property name="defaultEncoding" value="UTF-8"></property>
-	</bean>
+	<!-- 配置多媒体解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置默认编码, 默认编码为"ISO-8859-1" -->
+        <property name="defaultEncoding" value="UTF-8" />
+		<!-- 设置文件上传的最大值 5MB, 5*1024*1024 -->
+        <property name="maxUploadSize" value="5242880" />
+    </bean>
+    
+    <!-- 配置Freemarker -->
+    <bean id="freeMarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl/" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
 	
 	<!-- 注解驱动 -->
-	<mvc:annotation-driven>
+    <mvc:annotation-driven>
 		<!-- 使用FastJson解析json -->
-		<mvc:message-converters register-defaults="true">
-			<bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>application/json;charset=UTF-8</value>
-					</list>
-				</property>
-				<property name="fastJsonConfig" ref="fastJsonConfig" />
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-	<bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
-		<property name="serializerFeatures">
-			<array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
-				<value>WriteDateUseDateFormat</value>
-				<value>WriteMapNullValue</value>
-				<value>WriteNullListAsEmpty</value>
-				<value>WriteNullStringAsEmpty</value>
-				<value>DisableCircularReferenceDetect</value>
-			</array>
-		</property>
-	</bean>
-	
+        <mvc:message-converters register-defaults="true">
+            <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="fastJsonConfig" ref="fastJsonConfig" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
+        <property name="serializerFeatures">
+            <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+                <value>WriteDateUseDateFormat</value>
+                <value>WriteMapNullValue</value>
+                <value>WriteNullListAsEmpty</value>
+                <value>WriteNullStringAsEmpty</value>
+                <value>DisableCircularReferenceDetect</value>
+            </array>
+        </property>
+    </bean>
+
+    <!-- 应用信息配置; name: 当前应用名称, 用于注册中心计算应用间依赖关系 -->
+    <dubbo:application name="${dubbo.name}" />
+    <!-- 注册中心配置; address: 注册中心服务器地址 -->
+    <dubbo:registry address="${dubbo.address}" />
+    <!-- 服务消费者引用服务配置; 服务接口名: 服务接口名; id: 服务引用BeanId -->
+    <dubbo:reference interface="cn.e3mall.manager.service.ItemService" id="itemService" />
+    <dubbo:reference interface="cn.e3mall.manager.service.ItemDescService" id="itemDescService" />
 </beans>

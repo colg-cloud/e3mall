@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.e3mall.manager.dao.ItemParamMapper">
+    <resultMap id="BaseResultMap" type="cn.e3mall.common.base.entity.ItemParam">
+    <!--
+      WARNING - @mbg.generated
+    -->
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="item_cat_id" jdbcType="BIGINT" property="itemCatId" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+        <result column="param_data" jdbcType="LONGVARCHAR" property="paramData" />
+    </resultMap>
+    
+    <select id="getItemParamList" resultType="cn.e3mall.common.base.vo.ItemParamVo">
+        SELECT
+            ip.id, ip.item_cat_id, ip.param_data, ip.created, ip.updated,
+            ic.name `item_cat_name`
+        FROM
+            tb_item_param ip
+            INNER JOIN tb_item_cat ic ON ic.id = ip.item_cat_id
+            <!-- 状态。可选值:1(正常),2(删除) -->
+        WHERE ic.status = 1
+        ORDER BY ip.updated DESC
+    </select>
+    
+    <select id="findItemParamByItemCatId" resultType="cn.e3mall.common.base.entity.ItemParam">
+        SELECT
+            ip.*
+        FROM
+            tb_item_param ip
+        WHERE ip.item_cat_id = #{itemCatId}
+    </select>
+    
+    <select id="deleteItemParam">
+        DELETE FROM tb_item_param
+        WHERE id IN (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
+</mapper>

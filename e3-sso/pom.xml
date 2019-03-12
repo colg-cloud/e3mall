@@ -1,29 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>cn.e3mall</groupId>
-		<artifactId>e3-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>e3-sso</artifactId>
-	<packaging>pom</packaging>
-	
-	<!-- 配置tomcat插件 -->
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<configuration>
-					<path>/</path>		<!-- 工程名 -->
-					<port>8087</port> 	<!-- 端口号 -->
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
-	<modules>
-		<module>e3-sso-interface</module>
-		<module>e3-sso-service</module>
-	</modules>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.e3mall</groupId>
+        <artifactId>e3-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>e3-sso</artifactId>
+    <packaging>pom</packaging>
+    <name>e3-sso :: 服务层 - 单点登录服务</name>
+    <modules>
+        <module>e3-sso-dao</module>
+        <module>e3-sso-service</module>
+        <module>e3-sso-service-impl</module>
+    </modules>
 </project>

@@ -1,73 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>cn.e3mall</groupId>
-		<artifactId>e3-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.e3mall</groupId>
+        <artifactId>e3-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>e3-common</artifactId>
+    <packaging>pom</packaging>
+    <name>e3-common :: 通用层</name>
 
-	<artifactId>e3-common</artifactId>
-
-	<!-- 依赖的jar包 -->
-	<dependencies>
-		<!-- 时间操作组件 -->
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-		</dependency>
-		<!-- Apache工具组件 -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-net</groupId>
-			<artifactId>commons-net</artifactId>
-		</dependency>
-		<!-- Fstjson Json处理工具包 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-		</dependency>
-		<!-- 单元测试 -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<!-- 日志处理 -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-		<!-- Mybatis 分页插件 -->
-		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper</artifactId>
-		</dependency>
-		<!-- FastDFS -->
-		<dependency>
-			<groupId>fastdfs_client</groupId>
-			<artifactId>fastdfs_client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-		</dependency>
-		<!-- Redis客户端 -->
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-		</dependency>
-		<!-- servlet api -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-
+    <modules>
+        <module>e3-common-base</module>
+        <module>e3-common-fastdfs</module>
+        <module>e3-common-redis</module>
+        <module>e3-common-solr</module>
+        <module>e3-common-activemq</module>
+        <module>e3-common-freemarker</module>
+    </modules>
 </project>
