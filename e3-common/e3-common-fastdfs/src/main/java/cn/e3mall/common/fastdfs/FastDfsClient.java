@@ -39,10 +39,13 @@ public class FastDfsClient {
     @Setter
     private String imageServer = "http://192.168.21.110";
 
-    /// fastdfs 配置
+    /** Tracker client */
     private TrackerClient trackerClient = null;
+    /** Tracker Server Info */
     private TrackerServer trackerServer = null;
+    /** Storage Server Info */
     private StorageServer storageServer = null;
+    /** Storage client */
     private StorageClient1 storageClient = null;
     
     /**
@@ -78,7 +81,8 @@ public class FastDfsClient {
         trackerServer = trackerClient.getConnection();
         storageServer = null;
         storageClient = new StorageClient1(trackerServer, storageServer);
-        
+
+        log.info("FastDFS 初始化完成!");
         log.info("FastDFS: {}", ClientGlobal.configInfo());
     }
 

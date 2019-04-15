@@ -16,5 +16,6 @@
         <module>e3-common-solr</module>
         <module>e3-common-activemq</module>
         <module>e3-common-freemarker</module>
+        <module>e3-common-tencent-cos</module>
     </modules>
 </project>
