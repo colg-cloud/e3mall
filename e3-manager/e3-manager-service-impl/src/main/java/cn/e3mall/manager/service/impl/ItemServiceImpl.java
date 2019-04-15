@@ -163,6 +163,12 @@ public class ItemServiceImpl extends BaseServiceImpl implements ItemService {
         return E3Result.ok();
     }
     
+    /**
+     * activemq 发送消息
+     *
+     * @param destination
+     * @param itemId
+     */
     private void sendMsg(Destination destination, long itemId) {
         jmsTemplate.send(destination, new MessageCreator() {
             

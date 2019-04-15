@@ -14,5 +14,11 @@ import cn.e3mall.common.base.pojo.EasyUiTreeNode;
  */
 public interface ItemCatMapper extends tk.mybatis.mapper.common.Mapper<ItemCat> {
 
+    /**
+     * 获取商品分类树形结构
+     *
+     * @param parentId
+     * @return
+     */
     List<EasyUiTreeNode> selectEasyUITreeNodeByParentId(@Param("parentId") Long parentId);
 }

@@ -39,6 +39,6 @@
     </tx:advice>
 	<!-- 切面 -->
     <aop:config>
-        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* cn.e3mall.search.service..*.*(..))" />
+        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* cn.e3mall.*.service..*.*(..))" />
     </aop:config>
 </beans>

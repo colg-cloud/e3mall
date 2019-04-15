@@ -36,13 +36,13 @@ http://192.168.21.101:8080/dubbo-admin/
 ```ini
 # 安装软件: jdk, activeMQ
 
-# activemq 消息队列 [admin admin]
+# activemq 消息队列
 ps aux|grep activemq
 /usr/local/activeMQ/apache-activemq-5.12.0/bin/activemq start
 /usr/local/activeMQ/apache-activemq-5.12.0/bin/activemq stop
 /usr/local/activeMQ/apache-activemq-5.12.0/bin/activemq status
 
-# activemq
+# activemq [admin admin]
 http://192.168.21.102:8161/
 ```
 

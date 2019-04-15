@@ -14,7 +14,18 @@ import cn.e3mall.common.solr.ItemSearch;
  */
 public interface ItemMapper extends tk.mybatis.mapper.common.Mapper<Item> {
 
+    /**
+     * 查询商品列表
+     *
+     * @return
+     */
     List<ItemSearch> selectItemSearchList();
 
+    /**
+     * 根据商品id查询商品信息
+     *
+     * @param id
+     * @return
+     */
     ItemSearch findItemSearchById(@Param("id") Long id);
 }

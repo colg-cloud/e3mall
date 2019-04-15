@@ -6,6 +6,7 @@ SELECT * FROM tb_item_desc;			-- 商品详情
 SELECT * FROM tb_item_cat;			-- 商品分类
 SELECT * FROM tb_item_param;			-- 商品规格模版表
 SELECT * FROM tb_item_param_item;		-- 商品规格参数表
+DELETE FROM tb_item WHERE STATUS = 3;
 
 SHOW FULL COLUMNS FROM tb_item;
 SHOW FULL COLUMNS FROM tb_item_cat;
@@ -103,23 +104,15 @@ SHOW FULL COLUMNS FROM tb_item_cat;
 SHOW FULL COLUMNS FROM tb_content;
 SHOW FULL COLUMNS FROM tb_content_category;
 SHOW FULL COLUMNS FROM tb_item_param;
-
-SELECT id,category_id,title,sub_title,title_desc,url,pic,pic2,created,updated,content FROM tb_content WHERE ( category_id = 101 ) 
-
-LIMIT 1, 20;
+SHOW FULL COLUMNS FROM tb_item_param_item;
 
 
-SELECT
-    c.*
-FROM
-    tb_content c
-WHERE c.category_id = 101
-ORDER BY c.updated DESC;
+SELECT * FROM tb_order;
+SELECT * FROM tb_order_item;
+SELECT * FROM tb_order_shipping;
 
-SELECT
-    ipi.*
-FROM
-    tb_item_param_item ipi
-WHERE ipi.item_id = ?;
-
-UPDATE tb_item_param_item SET param_data = '1' WHERE item_id = 1
+        SELECT
+            c.*
+        FROM
+            tb_content c
+        WHERE c.category_id = #{categoryId}

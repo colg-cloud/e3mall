@@ -44,7 +44,7 @@ public interface ItemService {
      * @param itemId 商品id
      * @param item 商品信息
      * @param desc 商品详情
-     * @param itemParams 商品规格id 
+     * @param itemParamId 商品规格id 
      * @param paramData 商品规格参数 
      * @return
      */

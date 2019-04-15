@@ -33,7 +33,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Override
     public E3Result checkData(String param, Integer type) {
         // 参数类型 - 1: 用户名; 2: 手机; 3: 邮箱
-        if (type == null || (type != 1 && type != 2 && type != 3)) {
+        boolean existed = (type == null) || (type != 1 && type != 2 && type != 3);
+        if (existed) {
             return E3Result.fail("非法的参数类型!");
         }
         // 根据参数和参数类型查询用户
