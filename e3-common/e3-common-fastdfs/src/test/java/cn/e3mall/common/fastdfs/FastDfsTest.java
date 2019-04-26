@@ -16,14 +16,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class FastDfsTest {
-    
-    /** 项目基础路径 */
+
+    /** Project Base Path */
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     /**
      * Test method for {@link cn.e3mall.fastdfs.FastDfsClient#uploadFile(java.lang.String)}.
-     * @throws  
-     * @throws IOException 
+     * 
+     * @throws Exception
      */
     @Test
     public final void testUploadFileString() throws Exception {
@@ -39,11 +39,11 @@ public class FastDfsTest {
         StorageClient1 storageClient = new StorageClient1(trackerServer, storageServer);
         // 使用StorageClient上传文件
         String uploadFile = storageClient.upload_file1(PROJECT_PATH + "\\src\\test\\resources\\images\\FastDfs架构.png", "png", null);
-        
+
         // 服务路径: http://192.168.21.110
         // 图片路径: 组名/磁盘/存储目录/文件名
         // 图片完整路径: http://192.168.21.110/group1/M00/00/01/wKgVblx1OW2AEO0nAAHsodtdFiY723.png
         log.info("图片路径: {}", "http://192.168.21.110" + "/" + uploadFile);
     }
-    
+
 }

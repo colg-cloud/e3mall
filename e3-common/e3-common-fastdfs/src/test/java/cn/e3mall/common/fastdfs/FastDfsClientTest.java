@@ -11,28 +11,28 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class FastDfsClientTest {
-    
-    /** 项目基础路径 */
+
+    /** Project Base Path */
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     /**
      * Test method for {@link cn.e3mall.fastdfs.FastDfsClient#uploadFile(java.lang.String)}.
      */
     @Test
-    public final void testUpload()  throws Exception {
+    public final void testUpload() throws Exception {
         FastDfsClient fastDfsClient = FastDfsClient.create();
         String uploadFile = fastDfsClient.uploadFile(PROJECT_PATH + "\\src\\test\\resources\\images\\FastDfs文件上传流程.png");
         log.info("图片路径: {}", uploadFile);
     }
-    
+
     /**
      * Test method for {@link cn.e3mall.fastdfs.FastDfsClient#deleteFile(java.lang.String)}.
      */
     @Test
-    public final void testDeleteFile()  throws Exception {
+    public final void testDeleteFile() throws Exception {
         FastDfsClient fastDfsClient = FastDfsClient.create();
         int deleteFile = fastDfsClient.deleteFile("group1/M00/00/01/wKgVblx3TNSAIyO-AACyH0DVQw8099.png");
         log.info("图片路径: {}", deleteFile);
     }
-    
+
 }

@@ -25,10 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FastDfsClient {
-    
-    /** 路径分隔符 */
-    public static final String SEPARATOR  = "/";
-    
+
+    /** Path separator */
+    public static final String SEPARATOR = "/";
+
     /** server的IP和端口用冒号':'分隔, server之间用逗号','分隔; 例如："10.0.11.245:22122,10.0.11.246:22122" */
     @Getter
     @Setter
@@ -47,18 +47,11 @@ public class FastDfsClient {
     private StorageServer storageServer = null;
     /** Storage client */
     private StorageClient1 storageClient = null;
-    
+
     /**
-     * 初始化FastDfsClient
+     * Initialization FastDfsClient
      *
-     * @param confFilename
-     * @throws MyException
-     * @throws IOException
-     */
-    /**
-     * 初始化 FastDfsClient
-     *
-     * @param confFilename
+     * @param trackerServers
      * @throws IOException
      * @throws MyException
      */
@@ -87,37 +80,40 @@ public class FastDfsClient {
     }
 
     /**
-     * 创建 FastDfsClient
+     * Create FastDfsClient
      *
      * @param trackerServers
      * @return
-     * @throws MyException
      * @throws IOException
+     * @throws MyException
+     * @author colg
      */
     public static FastDfsClient create(String trackerServers) throws IOException, MyException {
         return new FastDfsClient(trackerServers);
     }
 
     /**
-     * 创建 FastDfsClient
+     * Create FastDfsClient
      *
      * @return
      * @throws IOException
      * @throws MyException
+     * @author colg
      */
     public static FastDfsClient create() throws IOException, MyException {
         return new FastDfsClient(null);
     }
 
     /**
-     * 上传文件到FastDfs服务器
+     * Upload file to FastDfs Server
      *
      * @param localFilename 文件全路径
      * @param extName 文件扩展名, 不包含(.)
      * @param metas 文件扩展信息
      * @return
-     * @throws MyException
      * @throws IOException
+     * @throws MyException
+     * @author colg
      */
     public String uploadFile(String localFilename, String extName, NameValuePair[] metas) throws IOException, MyException {
         return this.getImageServer() + SEPARATOR + storageClient.upload_file1(localFilename, extName, metas);
@@ -132,7 +128,7 @@ public class FastDfsClient {
     }
 
     /**
-     * 上传文件到FastDfs服务器
+     * Upload file to FastDfs Server
      *
      * @param fileBuff 文件的内容, 字节数组
      * @param extName 文件扩展名, 不包含(.)
@@ -154,15 +150,7 @@ public class FastDfsClient {
     }
 
     /**
-     * 从FastDfs服务器删除文件
-     *
-     * @param fileId 文件id(包含组名和文件名)
-     * @return
-     * @throws MyException
-     * @throws IOException
-     */
-    /**
-     * 从FastDfs服务器删除文件
+     * Delete file from FastDfs Server
      *
      * @param fileId 文件id(包含组名和文件名)
      * @return 0: 成功, 失败(抛异常)
