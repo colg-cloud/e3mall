@@ -17,7 +17,7 @@ import tk.mybatis.mapper.generator.FalseMethodPlugin;
 import tk.mybatis.mapper.generator.MapperCommentGenerator;
 
 /**
- * 自定义代码生成规则
+ * E3LombokPlugin: 自定义代码生成规则
  *
  * @author colg
  */
@@ -49,7 +49,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成Mapper接口
+     * Generate mapper interface
      *
      * @param interfaze
      * @param topLevelClass
@@ -75,10 +75,11 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 处理实体类的包和@Table注解
+     * Process packages and @Table annotations for entity class
      *
      * @param topLevelClass
      * @param introspectedTable
+     * @author colg
      */
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         // doc
@@ -119,7 +120,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成基础实体类
+     * Generate base entity class
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -132,7 +133,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成实体类注解KEY对象
+     * modelPrimaryKeyClassGenerated: 生成实体类注解KEY对象
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -145,7 +146,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成带BLOB字段的对象
+     * modelRecordWithBLOBsClassGenerated: 生成带BLOB字段的对象
      *
      * @param topLevelClass
      * @param introspectedTable
