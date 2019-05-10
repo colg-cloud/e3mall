@@ -30,7 +30,7 @@ public class ActiveMqTopicTest {
     private static final String BROKER_URL = "tcp://192.168.21.102:61616";
     /** 消息队列名称 */
     private static final String TOPIC_NAME = "active_mq_topic_test";
-    
+
     /**
      * 生产者; 发布消息
      *
@@ -51,20 +51,20 @@ public class ActiveMqTopicTest {
         Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
         // 5. 创建消息队列. 两种形式: queue/topic; 继承于Destination
         Topic topic = session.createTopic(TOPIC_NAME);
-        
+
         // 6. 创建消息生产者
         MessageProducer producer = session.createProducer(topic);
         // 7. 创建消息对象, 可以使用文本消息
         TextMessage textMessage = session.createTextMessage("ActiveMq Queue Test: " + DateUtil.now());
         // 8. 发送消息
         producer.send(textMessage);
-        
+
         // 9. 关闭资源
         producer.close();
         session.close();
         connection.close();
     }
-    
+
     /**
      * 消费者; 订阅消息
      *
@@ -86,7 +86,7 @@ public class ActiveMqTopicTest {
         MessageConsumer consumer = session.createConsumer(topic);
         // 7. 接收消息
         consumer.setMessageListener(new MessageListener() {
-            
+
             @Override
             public void onMessage(Message message) {
                 // 获取消息内容
@@ -98,7 +98,7 @@ public class ActiveMqTopicTest {
                 }
             }
         });
-        
+
         // 启动多次: 发布/订阅模式, 即一个生产者产生消息并进行发送后, 可以由多个消费者进行接收
         log.info("{} 已经启动: {}", topic.getTopicName(), RandomUtil.randomInt(1, 100));
         // 8. 等待键盘输入; 否则一直监听着

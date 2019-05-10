@@ -31,7 +31,7 @@ public class JedisClusterCache implements JedisClient {
     /**
      * 初始化 JedisCluster, 默认配置
      *
-     * @return
+     * @return JedisCluster
      */
     private JedisCluster initJedisCluster() {
         Properties prop = Props.getProp("conf/redis.properties");

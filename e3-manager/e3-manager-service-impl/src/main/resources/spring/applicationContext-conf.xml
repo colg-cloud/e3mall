@@ -6,10 +6,6 @@
 	   					   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--加载配置文件-->
-    <context:property-placeholder location="classpath:conf/solr.properties" />
+    <context:property-placeholder location="classpath:conf/*.properties" />
 
-    <!--solr: 单机-->
-    <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-        <constructor-arg name="baseURL" value="${baseURL}" />
-    </bean>
 </beans>

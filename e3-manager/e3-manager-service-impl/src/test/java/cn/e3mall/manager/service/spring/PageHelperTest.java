@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring/applicationContext-dao.xml")
 public class PageHelperTest {
-    
+
     @Autowired
     private ItemMapper itemMapper;
 
@@ -38,7 +38,7 @@ public class PageHelperTest {
         List<Item> list = itemMapper.selectAll();
         // 取分页信息
         PageInfo<Item> pageInfo = new PageInfo<>(list);
-        
+
         log.info("总记录数: {}", pageInfo.getTotal());
         log.info("总页数: {}", pageInfo.getPages());
         log.info("每页的数量: {}", pageInfo.getPageSize());
@@ -46,7 +46,7 @@ public class PageHelperTest {
         log.info("当前页的数量: {}", pageInfo.getSize());
 
         log.info("------------------------------------------------------------------------------------------");
-        
+
         Page<?> page = (Page<?>)list;
         log.info("总记录数: {}", page.getTotal());
         log.info("总页数: {}", page.getPages());

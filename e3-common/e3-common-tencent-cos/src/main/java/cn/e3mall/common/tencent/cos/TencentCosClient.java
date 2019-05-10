@@ -32,13 +32,12 @@ public class TencentCosClient {
 
     /** 单例模式 */
     private static volatile TencentCosClient tencentCosClient = null;
-    
-    private ClientConfig clientConfig = null;
-    private COSClient cosClient = null;
+
+    private COSClient cosClient;
 
     public TencentCosClient() {
         COSCredentials cred = new BasicCOSCredentials(ACCESSKEY, SECRETKEY);
-        clientConfig = new ClientConfig(new Region(REGION_NAME));
+        ClientConfig clientConfig = new ClientConfig(new Region(REGION_NAME));
         cosClient = new COSClient(cred, clientConfig);
         log.info("腾讯云 - 对象存储初始化完成!");
     }

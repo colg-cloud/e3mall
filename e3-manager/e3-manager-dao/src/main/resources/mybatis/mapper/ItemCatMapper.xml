@@ -20,7 +20,7 @@
             ic.id, ic.name `text`, IF(ic.is_parent = 1, 'closed', 'open') state
         FROM
             tb_item_cat ic
-            <!-- 状态。可选值:1(正常),2(删除) -->
+            <!--状态。可选值:1(正常),2(删除)-->
         WHERE ic.parent_id = #{parentId} AND ic.status = 1
         ORDER BY ic.sort_order
     </select>

@@ -33,8 +33,6 @@ public class ActiveMqQueueTest {
 
     /**
      * 生产者; 发送消息
-     *
-     * @throws Exception
      */
     @Test
     public void testProducre() throws Exception {
@@ -51,24 +49,22 @@ public class ActiveMqQueueTest {
         Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
         // 5. 创建消息队列. 两种形式: queue/topic; 继承于Destination
         Queue queue = session.createQueue(QUEUE_NAME);
-        
+
         // 6. 创建消息生产者
         MessageProducer producer = session.createProducer(queue);
         // 7. 创建消息对象, 可以使用文本消息
         TextMessage textMessage = session.createTextMessage("ActiveMq Queue Test: " + DateUtil.now());
         // 8. 发送消息
         producer.send(textMessage);
-        
+
         // 9. 关闭资源
         producer.close();
         session.close();
         connection.close();
     }
-    
+
     /**
      * 消费者; 接收消息
-     *
-     * @throws Exception
      */
     @Test
     public void testConsumer() throws Exception {
@@ -86,7 +82,7 @@ public class ActiveMqQueueTest {
         MessageConsumer consumer = session.createConsumer(queue);
         // 7. 接收消息
         consumer.setMessageListener(new MessageListener() {
-            
+
             @Override
             public void onMessage(Message message) {
                 // 获取消息内容
@@ -98,7 +94,7 @@ public class ActiveMqQueueTest {
                 }
             }
         });
-        
+
         // 启动多次; 消息队列模式: 点对点的, 即一个生产者和一个消费者一一对应
         log.info("{} 已经启动: {}", queue.getQueueName(), RandomUtil.randomInt(1, 100));
         // 8. 等待键盘输入; 否则一直监听着

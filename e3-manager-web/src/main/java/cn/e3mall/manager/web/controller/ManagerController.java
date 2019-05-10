@@ -17,7 +17,7 @@ public class ManagerController {
 	/**
 	 * 页面跳转
 	 *
-	 * @param page
+	 * @param view
 	 * @return
 	 */
 	@GetMapping("/{view}")

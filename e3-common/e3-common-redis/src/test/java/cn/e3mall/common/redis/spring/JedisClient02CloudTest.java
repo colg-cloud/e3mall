@@ -19,14 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring/redis-02-cloud.xml")
 public class JedisClient02CloudTest {
-    
+
     private static final String KEY = "e3-jedis";
-    
+
     @Autowired
     private JedisClient jedisClient;
 
     /**
-     * Test method for {@link cn.e3mall.redis.cache.JedisClient#del(java.lang.String[])}.
+     * Test method for {@link cn.e3mall.common.redis.JedisClient#del(java.lang.String[])}.
      */
     @Test
     public final void testDel() {
@@ -35,7 +35,7 @@ public class JedisClient02CloudTest {
     }
 
     /**
-     * Test method for {@link cn.e3mall.redis.cache.JedisClient#get(java.lang.String)}.
+     * Test method for {@link cn.e3mall.common.redis.JedisClient#get(java.lang.String)}.
      */
     @Test
     public final void testGet() {
@@ -44,7 +44,7 @@ public class JedisClient02CloudTest {
     }
 
     /**
-     * Test method for {@link cn.e3mall.redis.cache.JedisClient#set(java.lang.String, java.lang.String)}.
+     * Test method for {@link cn.e3mall.common.redis.JedisClient#set(java.lang.String, java.lang.String)}.
      */
     @Test
     public final void testSet() {

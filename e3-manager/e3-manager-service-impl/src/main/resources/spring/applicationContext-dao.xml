@@ -2,16 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	                       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-	                       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	                       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<!-- 加载配置文件 -->
-    <context:property-placeholder location="classpath:conf/*.properties" />
-	
-	<!-- Spring 用来控制业务逻辑，数据源，事务控制，AOP -->
+    <import resource="applicationContext-conf.xml" />
+
+    <!--Spring 用来控制业务逻辑，数据源，事务控制，AOP-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc.url}" />
         <property name="driverClassName" value="${jdbc.driver}" />
@@ -21,42 +19,42 @@
         <property name="minIdle" value="1" />
         <property name="maxActive" value="5" />
         <property name="maxWait" value="60000" />
-		<!-- 验证数据库连接有效性 -->
+        <!--验证数据库连接有效性-->
         <property name="validationQuery" value="${validationQuery}" />
         <property name="testWhileIdle" value="true" />
         <property name="testOnBorrow" value="false" />
         <property name="testOnReturn" value="false" />
-		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <!--配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒-->
         <property name="timeBetweenEvictionRunsMillis" value="60000" />
         <property name="minEvictableIdleTimeMillis" value="25200000" />
-		<!-- 对于长时间不使用的连接强制关闭 -->
+        <!--对于长时间不使用的连接强制关闭-->
         <property name="removeAbandoned" value="true" />
-		<!-- 关闭超过30分钟的空闲连接，1800秒，也就是30分钟 -->
+        <!--关闭超过30分钟的空闲连接，1800秒，也就是30分钟-->
         <property name="removeAbandonedTimeout" value="1800" />
-		<!-- 关闭abanded连接时输出错误日志 -->
+        <!--关闭abanded连接时输出错误日志-->
         <property name="logAbandoned" value="true" />
-		<!-- 配置监控统计拦截的filters -->
+        <!--配置监控统计拦截的filters-->
         <property name="filters" value="stat" />
     </bean>
-	
-	<!-- 让spring管理sqlSessionFactory -->
+
+    <!--让spring管理sqlSessionFactory-->
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<!-- 加载数据源 -->
+        <!--加载数据源-->
         <property name="dataSource" ref="dataSource" />
-		<!-- 加载mybatis的全局配置文件 -->
+        <!--加载mybatis的全局配置文件-->
         <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml" />
-		<!-- 加载mapper.xml文件 -->
+        <!--加载mapper.xml文件-->
         <property name="mapperLocations">
             <array>
                 <value>classpath:mybatis/mapper/*.xml</value>
             </array>
         </property>
-		<!-- 分页插件 -->
+        <!--分页插件-->
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">
                     <property name="properties">
-						<!--使用下面的方式配置参数，一行配置一个 -->
+                        <!--使用下面的方式配置参数，一行配置一个-->
                         <value>
                             params=value1
                         </value>
@@ -65,10 +63,10 @@
             </array>
         </property>
     </bean>
-	
-    <!-- 配置通用Mapper -->
+
+    <!--配置通用Mapper-->
     <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!-- 扫描Mapper接口 -->
+        <!--扫描Mapper接口-->
         <property name="basePackage" value="cn.e3mall.manager.dao" />
         <property name="properties">
             <value>
@@ -76,4 +74,39 @@
             </value>
         </property>
     </bean>
+
+    <!--事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--声明式事务管理通知-->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--事务传播行为-->
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="append*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="modify*" propagation="REQUIRED" />
+            <tx:method name="edit*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="remove*" propagation="REQUIRED" />
+
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="load*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="query*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="search*" propagation="SUPPORTS" read-only="true" />
+
+            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <!--切面-->
+    <aop:config>
+        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* cn.e3mall.*.service..*.*(..))" />
+    </aop:config>
 </beans>

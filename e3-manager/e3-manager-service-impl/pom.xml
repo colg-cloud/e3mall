@@ -14,25 +14,25 @@
             <artifactId>e3-manager-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- activemq -->
+        <!--activemq-->
         <dependency>
             <groupId>cn.e3mall</groupId>
             <artifactId>e3-common-activemq</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- redis -->
+        <!--redis-->
         <dependency>
             <groupId>cn.e3mall</groupId>
             <artifactId>e3-common-redis</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!-- Spring MVC -->
+        <!--Spring MVC-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
-        <!-- Spring -->
+        <!--Spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -54,12 +54,12 @@
             <artifactId>spring-jms</artifactId>
         </dependency>
         
-        <!-- duboo -->
+        <!--duboo-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
         </dependency>
-        <!-- zookeeper -->
+        <!--zookeeper-->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>

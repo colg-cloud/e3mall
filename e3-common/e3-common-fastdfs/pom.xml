@@ -16,7 +16,7 @@
             <optional>true</optional>
         </dependency>
         
-        <!-- FastDFS -->
+        <!--FastDFS-->
         <dependency>
             <groupId>cn.bestwu</groupId>
             <artifactId>fastdfs-client-java</artifactId>

@@ -26,7 +26,7 @@ public final class CookieUtil {
 
     /**
      * 根据cookie名称获取Cookie的值, 不编码
-     * 
+     *
      * @param request
      * @param cookieName
      * @return
@@ -37,10 +37,10 @@ public final class CookieUtil {
 
     /**
      * 根据cookie名称获取Cookie的值
-     * 
+     *
      * @param request
      * @param cookieName
-     * @param isDecoder true: UTF-8编码, false: 不编码
+     * @param isDecoder  true: UTF-8编码, false: 不编码
      * @return
      */
     public static String getCookieValue(HttpServletRequest request, String cookieName, boolean isDecoder) {
@@ -55,7 +55,7 @@ public final class CookieUtil {
                 if (cookieName.equals(cookie.getName())) {
                     if (isDecoder) {
                         try {
-                            retValue = URLDecoder.decode(cookie.getValue(), "UTF-8");
+                            retValue = URLDecoder.decode(cookie.getValue(), CharsetUtil.UTF_8);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
@@ -72,7 +72,7 @@ public final class CookieUtil {
 
     /**
      * 根据cookie名称和指定编码获取Cookie的值
-     * 
+     *
      * @param request
      * @param cookieName
      * @param encodeString 编码格式
@@ -124,22 +124,21 @@ public final class CookieUtil {
 
     /**
      * 设置Cookie的值 在指定时间内生效, 编码参数
-     * 
+     *
      * @param request
      * @param response
      * @param cookieName
      * @param cookieValue
      * @param cookieMaxage
-     * @param isEncode true: UTF-8编码, false: 不编码
+     * @param isEncode     true: UTF-8编码, false: 不编码
      */
-    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-        boolean isEncode) {
+    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, boolean isEncode) {
         doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, isEncode);
     }
 
     /**
      * 设置Cookie的值 在指定时间内生效, 编码参数(指定编码)
-     * 
+     *
      * @param request
      * @param response
      * @param cookieName
@@ -147,14 +146,13 @@ public final class CookieUtil {
      * @param cookieMaxage
      * @param encodeString
      */
-    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-        String encodeString) {
+    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, String encodeString) {
         doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, encodeString);
     }
 
     /**
      * 删除Cookie带cookie域名
-     * 
+     *
      * @param request
      * @param response
      * @param cookieName
@@ -165,7 +163,7 @@ public final class CookieUtil {
 
     /**
      * 设置Cookie的值，并使其在指定时间内生效, 指定UTF-8编码
-     * 
+     *
      * @param request
      * @param response
      * @param cookieName
@@ -173,8 +171,7 @@ public final class CookieUtil {
      * @param cookieMaxage cookie生效的最大秒数
      * @param isEncode
      */
-    private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-        boolean isEncode) {
+    private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, boolean isEncode) {
         if (cookieValue == null) {
             cookieValue = "";
         } else {
@@ -191,7 +188,7 @@ public final class CookieUtil {
         }
         if (null != request) {
             // 设置域名的cookie
-             String domainName = getDomainName(request);
+            String domainName = getDomainName(request);
             if (!HOST.equals(domainName)) {
                 cookie.setDomain(domainName);
             }
@@ -210,8 +207,7 @@ public final class CookieUtil {
      * @param cookieMaxage cookie 有效时间: 秒
      * @param encodeString
      */
-    private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage,
-        String encodeString) {
+    private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, String encodeString) {
         if (cookieValue == null) {
             cookieValue = "";
         } else {

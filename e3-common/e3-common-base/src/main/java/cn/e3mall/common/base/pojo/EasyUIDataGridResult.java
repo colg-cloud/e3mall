@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * EasyUI 表格数据格式
- * 
+ *
  * <pre>
  * EasyUI 必须返回标准数据对象，含有 'total' 和 'rows' 属性。
  * </pre>
@@ -33,17 +33,18 @@ public class EasyUIDataGridResult extends BaseEntity implements Serializable {
 
 	/** 总记录数 */
 	private Long total;
-	
+
 	/** 结果集 */
 	@JSONField(ordinal = 1)
 	private List<?> rows;
 
-	/**
-	 * 构造表格数据
-	 * 
-	 * @param data
-	 * @return
-	 */
+
+    /**
+     * 构造表格数据
+     *
+     * @param data 数据
+     * @return easyUIDataGridResult
+     */
 	public static EasyUIDataGridResult ok(Object data) {
 		EasyUIDataGridResult easyUIDataGridResult = new EasyUIDataGridResult();
 		if (data instanceof Page<?>) {

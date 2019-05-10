@@ -23,12 +23,12 @@ public class BaseController {
     protected ItemParamService itemParamService;
     @Autowired
     protected ItemParamItemService itemParamItemService;
-    
+
     @Autowired
     protected ContentCategoryService contentCategoryService;
     @Autowired
     protected ContentService contentService;
-    
+
     @Autowired
     protected ItemSearchService itemSearchService;
 }

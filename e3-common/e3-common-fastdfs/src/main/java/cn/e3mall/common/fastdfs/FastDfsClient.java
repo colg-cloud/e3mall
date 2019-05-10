@@ -75,8 +75,8 @@ public class FastDfsClient {
         storageServer = null;
         storageClient = new StorageClient1(trackerServer, storageServer);
 
-        log.info("FastDFS 初始化完成!");
-        log.info("FastDFS: {}", ClientGlobal.configInfo());
+        log.info("FastDFS: 初始化完成!");
+        log.info("FastDFS: \n{}", ClientGlobal.configInfo());
     }
 
     /**
@@ -108,8 +108,8 @@ public class FastDfsClient {
      * Upload file to FastDfs Server
      *
      * @param localFilename 文件全路径
-     * @param extName 文件扩展名, 不包含(.)
-     * @param metas 文件扩展信息
+     * @param extName       文件扩展名, 不包含(.)
+     * @param metas         文件扩展信息
      * @return
      * @throws IOException
      * @throws MyException
@@ -131,8 +131,8 @@ public class FastDfsClient {
      * Upload file to FastDfs Server
      *
      * @param fileBuff 文件的内容, 字节数组
-     * @param extName 文件扩展名, 不包含(.)
-     * @param metas 文件扩展信息
+     * @param extName  文件扩展名, 不包含(.)
+     * @param metas    文件扩展信息
      * @return
      * @throws IOException
      * @throws MyException
@@ -160,4 +160,5 @@ public class FastDfsClient {
     public int deleteFile(String fileId) throws IOException, MyException {
         return storageClient.delete_file1(fileId);
     }
+
 }

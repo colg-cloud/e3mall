@@ -32,7 +32,7 @@ public class Solr02CloudTest {
 
     @Autowired
     private SolrServer solrServer;
-    
+
     /**
      * 向索引库添加文档
      *
@@ -51,7 +51,7 @@ public class Solr02CloudTest {
         // 提交
         solrServer.commit();
     }
-    
+
     /**
      * 从索引库中删除文档
      *
@@ -65,7 +65,7 @@ public class Solr02CloudTest {
         solrServer.deleteByQuery("item_title:solr");
         solrServer.commit();
     }
-    
+
     /**
      * 查询索引库 - 简单查询(默认查询10条记录)
      *
@@ -79,12 +79,12 @@ public class Solr02CloudTest {
         QueryResponse queryResponse = solrServer.query(solrQuery);
         // 查询结果
         SolrDocumentList documentList = queryResponse.getResults();
-        
+
         log.info("当前记录数: {}", documentList.size());
         log.info("查询结果总记录数: {}", documentList.getNumFound());
         log.info("查询的结果集: {}", JSON.toJSONString(documentList));
     }
-    
+
     /**
      * 查询索引库 - 复杂查询
      *
@@ -101,19 +101,18 @@ public class Solr02CloudTest {
         // 分页
         solrQuery.setStart(0).setRows(10);
         // 高示; 高亮字段; 高亮样式/标签
-        solrQuery.setHighlight(true)
-                 .setHighlightSimplePre("<em>").setHighlightSimplePost("</em>");
-        
+        solrQuery.setHighlight(true).setHighlightSimplePre("<em>").setHighlightSimplePost("</em>");
+
         // 执行查询
         QueryResponse queryResponse = solrServer.query(solrQuery);
-        
+
         // 查询结果
         SolrDocumentList documentList = queryResponse.getResults();
-        
+
         log.info("当前记录数: {}", documentList.size());
         log.info("查询结果总记录数: {}", documentList.getNumFound());
         log.info("查询的结果集: {}", JSON.toJSONString(documentList));
-        
+
         // 高亮结果
         Map<String, Map<String, List<String>>> map = queryResponse.getHighlighting();
         log.info("高亮结果集: {}", JSON.toJSONString(map));

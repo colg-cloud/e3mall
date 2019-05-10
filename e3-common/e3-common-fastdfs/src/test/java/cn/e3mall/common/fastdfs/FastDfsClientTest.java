@@ -16,7 +16,7 @@ public class FastDfsClientTest {
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     /**
-     * Test method for {@link cn.e3mall.fastdfs.FastDfsClient#uploadFile(java.lang.String)}.
+     * Test method for {@link cn.e3mall.common.fastdfs.FastDfsClient#uploadFile(java.lang.String)}.
      */
     @Test
     public final void testUpload() throws Exception {
@@ -26,7 +26,7 @@ public class FastDfsClientTest {
     }
 
     /**
-     * Test method for {@link cn.e3mall.fastdfs.FastDfsClient#deleteFile(java.lang.String)}.
+     * Test method for {@link cn.e3mall.common.fastdfs.FastDfsClient#deleteFile(java.lang.String)}.
      */
     @Test
     public final void testDeleteFile() throws Exception {

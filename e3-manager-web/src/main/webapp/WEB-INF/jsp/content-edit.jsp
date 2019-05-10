@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="/static/js/kindeditor-4.1.10/themes/default/default.css" rel="stylesheet">
 <script src="/static/js/kindeditor-4.1.10/kindeditor-all-min.js"></script>
 <script src="/static/js/kindeditor-4.1.10/lang/zh_CN.js"></script>

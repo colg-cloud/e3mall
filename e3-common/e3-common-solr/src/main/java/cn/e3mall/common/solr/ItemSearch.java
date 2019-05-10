@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class ItemSearch extends BaseEntity implements Serializable {
-    
+
     /** id */
     private String id;
     /** 名称 */
@@ -36,7 +36,7 @@ public class ItemSearch extends BaseEntity implements Serializable {
     private String categoryName;
 
     private static final long serialVersionUID = 1L;
-    
+
     /// ----------------------------------------------------------------------------------------------------
 
     /**

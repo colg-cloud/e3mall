@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.e3mall</groupId>
@@ -10,43 +11,43 @@
     <name>e3-manager-web :: 表现层 - 后台管理系统</name>
 
     <dependencies>
-        <!-- fastdfs -->
+        <!--fastDFS-->
         <dependency>
             <groupId>cn.e3mall</groupId>
             <artifactId>e3-common-fastdfs</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        
-        <!-- 商品服务 -->
+
+        <!--商品服务-->
         <dependency>
             <groupId>cn.e3mall</groupId>
             <artifactId>e3-manager-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- 内容服务 -->
+        <!--内容服务-->
         <dependency>
             <groupId>cn.e3mall</groupId>
             <artifactId>e3-content-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- 搜索服务 -->
+        <!--搜索服务-->
         <dependency>
             <groupId>cn.e3mall</groupId>
             <artifactId>e3-search-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!-- Spring MVC -->
+        <!--Spring MVC-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
-        <!-- Spring MVC 文件上传 -->
+        <!--Spring MVC 文件上传-->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
         </dependency>
-		<!-- Spring -->
+        <!--Spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
@@ -63,15 +64,15 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jms</artifactId>
         </dependency>
-		<!-- servlet api -->
+        <!--servlet api-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
-            
-		<!-- JSP -->
+
+        <!--JSP-->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
@@ -81,13 +82,13 @@
             <artifactId>jsp-api</artifactId>
             <scope>provided</scope>
         </dependency>
-        
-        <!-- duboo -->
+
+        <!--dubbo-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
         </dependency>
-        <!-- zookeeper -->
+        <!--zookeeper-->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
@@ -100,7 +101,7 @@
 
     <build>
         <plugins>
-            <!-- tomcat插件 -->
+            <!--tomcat插件-->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>

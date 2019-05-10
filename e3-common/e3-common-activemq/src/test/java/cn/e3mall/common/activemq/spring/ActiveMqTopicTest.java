@@ -28,23 +28,23 @@ public class ActiveMqTopicTest {
     private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/activemq-topic.xml");
     private JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
     private Destination destination = applicationContext.getBean(ActiveMQTopic.class);
-    
+
     /**
      * 生产者; 发送消息
      *
      * @throws Exception
      */
     @Test
-    public void testProducre() throws Exception {
+    public void testProducre() {
         jmsTemplate.send(destination, new MessageCreator() {
-            
+
             @Override
             public Message createMessage(Session session) throws JMSException {
                 return session.createTextMessage("ActiveMq Queue Spring Test: " + DateUtil.now());
             }
         });
     }
-    
+
     /**
      * 消费者; 接收消息
      *

@@ -35,7 +35,7 @@
     </#list>
   </table>
   <br>
-  <!-- 可以使用?date,?time,?datetime,?string(parten)-->
+  <!--可以使用?date,?time,?datetime,?string(parten)-->
   当前日期: ${date?date}<br>
   当前时间: ${date?time}<br>
   当前日期时间: ${date?datetime}<br>

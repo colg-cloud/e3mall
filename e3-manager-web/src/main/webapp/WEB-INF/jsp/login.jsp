@@ -1,30 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>e3 商城 - 后台管理系统(登录) </title>
-<link rel="icon" href="/static/icon/favicon.ico">
-<link rel="stylesheet" href="/static/js/jquery-easyui-1.4.1/themes/gray/easyui.css"/>
-<link rel="stylesheet" href="/static/js/jquery-easyui-1.4.1/themes/icon.css"/>
-<link rel="stylesheet" href="/static/css/e3.css"/>
-<link rel="stylesheet" href="/static/css/default.css"/>
-<script src="/static/js/jquery-easyui-1.4.1/jquery.min.js"></script>
-<script src="/static/js/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
-<script src="/static/js/jquery-easyui-1.4.1/locale/easyui-lang-zh_CN.js"></script>
-<script src="/static/js/common.js"></script>
+<%@include file="common/head.jsp" %>
 </head>
 <body style="background-color: #F3F3F3">
   <div class="easyui-dialog" title="管理员登录" data-options="closable:false,draggable:false" style="width:400px;height:300px;padding:10px;">
     <div style="margin-left: 50px;margin-top: 50px;">
       <div style="margin-bottom:20px;">
         <div>
-                            用户名: <input class="easyui-textbox" name="username" data-options="required:true,iconCls:'icon-man',iconWidth:38" style="width:200px;height:32px" value="admin"/>
+          用户名: <input class="easyui-textbox" name="username" data-options="required:true,iconCls:'icon-man',iconWidth:38" style="width:200px;height:32px" value="admin"/>
         </div>
       </div>
       <div style="margin-bottom:20px">
         <div>
-                            密&nbsp;&nbsp;码: &nbsp;<input class="easyui-textbox" name="password" type="password" style="width:200px;height:32px" data-options="required:true,iconCls:'icon-lock',iconWidth:38" value="123456"/>
+          密&nbsp;&nbsp;码: &nbsp;<input class="easyui-textbox" name="password" type="password" data-options="required:true,iconCls:'icon-lock',iconWidth:38" style="width:200px;height:32px" value="123456"/>
         </div>
       </div>
       <div>
@@ -32,14 +24,14 @@
       </div>
     </div>
   </div>
-  
+
   <script>
-    $('#login').click(function () {
-      var username = $('[name=username]').val()
-      var password = $('[name=password]').val()
+    $('#login').click(() => {
+      const username = $('[name=username]').val()
+      const password = $('[name=password]').val()
 
       if (username !== 'admin' || password !== '123456') {
-        $.messager.alert('错误', '用户名密码不正确！')
+        $.messager.alert('错误', '用户名或密码不正确!')
         return
       }
       window.location.href = '/manager/index'

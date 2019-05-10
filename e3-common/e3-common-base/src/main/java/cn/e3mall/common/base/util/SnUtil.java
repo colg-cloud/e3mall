@@ -15,21 +15,20 @@ public class SnUtil {
     /**
      * 图片名称生成
      *
-     * @return
+     * @return 格式: yyyy-MM-dd_0SSS
      */
     public static String genImageName() {
-        // 格式: yyyy-MM-dd_0SSS
         return DateUtil.format(new Date(), DatePattern.NORM_DATE_FORMAT) + "_" + String.format("%04d", DateUtil.thisMillsecond());
     }
 
     /**
      * 商品id生成
      *
-     * @return
+     * @return 格式: yyyyMMdd0SSS
      */
     public static long genItemId() {
-        // 格式: yyyyMMdd0SSS
         String string = DateUtil.format(new Date(), DatePattern.PURE_DATE_FORMAT) + String.format("%04d", DateUtil.thisMillsecond());
         return Long.parseLong(string);
     }
+
 }

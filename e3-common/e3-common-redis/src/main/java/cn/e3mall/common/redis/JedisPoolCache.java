@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * JedisClient 单机
@@ -23,18 +24,28 @@ public class JedisPoolCache implements JedisClient {
     @Getter
     @Setter
     private JedisPool jedisPool = initJedisPool();
-    
+
     /**
      * 初始化 JedisPool 默认配置
      *
-     * @return
+     * @return JedisPool
      */
     private JedisPool initJedisPool() {
         Properties prop = Props.getProp("conf/redis.properties");
         String host = prop.getProperty("redis.host");
         int port = Integer.parseInt(prop.getProperty("redis.port"));
+        long maxWaitMillis = Long.parseLong(prop.getProperty("redis.pool.max-wait"));
+        int minIdle = Integer.parseInt(prop.getProperty("redis.pool.min-idle"));
+        int maxIdle = Integer.parseInt(prop.getProperty("redis.pool.max-idle"));
+        int maxTotal = Integer.parseInt(prop.getProperty("redis.pool.max-active"));
+
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setMaxWaitMillis(maxWaitMillis);
+        config.setMinIdle(minIdle);
+        config.setMaxIdle(maxIdle);
+        config.setMaxTotal(maxTotal);
         log.info("redis 单机: {}", host + ":" + port);
-        return new JedisPool(host, port);
+        return new JedisPool(config, host, port);
     }
 
     @Override

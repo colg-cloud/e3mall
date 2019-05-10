@@ -126,9 +126,12 @@ var E3 = {
     })
   },
 
-  createEditor: function (select) {
-    return KindEditor.create(select, E3.kingEditorParams)
-  },
+  /**
+   * 创建KindEditor编辑器
+   * @param select
+   * @returns {select}
+   */
+  createEditor: select => KindEditor.create(select, E3.kingEditorParams),
 
   /**
    * 创建一个窗口，关闭窗口后销毁该窗口对象。<br/>
@@ -145,7 +148,7 @@ var E3 = {
    * url : 必填参数 <br/>
    * onLoad : function 加载完窗口内容后执行<br/>
    */
-  createWindow: function (params) {
+  createWindow: params => {
     $('<div>').css({padding: '5px'}).window({
       width: params.width ? params.width : '80%',
       height: params.height ? params.height : '80%',
@@ -162,26 +165,34 @@ var E3 = {
       }
     }).window('open')
   },
-  // 关闭窗口
-  closeWindow: function (select) {
+
+  /**
+   * 关闭窗口
+   * @param select
+   */
+  closeWindow: select => {
     $(select).window('close')
   },
 
-  closeCurrentWindow: function () {
+  /**
+   * 关闭当前窗口
+   */
+  closeCurrentWindow: () => {
     $('.panel-tool-close').click()
   },
 
-  changeItemParam: function (node, formId) {
-    $.getJSON('/manager/item/param/select/' + node.id, function (data) {
+  changeItemParam: (node, formId) => {
+    $.getJSON('/manager/item/param/select/' + node.id, data => {
       if (data.status === 200 && data.data) {
         $('#' + formId + ' .params').show()
-        var paramData = JSON.parse(data.data.paramData)
-        var html = '<ul style="margin-left: -40px">'
-        paramData.forEach(function (pd) {
+        let paramData = JSON.parse(data.data.paramData)
+        let html = '<ul style="margin-left: -40px">'
+        paramData.forEach(pd => {
+          const {group, params} = pd
           html += '<li><table>'
-          html += '<tr><td colspan="2" class="group">' + pd.group + '</td></tr>'
+          html += '<tr><td colspan="2" class="group">' + group + '</td></tr>'
 
-          pd.params.forEach(function (ps) {
+          params.forEach(ps => {
             html += '<tr><td class="param"><span>' + ps + '</span>: </td><td><input class="easyui-textbox" style="width: 200px;" type="text"/></td></tr>'
           })
           html += '</table></li>'
@@ -198,53 +209,53 @@ var E3 = {
    * 获取商品规格参数
    * @return {string}
    */
-  getItemParamData: function (select) {
-    var paramJson = []
+  getItemParamData: select => {
+    let paramJson = []
     $(select + ' .params li').each(function (i, e) {
       var trs = $(e).find('tr')
-      var group = trs.eq(0).text()
-      var params = []
+      let group = trs.eq(0).text()
+      let params = []
       // 从第二个tr开始
-      for (var i = 1; i < trs.length; i++) {
-        var tr = trs.eq(i)
+      for (let i = 1; i < trs.length; i++) {
+        let tr = trs.eq(i)
         params.push({
           'k': $.trim(tr.find('td').eq(0).find('span').text()),
           'v': $.trim(tr.find('input').val())
         })
       }
-      paramJson.push({
-        'group': group,
-        'params': params
-      })
+      paramJson.push({group, params})
     })
     // 把json对象转换成字符串
     paramJson = JSON.stringify(paramJson)
     return paramJson
   },
+
   /**
    * 获取表格选中的ids
    * @param select
    * @return {string}
    */
-  getSelectionsIds: function (select) {
-    var list = $(select)
-    var sels = list.datagrid('getSelections')
-    var ids = []
-    sels.forEach(function (value) {
-      ids.push(value.id)
+  getSelectionsIds: select => {
+    const list = $(select)
+    const selS = list.datagrid('getSelections')
+    let ids = []
+    selS.forEach(e => {
+      const {id} = e
+      ids.push(id)
     })
     ids = ids.join(',')
     return ids
   },
+
   /**
    * 获取表格选中的categoryId
    * @param select
    * @return {*}
    */
-  getSelectionsCategoryId: function (select) {
-    var list = $(select)
-    var sels = list.datagrid('getSelections')
-    return sels[0].categoryId
+  getSelectionsCategoryId: select => {
+    const list = $(select)
+    const selS = list.datagrid('getSelections')
+    return selS[0].categoryId
   },
 
   /**
@@ -252,14 +263,14 @@ var E3 = {
    * 选择器为：.onePicUpload <br/>
    * 上传完成后会设置input内容以及在input后面追加<img>
    */
-  initOnePicUpload: function () {
+  initOnePicUpload: () => {
     $('.onePicUpload').click(function () {
-      var _self = $(this)
+      const _self = $(this)
       KindEditor.editor(E3.kingEditorParams).loadPlugin('image', function () {
         this.plugin.imageDialog({
           showRemote: false,
           clickFn: function (url, title, width, height, border, align) {
-            var input = _self.siblings('input')
+            let input = _self.siblings('input')
             input.parent().find('img').remove()
             input.val(url)
             input.after('<a href="' + url + '" target="_blank"><img src="' + url + '" width="80" height="50"></a>')
@@ -270,19 +281,26 @@ var E3 = {
     })
   },
 
-  // 格式化连接
-  formatUrl: function (val, row) {
-    if (val) {
-      return '<a href="' + val + '" target="_blank">查看</a>'
-    }
-    return ''
-  },
-  // 格式化价格
-  formatPrice: function (val, row) {
-    return (val / 100).toFixed(2)
-  },
-  // 格式化商品的状态
-  formatItemStatus: function formatStatus(val, row) {
+  /**
+   * 格式化链接
+   * @param val
+   * @returns {string}
+   */
+  formatUrl: val => val ? '<a href="' + val + '" target="_blank">查看</a>' : '',
+
+  /**
+   * 格式化价格
+   * @param val
+   * @returns {string}
+   */
+  formatPrice: val => (val / 100).toFixed(2),
+
+  /**
+   * 格式化商品的状态
+   * @param val
+   * @returns {string}
+   */
+  formatItemStatus: val => {
     if (val === 1) {
       return '<span style="color:green;">正常</span>'
     } else if (val === 2) {
@@ -291,12 +309,18 @@ var E3 = {
       return '<span style="color:gray;">删除</span>'
     }
   },
-  // 格式化商品规格参数
-  formatItemParamData: function (val, row) {
-    var json = JSON.parse(val)
-    var array = []
-    $.each(json, function (i, e) {
-      array.push(e.group)
+
+  /**
+   * 格式化商品规格参数
+   * @param val
+   * @returns {string}
+   */
+  formatItemParamData: val => {
+    let json = JSON.parse(val)
+    let array = []
+    $.each(json, (i, e) => {
+      const {group} = e
+      array.push(group)
     })
     return array.join(',')
   }
