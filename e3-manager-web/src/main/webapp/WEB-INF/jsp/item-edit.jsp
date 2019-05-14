@@ -3,7 +3,7 @@
 <script src="/static/js/kindeditor-4.1.10/kindeditor-all-min.js"></script>
 <script src="/static/js/kindeditor-4.1.10/lang/zh_CN.js"></script>
 <div style="padding:10px 10px 10px 10px">
-  <form id="itemeEditForm" class="itemForm" method="post">
+  <form id="itemEditForm" class="itemForm" method="post">
     <input type="hidden" name="id"/>
     <table cellpadding="5">
       <tr>
@@ -69,23 +69,23 @@
   var itemEditEditor
   $(function () {
     //实例化编辑器
-    itemEditEditor = E3.createEditor('#itemeEditForm [name=desc]')
+    itemEditEditor = E3.createEditor('#itemEditForm [name=desc]')
   })
 
   function submitForm() {
-    if (!$('#itemeEditForm').form('validate')) {
+    if (!$('#itemEditForm').form('validate')) {
       $.messager.alert('提示', '表单还未填写完成!')
       return
     }
-    $('#itemeEditForm [name=price]').val(eval($('#itemeEditForm [name=priceView]').val()) * 100)
+    $('#itemEditForm [name=price]').val(eval($('#itemEditForm [name=priceView]').val()) * 100)
     // 同步文本框中的商品描述
     itemEditEditor.sync()
     
     // 获取商品规格参数
-    var paramData = E3.getItemParamData('#itemeEditForm')
-    $('#itemeEditForm [name=itemParams]').val(paramData)
+    var paramData = E3.getItemParamData('#itemEditForm')
+    $('#itemEditForm [name=itemParams]').val(paramData)
 
-    $.post('/manager/item/update', $('#itemeEditForm').serialize(), function (data) {
+    $.post('/manager/item/update', $('#itemEditForm').serialize(), function (data) {
       if (data.status === 200) {
         $.messager.alert('提示', '修改商品成功!', 'info', function () {
           E3.closeWindow('#itemEditWindow')

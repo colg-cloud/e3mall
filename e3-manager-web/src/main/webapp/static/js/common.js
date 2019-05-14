@@ -236,8 +236,8 @@ var E3 = {
    * @return {string}
    */
   getSelectionsIds: select => {
-    const list = $(select)
-    const selS = list.datagrid('getSelections')
+    const $list = $(select)
+    const selS = $list.datagrid('getSelections')
     let ids = []
     selS.forEach(e => {
       const {id} = e

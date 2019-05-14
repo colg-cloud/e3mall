@@ -7,20 +7,25 @@
 <%@include file="common/head.jsp" %>
 </head>
 <body style="background-color: #F3F3F3">
-  <div class="easyui-dialog" title="管理员登录" data-options="closable:false,draggable:false" style="width:400px;height:300px;padding:10px;">
-    <div style="margin-left: 50px;margin-top: 50px;">
-      <div style="margin-bottom:20px;">
+  <div class="easyui-dialog" title="管理员登录" style="width: 400px; height: 300px; padding: 10px;"
+       data-options="closable:false, draggable:false">
+    <div style="margin-left: 50px; margin-top: 50px;">
+      <div style="margin-bottom: 20px;">
         <div>
-          用户名: <input class="easyui-textbox" name="username" data-options="required:true,iconCls:'icon-man',iconWidth:38" style="width:200px;height:32px" value="admin"/>
+          用户名: <input class="easyui-textbox" name="username" value="admin" style="width: 200px; height: 32px;"
+                      data-options="required:true, iconCls:'icon-man', iconWidth:38"/>
         </div>
       </div>
       <div style="margin-bottom:20px">
         <div>
-          密&nbsp;&nbsp;码: &nbsp;<input class="easyui-textbox" name="password" type="password" data-options="required:true,iconCls:'icon-lock',iconWidth:38" style="width:200px;height:32px" value="123456"/>
+          密&nbsp;&nbsp;码: &nbsp;<input class="easyui-textbox" name="password" type="password" value="123456" style="width: 200px; height: 32px;"
+                                       data-options="required:true, iconCls:'icon-lock', iconWidth:38"/>
         </div>
       </div>
       <div>
-        <a id="login" class="easyui-linkbutton" iconCls="icon-ok" style="padding:5px 0;width:80%;"><span style="font-size:14px;">登录</span></a>
+        <a id="login" class="easyui-linkbutton" iconCls="icon-ok" style="padding: 5px 0; width: 80%;">
+          <span style="font-size: 14px;">登录</span>
+        </a>
       </div>
     </div>
   </div>

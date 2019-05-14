@@ -62,9 +62,9 @@
           //加载商品规格
           $.getJSON('/manager/item/param/item/select/' + data.id, function (_data) {
             if (_data && _data.status === 200 && _data.data && _data.data.paramData) {
-              $('#itemeEditForm .params').show()
-              $('#itemeEditForm [name=itemParams]').val(_data.data.paramData)
-              $('#itemeEditForm [name=itemParamId]').val(_data.data.id)
+              $('#itemEditForm .params').show()
+              $('#itemEditForm [name=itemParams]').val(_data.data.paramData)
+              $('#itemEditForm [name=itemParamId]').val(_data.data.id)
 
               //回显商品规格
               var paramData = JSON.parse(_data.data.paramData)
@@ -80,7 +80,7 @@
                 html += '</table></li>'
               })
               html += '</ul>'
-              $('#itemeEditForm .params td').eq(1).html(html)
+              $('#itemEditForm .params td').eq(1).html(html)
             }
           })
 
@@ -88,7 +88,7 @@
             'pics': data.image,
             'cid': data.cid,
             fun: function (node) {
-              E3.changeItemParam(node, 'itemeEditForm')
+              E3.changeItemParam(node, 'itemEditForm')
             }
           })
         }

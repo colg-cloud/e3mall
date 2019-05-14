@@ -26,16 +26,16 @@ import cn.hutool.core.io.FileUtil;
 @RestController
 @RequestMapping("/manager/item")
 public class ItemController extends BaseController {
-    
+
     /**
      * 分页查询商品列表
      *
-     * @param page
-     * @param rows
+     * @param page 页码
+     * @param rows 每页记录数
      * @return
      */
     @GetMapping("/list")
-    public EasyUIDataGridResult selectItemList(Integer page, Integer rows) {
+    public EasyUIDataGridResult selectItemList(@RequestParam Integer page, @RequestParam Integer rows) {
         // 调用服务查询商品列表
         return itemService.selectItemList(page, rows);
     }
@@ -45,8 +45,8 @@ public class ItemController extends BaseController {
      *
      * @param multipartFile
      * @return
-     * @throws MyException 
-     * @throws IOException 
+     * @throws MyException
+     * @throws IOException
      */
     @PostMapping("/pic/upload")
     public PicResult uploadFile(@RequestParam("uploadFile") MultipartFile multipartFile) {
@@ -60,7 +60,7 @@ public class ItemController extends BaseController {
             e1.printStackTrace();
             return PicResult.fail("图片上传失败!");
         }
-        
+
         // 完整的url: http://ip/group/filename
         return PicResult.ok(url);
     }
@@ -81,18 +81,18 @@ public class ItemController extends BaseController {
     /**
      * 修改商品
      *
-     * @param id 商品id
-     * @param item 商品信息
-     * @param desc 商品描述
+     * @param id          商品id
+     * @param item        商品信息
+     * @param desc        商品描述
      * @param itemParamId 商品规格id
-     * @param itemParams 商品规格参数
+     * @param itemParams  商品规格参数
      * @return
      */
     @PostMapping("/update")
     public E3Result update(Long id, Item item, String desc, Long itemParamId, String itemParams) {
         return itemService.updateItem(id, item, desc, itemParamId, itemParams);
     }
-    
+
     /**
      * 批量删除商品
      *
@@ -103,7 +103,7 @@ public class ItemController extends BaseController {
     public E3Result delete(String ids) {
         return itemService.delete(ids);
     }
-    
+
     /**
      * 批量下架商品
      *
@@ -114,7 +114,7 @@ public class ItemController extends BaseController {
     public E3Result instock(String ids) {
         return itemService.updateInstock(ids);
     }
-    
+
     /**
      * 批量上架商品
      *
@@ -125,7 +125,7 @@ public class ItemController extends BaseController {
     public E3Result reshelf(String ids) {
         return itemService.updateReshelf(ids);
     }
-    
+
     /**
      * 一键导入所有商品数据到Solr索引库
      *
