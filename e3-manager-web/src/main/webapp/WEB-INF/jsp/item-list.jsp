@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
-<table class="easyui-datagrid" id="itemList" title="商品列表"></table>
+<table id="itemList" class="easyui-datagrid"
+       data-options="title:'编辑商品'">
+</table>
 
-<div id="itemEditWindow" class="easyui-window" title="编辑商品" style="width: 80%; height: 80%; padding: 10px;"
-     data-options="modal:true, closed:true, iconCls:'icon-save', href:'/manager/item-edit'">
+<div id="itemEditWindow" class="easyui-window" style="width: 80%; height: 80%; padding: 10px;"
+     data-options="title:'编辑商品', closed:true">
 </div>
 
 <script>
@@ -20,10 +22,10 @@
       idField: 'id',
       columns: [[
         {field: 'ck', checkbox: true},
-        {field: 'id', title: '商品ID', width: 280},
+        {field: 'id', title: '商品ID', width: 180},
         {field: 'title', title: '商品标题', width: 280},
-        {field: 'cid', title: '类目ID', width: 50},
-        {field: 'cname', title: '商品名称', width: 100},
+        {field: 'cid', title: '商品类目ID', width: 80},
+        {field: 'cname', title: '商品类目名称', width: 100},
         {field: 'sellPoint', title: '卖点', width: 380},
         {field: 'price', title: '商品价格', width: 80, align: 'right', formatter: E3.formatPrice},
         {field: 'num', title: '库存数量', width: 70, align: 'right'},
@@ -41,47 +43,52 @@
           text: '编辑', iconCls: 'icon-edit', handler: () => {
             let ids = E3.getSelectionsIds('#itemList')
             if (ids.length === 0) {
-              $.messager.alert('提示', '必须选择一个商品才能编辑!')
+              $.messager.alert('提示', '必须选择一个商品才能编辑!', 'warning')
               return
             }
             if (ids.indexOf(',') > 0) {
-              $.messager.alert('提示', '只能选择一个商品!')
+              $.messager.alert('提示', '只能选择一个商品!', 'warning')
               return
             }
 
             $('#itemEditWindow').window({
+              href: '/manager/item-edit',
+              modal: true,
+              iconCls: 'icon-save',
               onLoad: () => {
                 // 回显数据
-                let data = $('#itemList').datagrid('getSelections')[0]
-                data.priceView = E3.formatPrice(data.price)
+                let data = E3.getSelections('#itemList')[0]
+                const {id, price, cid, cname, image: pics} = data
+                data.priceView = E3.formatPrice(price)
                 $('#itemEditForm').form('load', data)
 
                 // 加载商品描述
-                $.getJSON('/manager/item/desc/' + data.id, _data => {
-                  if (_data.status === 200) {
-                    // UM.getEditor('itemeEditDescEditor').setContent(_data.data.itemDesc, false);
-                    const {itemDesc} = _data.data
+                $.getJSON('/manager/item/desc/' + id, data => {
+                  if (data.status === 200) {
+                    const {itemDesc} = data.data
                     itemEditEditor.html(itemDesc)
                   }
                 })
 
                 //加载商品规格
-                $.getJSON('/manager/item/param/item/select/' + data.id, _data => {
-                  if (_data && _data.status === 200 && _data.data && _data.data.paramData) {
+                $.getJSON('/manager/item/param/item/select/' + id, data => {
+                  if (data && data.status === 200 && data.data && data.data.paramData) {
                     $('#itemEditForm .params').show()
-                    $('#itemEditForm [name=itemParams]').val(_data.data.paramData)
-                    $('#itemEditForm [name=itemParamId]').val(_data.data.id)
+                    $('#itemEditForm [name=itemParams]').val(data.data.paramData)
+                    $('#itemEditForm [name=itemParamId]').val(data.data.id)
 
                     //回显商品规格
-                    let paramData = JSON.parse(_data.data.paramData)
+                    let paramData = JSON.parse(data.data.paramData)
 
                     let html = '<ul style="margin-left: -40px">'
                     paramData.forEach(pd => {
+                      const {group, params} = pd
                       html += '<li><table>'
-                      html += '<tr><td colspan="2" class="group">' + pd.group + '</td></tr>'
+                      html += '<tr><td colspan="2" class="group">' + group + '</td></tr>'
 
-                      pd.params.forEach(function (ps) {
-                        html += '<tr><td class="param"><span>' + ps.k + '</span>: </td><td><input class="easyui-textbox" style="width: 200px;" type="text" value="' + ps.v + '"/></td></tr>'
+                      params.forEach(ps => {
+                        const {k, v} = ps
+                        html += '<tr><td class="param"><span>' + k + '</span>: </td><td><input class="easyui-textbox" style="width: 200px;" type="text" value="' + v + '"/></td></tr>'
                       })
                       html += '</table></li>'
                     })
@@ -91,9 +98,9 @@
                 })
 
                 E3.init({
-                  'pics': data.image,
-                  'cid': data.cid,
-                  'cname': data.cname,
+                  pics,
+                  cid,
+                  cname,
                   fun: node => {
                     E3.changeItemParam(node, 'itemEditForm')
                   }
@@ -110,10 +117,9 @@
             }
             $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的商品吗？', r => {
               if (r) {
-                let params = {ids}
-                $.post('/manager/item/delete', params, data => {
+                $.post('/manager/item/delete', {ids}, data => {
                   if (data.status === 200) {
-                    $.messager.alert('提示', '删除商品成功!', undefined, () => {
+                    $.messager.alert('提示', '删除商品成功!', 'info', () => {
                       $('#itemList').datagrid('reload')
                     })
                   }
@@ -130,10 +136,9 @@
             }
             $.messager.confirm('确认', '确定下架ID为 ' + ids + ' 的商品吗？', r => {
               if (r) {
-                let params = {ids}
-                $.post('/manager/item/instock', params, data => {
+                $.post('/manager/item/instock', {ids}, data => {
                   if (data.status === 200) {
-                    $.messager.alert('提示', '下架商品成功!', undefined, () => {
+                    $.messager.alert('提示', '下架商品成功!', 'info', () => {
                       $('#itemList').datagrid('reload')
                     })
                   }
@@ -150,10 +155,9 @@
             }
             $.messager.confirm('确认', '确定上架ID为 ' + ids + ' 的商品吗？', r => {
               if (r) {
-                let params = {ids}
-                $.post('/manager/item/reshelf', params, data => {
+                $.post('/manager/item/reshelf', {ids}, data => {
                   if (data.status === 200) {
-                    $.messager.alert('提示', '上架商品成功!', undefined, () => {
+                    $.messager.alert('提示', '上架商品成功!', 'info', () => {
                       $('#itemList').datagrid('reload')
                     })
                   }

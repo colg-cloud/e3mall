@@ -15,16 +15,17 @@ import cn.e3mall.manager.web.core.BaseController;
  */
 @RestController
 @RequestMapping("/manager/item/desc")
-public class ItemDescController extends BaseController{
+public class ItemDescController extends BaseController {
 
     /**
      * 根据商品id获取商品详情
      *
-     * @param itemId
+     * @param itemId 商品id
      * @return
      */
     @GetMapping("/{id}")
     public E3Result findById(@PathVariable("id") Long itemId) {
         return E3Result.ok(itemDescService.findById(itemId));
     }
+
 }

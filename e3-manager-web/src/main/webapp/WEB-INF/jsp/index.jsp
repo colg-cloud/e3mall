@@ -83,7 +83,6 @@
       })
     })
 
-
     const week = '日一二三四五六'
     let $nowTime = $('#nowTime')
     let now = new Date()

@@ -12,14 +12,16 @@
     <div style="margin-left: 50px; margin-top: 50px;">
       <div style="margin-bottom: 20px;">
         <div>
-          用户名: <input class="easyui-textbox" name="username" value="admin" style="width: 200px; height: 32px;"
-                      data-options="required:true, iconCls:'icon-man', iconWidth:38"/>
+          用户名:
+          <input class="easyui-textbox" name="username" value="admin" style="width: 200px; height: 32px;"
+                 data-options="required:true, iconCls:'icon-man', iconWidth:38"/>
         </div>
       </div>
       <div style="margin-bottom:20px">
         <div>
-          密&nbsp;&nbsp;码: &nbsp;<input class="easyui-textbox" name="password" type="password" value="123456" style="width: 200px; height: 32px;"
-                                       data-options="required:true, iconCls:'icon-lock', iconWidth:38"/>
+          密&nbsp;&nbsp;码: &nbsp;
+          <input class="easyui-textbox" name="password" type="password" value="123456" style="width: 200px; height: 32px;"
+                 data-options="required:true, iconCls:'icon-lock', iconWidth:38"/>
         </div>
       </div>
       <div>

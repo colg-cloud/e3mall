@@ -96,7 +96,7 @@ public class ItemController extends BaseController {
     /**
      * 批量删除商品
      *
-     * @param ids
+     * @param ids 商品ids
      * @return
      */
     @PostMapping("/delete")
@@ -107,7 +107,7 @@ public class ItemController extends BaseController {
     /**
      * 批量下架商品
      *
-     * @param ids
+     * @param ids 商品ids
      * @return
      */
     @PostMapping("/instock")
@@ -118,7 +118,7 @@ public class ItemController extends BaseController {
     /**
      * 批量上架商品
      *
-     * @param ids
+     * @param ids 商品ids
      * @return
      */
     @PostMapping("/reshelf")

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <link href="/static/js/kindeditor-4.1.10/themes/default/default.css" rel="stylesheet">
 <script src="/static/js/kindeditor-4.1.10/kindeditor-all-min.js"></script>
 <script src="/static/js/kindeditor-4.1.10/lang/zh_CN.js"></script>
@@ -80,7 +80,7 @@
     $('#itemEditForm [name=price]').val(eval($('#itemEditForm [name=priceView]').val()) * 100)
     // 同步文本框中的商品描述
     itemEditEditor.sync()
-    
+
     // 获取商品规格参数
     var paramData = E3.getItemParamData('#itemEditForm')
     $('#itemEditForm [name=itemParams]').val(paramData)

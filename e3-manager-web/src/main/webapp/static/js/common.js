@@ -231,6 +231,15 @@ var E3 = {
   },
 
   /**
+   * 获取表格选中的行
+   * @param select
+   */
+  getSelections: select => {
+    const $list = $(select)
+    return $list.datagrid('getSelections')
+  },
+
+  /**
    * 获取表格选中的ids
    * @param select
    * @return {string}
@@ -240,8 +249,7 @@ var E3 = {
     const selS = $list.datagrid('getSelections')
     let ids = []
     selS.forEach(e => {
-      const {id} = e
-      ids.push(id)
+      ids.push(e.id)
     })
     ids = ids.join(',')
     return ids
@@ -253,8 +261,8 @@ var E3 = {
    * @return {*}
    */
   getSelectionsCategoryId: select => {
-    const list = $(select)
-    const selS = list.datagrid('getSelections')
+    const $list = $(select)
+    const selS = $list.datagrid('getSelections')
     return selS[0].categoryId
   },
 
