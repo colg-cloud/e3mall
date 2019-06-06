@@ -12,17 +12,18 @@
     <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
         <property name="targetConnectionFactory" ref="targetConnectionFactory" />
     </bean>
-    <!--ActiveMQ地址-->
+    <!--配置 ActiveMQ 连接工厂-->
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <constructor-arg name="brokerURL" value="${mq.brokerURL}" />
+        <property name="brokerURL" value="${mq.brokerURL}" />
     </bean>
 
-    <!--配置生产者-->
+    <!--配置 JMS 模版(Queue), Spring提供的JMS工具类, 它发送, 接收消息-->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory" />
     </bean>
-    <!--消息模式-->
+    <!--定义消息模式(Queue)-->
     <bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+        <!--设置消息队列名称-->
         <constructor-arg name="name" value="${mq.queue.name}" />
     </bean>
 </beans>

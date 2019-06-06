@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class ActiveMqTopicTest {
+public class ActiveMqTopicTest extends BaseTest {
 
     /** tcp:// 规定写法; 61616: activemq服务监控端口 */
     private static final String BROKER_URL = "tcp://192.168.21.102:61616";
@@ -37,7 +37,7 @@ public class ActiveMqTopicTest {
      * @throws Exception
      */
     @Test
-    public void testProducre() throws Exception {
+    public void testProducer() throws Exception {
         // 1. 创建一个连接工厂对象, 需要指定服务的ip及端口
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(BROKER_URL);
         // 2. 使用工厂对象来创建一个Connection对象
@@ -108,4 +108,5 @@ public class ActiveMqTopicTest {
         session.close();
         connection.close();
     }
+
 }

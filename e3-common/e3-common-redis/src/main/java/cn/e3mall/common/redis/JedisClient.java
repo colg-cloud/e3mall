@@ -108,7 +108,7 @@ public interface JedisClient {
      * @return 如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 。
      * @author colg
      */
-    Boolean hexists(String key, String field);
+    Boolean hExists(String key, String field);
 
     /**
      * 删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略。
@@ -118,7 +118,7 @@ public interface JedisClient {
      * @return 被成功删除字段的数量，不包括被忽略的字段。
      * @author colg
      */
-    Long hdel(String key, String... fields);
+    Long hDel(String key, String... fields);
 
     /**
      * 获取哈希表中指定字段的值。
@@ -128,7 +128,7 @@ public interface JedisClient {
      * @return 返回给定字段的值。如果给定的字段或 key 不存在时，返回 null 。
      * @author colg
      */
-    String hget(String key, String field);
+    String hGet(String key, String field);
 
     /**
      * 将哈希表 key 中的字段 field 的值设为 value 。如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。如果字段已经存在于哈希表中，旧值将被覆盖。
@@ -139,7 +139,7 @@ public interface JedisClient {
      * @return 如果字段是哈希表中的一个新建字段，并且值设置成功，返回 1 。 如果哈希表中域字段已经存在且旧值已被新值覆盖，返回 0 。
      * @author colg
      */
-    Long hset(String key, String field, String value);
+    Long hSet(String key, String field, String value);
 
     /**
      * 获取在哈希表中指定 key 的所有字段和值。
@@ -148,7 +148,7 @@ public interface JedisClient {
      * @return 以Map形式返回哈希表的字段及字段值。 若 key 不存在，返回空列表。
      * @author colg
      */
-    Map<String, String> hgetAll(String key);
+    Map<String, String> hGetAll(String key);
 
     /**
      * 获取在哈希表中指定 key 的所有字段。
@@ -157,7 +157,7 @@ public interface JedisClient {
      * @return
      * @author colg
      */
-    Set<String> hkeys(String key);
+    Set<String> hKeys(String key);
 
     /**
      * 获取在哈希表中指定 key 的所有值。
@@ -166,5 +166,5 @@ public interface JedisClient {
      * @return 一个包含哈希表中所有值的表。 当 key 不存在时，返回一个空集合。
      * @author colg
      */
-    List<String> hvals(String key);
+    List<String> hVals(String key);
 }

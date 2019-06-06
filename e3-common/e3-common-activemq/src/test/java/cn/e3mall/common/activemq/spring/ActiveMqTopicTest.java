@@ -6,6 +6,7 @@ import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import cn.e3mall.common.activemq.BaseTest;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class ActiveMqTopicTest {
+public class ActiveMqTopicTest extends BaseTest {
 
     /** 初始化Spring容器 */
     private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/activemq-topic.xml");
@@ -35,7 +36,7 @@ public class ActiveMqTopicTest {
      * @throws Exception
      */
     @Test
-    public void testProducre() {
+    public void testProducer() {
         jmsTemplate.send(destination, new MessageCreator() {
 
             @Override
@@ -56,4 +57,5 @@ public class ActiveMqTopicTest {
         String result = ((TextMessage)message).getText();
         log.info("发布/订阅模式接收到的消息: {}", result);
     }
+
 }

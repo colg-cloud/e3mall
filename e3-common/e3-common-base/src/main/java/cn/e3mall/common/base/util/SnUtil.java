@@ -18,7 +18,7 @@ public class SnUtil {
      * @return 格式: yyyy-MM-dd_0SSS
      */
     public static String genImageName() {
-        return DateUtil.format(new Date(), DatePattern.NORM_DATE_FORMAT) + "_" + String.format("%04d", DateUtil.thisMillsecond());
+        return DateUtil.format(new Date(), DatePattern.NORM_DATE_PATTERN) + "_" + String.format("%04d", DateUtil.thisMillsecond());
     }
 
     /**
@@ -27,8 +27,7 @@ public class SnUtil {
      * @return 格式: yyyyMMdd0SSS
      */
     public static long genItemId() {
-        String string = DateUtil.format(new Date(), DatePattern.PURE_DATE_FORMAT) + String.format("%04d", DateUtil.thisMillsecond());
-        return Long.parseLong(string);
+        return Long.parseLong(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN) + String.format("%04d", DateUtil.thisMillsecond()));
     }
 
 }

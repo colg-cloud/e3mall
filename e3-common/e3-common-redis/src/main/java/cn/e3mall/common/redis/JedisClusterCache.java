@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.dialect.Props;
 import lombok.Getter;
@@ -34,14 +35,14 @@ public class JedisClusterCache implements JedisClient {
      * @return JedisCluster
      */
     private JedisCluster initJedisCluster() {
-        Properties prop = Props.getProp("conf/redis.properties");
+        Properties prop = Props.getProp("conf/redis.properties", CharsetUtil.CHARSET_UTF_8);
         String clusterNodes = prop.getProperty("redis.cluster.nodes");
         Set<HostAndPort> nodes = new HashSet<>(9);
         StrUtil.split(clusterNodes, ',').forEach(clusterNode -> {
             List<String> node = StrUtil.split(clusterNode, ':');
             nodes.add(new HostAndPort(node.get(0), Integer.parseInt(node.get(1))));
         });
-        log.info("redis 集群: {}", clusterNodes);
+        log.info("Redis 集群: {}", clusterNodes);
         return new JedisCluster(nodes);
     }
 
@@ -99,37 +100,37 @@ public class JedisClusterCache implements JedisClient {
     }
 
     @Override
-    public Boolean hexists(String key, String field) {
+    public Boolean hExists(String key, String field) {
         return jedisCluster.hexists(key, field);
     }
 
     @Override
-    public Long hdel(String key, String... fields) {
+    public Long hDel(String key, String... fields) {
         return jedisCluster.hdel(key, fields);
     }
 
     @Override
-    public String hget(String key, String field) {
+    public String hGet(String key, String field) {
         return jedisCluster.hget(key, field);
     }
 
     @Override
-    public Long hset(String key, String field, String value) {
+    public Long hSet(String key, String field, String value) {
         return jedisCluster.hset(key, field, value);
     }
 
     @Override
-    public Map<String, String> hgetAll(String key) {
+    public Map<String, String> hGetAll(String key) {
         return jedisCluster.hgetAll(key);
     }
 
     @Override
-    public Set<String> hkeys(String key) {
+    public Set<String> hKeys(String key) {
         return jedisCluster.hkeys(key);
     }
 
     @Override
-    public List<String> hvals(String key) {
+    public List<String> hVals(String key) {
         return jedisCluster.hvals(key);
     }
 

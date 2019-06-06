@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class JedisPoolCache implements JedisClient {
      * @return JedisPool
      */
     private JedisPool initJedisPool() {
-        Properties prop = Props.getProp("conf/redis.properties");
+        Properties prop = Props.getProp("conf/redis.properties", CharsetUtil.CHARSET_UTF_8);
         String host = prop.getProperty("redis.host");
         int port = Integer.parseInt(prop.getProperty("redis.port"));
         long maxWaitMillis = Long.parseLong(prop.getProperty("redis.pool.max-wait"));
@@ -44,7 +45,7 @@ public class JedisPoolCache implements JedisClient {
         config.setMinIdle(minIdle);
         config.setMaxIdle(maxIdle);
         config.setMaxTotal(maxTotal);
-        log.info("redis 单机: {}", host + ":" + port);
+        log.info("Redis 单机: {}", host + ":" + port);
         return new JedisPool(config, host, port);
     }
 
@@ -113,7 +114,7 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
-    public Boolean hexists(String key, String field) {
+    public Boolean hExists(String key, String field) {
         Jedis jedis = jedisPool.getResource();
         Boolean result = jedis.hexists(key, field);
         jedis.close();
@@ -121,7 +122,7 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
-    public Long hdel(String key, String... fields) {
+    public Long hDel(String key, String... fields) {
         Jedis jedis = jedisPool.getResource();
         Long result = jedis.hdel(key, fields);
         jedis.close();
@@ -129,7 +130,7 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
-    public String hget(String key, String field) {
+    public String hGet(String key, String field) {
         Jedis jedis = jedisPool.getResource();
         String result = jedis.hget(key, field);
         jedis.close();
@@ -137,7 +138,7 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
-    public Long hset(String key, String field, String value) {
+    public Long hSet(String key, String field, String value) {
         Jedis jedis = jedisPool.getResource();
         Long result = jedis.hset(key, field, value);
         jedis.close();
@@ -145,7 +146,7 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
-    public Map<String, String> hgetAll(String key) {
+    public Map<String, String> hGetAll(String key) {
         Jedis jedis = jedisPool.getResource();
         Map<String, String> result = jedis.hgetAll(key);
         jedis.close();
@@ -153,7 +154,7 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
-    public Set<String> hkeys(String key) {
+    public Set<String> hKeys(String key) {
         Jedis jedis = jedisPool.getResource();
         Set<String> result = jedis.hkeys(key);
         jedis.close();
@@ -161,7 +162,7 @@ public class JedisPoolCache implements JedisClient {
     }
 
     @Override
-    public List<String> hvals(String key) {
+    public List<String> hVals(String key) {
         Jedis jedis = jedisPool.getResource();
         List<String> result = jedis.hvals(key);
         jedis.close();
