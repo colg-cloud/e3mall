@@ -1,120 +1,83 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<table class="easyui-datagrid" id="itemParamList" title="商品规格模版列表"
-       data-options="singleSelect:false,collapsible:true,pagination:true,fitColumns:true,idField:'id',url:'/manager/item/param/list',method:'get',pageSize:30,toolbar:itemParamListToolbar">
-  <thead>
-    <tr>
-      <th data-options="field:'ck',checkbox:true"></th>
-      <th data-options="field:'id',width:100">商品规格模版ID</th>
-      <th data-options="field:'itemCatId',width:100">商品类目ID</th>
-      <th data-options="field:'itemCatName',width:100">商品类目</th>
-      <th data-options="field:'paramData',width:100,formatter:E3.formatItemParamData">规格(只显示分组名称)</th>
-      <th data-options="field:'created',width:100,align:'center'">创建日期</th>
-      <th data-options="field:'updated',width:100,align:'center'">更新日期</th>
-    </tr>
-  </thead>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<table id="itemParamList" class="easyui-datagrid"
+       data-options="title:'商品规格模版列表', pagination:true, pageNumber:1, pageSize:30, rownumbers:true, fitColumns:true, striped:true">
 </table>
-<div id="itemParamEditWindow" class="easyui-window" title="编辑商品规格模版" data-options="modal:true,closed:true,iconCls:'icon-save',href:'/manager/item-param-edit'"
-     style="width:80%;height:80%;padding:10px;">
+
+<div id="itemParamEditWindow" class="easyui-window" style="width: 80%; height: 80%; padding: 10px;"
+     data-options="title:'编辑商品规格模版', closed:true, modal:true, iconCls:'icon-save'">
 </div>
+
 <script>
-  function getSelectionsIds() {
-    var itemList = $('#itemParamList')
-    var sels = itemList.datagrid('getSelections')
-    var ids = []
-    for (var i in sels) {
-      ids.push(sels[i].id)
-    }
-    return ids.join(',')
-  }
-
-  var itemParamListToolbar = [{
-    text: '新增',
-    iconCls: 'icon-add',
-    handler: function () {
-      E3.createWindow({
-        title: '新增规格参数',
-        url: '/manager/item-param-add'
-      })
-    }
-  }, {
-    text: '编辑',
-    iconCls: 'icon-edit',
-    handler: function () {
-      var ids = E3.getSelectionsIds('#itemParamList')
-      if (ids.length === 0) {
-        $.messager.alert('提示', '必须选择一个商品规格模版才能编辑!')
-        return
-      }
-      if (ids.indexOf(',') > 0) {
-        $.messager.alert('提示', '只能选择一个商品规格模版!')
-        return
-      }
-      $.messager.alert('提示', '编辑功能尚未完成!')
-      return
-      // TODO: colg [商品规格模版 - 编辑功能尚未完成]
-      
-      $('#itemParamEditWindow').window({
-        onLoad: function () {
-          // 回显数据
-          var data = $('#itemParamList').datagrid('getSelections')[0]
-          console.log(data)
-
-          //加载商品规格
-          $.getJSON('/manager/item/param/item/select/' + data.id, function (_data) {
-            if (_data && _data.status === 200 && _data.data && _data.data.paramData) {
-              $('#itemEditForm .params').show()
-              $('#itemEditForm [name=itemParams]').val(_data.data.paramData)
-              $('#itemEditForm [name=itemParamId]').val(_data.data.id)
-
-              //回显商品规格
-              var paramData = JSON.parse(_data.data.paramData)
-
-              var html = '<ul style="margin-left: -40px">'
-              paramData.forEach(function (pd) {
-                html += '<li><table>'
-                html += '<tr><td colspan="2" class="group">' + pd.group + '</td></tr>'
-
-                pd.params.forEach(function (ps) {
-                    html += '<tr><td class="param"><span>' + ps.k + '</span>: </td><td><input class="easyui-textbox" style="width: 200px;" type="text" value="' + ps.v + '"/></td></tr>'
-                  })
-                html += '</table></li>'
-              })
-              html += '</ul>'
-              $('#itemEditForm .params td').eq(1).html(html)
+  $(() => {
+    // 加载表格
+    $('#itemParamList').datagrid({
+      url: '/manager/item/param/list',
+      columns: [[
+        {field: 'ck', checkbox: true},
+        {field: 'id', title: '商品规格模版ID', width: 130},
+        {field: 'itemCatId', title: '商品类目ID', width: 100},
+        {field: 'itemCatName', title: '商品类目', width: 100},
+        {field: 'paramData', title: '规格(只显示分组名称)', width: 100, formatter: E3.formatItemParamData},
+        {field: 'created', title: '创建日期', width: 120, align: 'center'},
+        {field: 'updated', title: '更新日期', width: 120, align: 'center'},
+      ]],
+      toolbar: [
+        {
+          text: '新增', iconCls: 'icon-add', handler: () => {
+            E3.createWindow({
+              title: '新增规格参数',
+              url: '/manager/item-param-add'
+            })
+          }
+        },
+        {
+          text: '编辑', iconCls: 'icon-edit', handler: () => {
+            let ids = E3.getSelectionsIds('#itemParamList')
+            if (ids.length === 0) {
+              $.messager.alert('提示', '必须选择一个商品规格模版才能编辑!', 'warning')
+              return
             }
-          })
-
-          E3.init({
-            'pics': data.image,
-            'cid': data.cid,
-            fun: function (node) {
-              E3.changeItemParam(node, 'itemEditForm')
+            if (ids.indexOf(',') > 0) {
+              $.messager.alert('提示', '只能选择一个商品规格模版!', 'warning')
+              return
             }
-          })
+
+            $('#itemParamEditWindow').window({
+              href: '/manager/item-param-edit',
+              onLoad: () => {
+                // 回显数据
+                let data = E3.getSelections('#itemParamList')[0]
+                //回显商品规格
+                let paramData = JSON.parse(data.paramData)
+                console.log(paramData)
+              }
+            }).window('open')
+
+            $.messager.alert('提示', '编辑功能尚未完成!', 'error')
+            // TODO: colg [商品规格模版 - 编辑功能尚未完成]
+          }
+        },
+        {
+          text: '删除', iconCls: 'icon-cancel', handler: () => {
+            let ids = E3.getSelectionsIds('#itemParamList')
+            if (ids.length === 0) {
+              $.messager.alert('提示', '未选中商品规格模版!', 'warning')
+              return
+            }
+            $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的商品规格模版吗?', r => {
+              if (r) {
+                $.post('/manager/item/param/delete', {ids}, data => {
+                  if (data.status === 200) {
+                    $.messager.alert('提示', '删除商品规格模版成功!', 'info', () => {
+                      $('#itemParamList').datagrid('reload')
+                    })
+                  }
+                })
+              }
+            })
+          }
         }
-      }).window('open')
-    }
-  }, {
-    text: '删除',
-    iconCls: 'icon-cancel',
-    handler: function () {
-      var ids = E3.getSelectionsIds('#itemParamList')
-      if (ids.length === 0) {
-        $.messager.alert('提示', '未选中商品规格模版!')
-        return
-      }
-      $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的商品规格模版吗？', function (r) {
-        if (r) {
-          var params = {'ids': ids}
-          $.post('/manager/item/param/delete', params, function (data) {
-            if (data.status === 200) {
-              $.messager.alert('提示', '删除商品规格模版成功!', undefined, function () {
-                $('#itemParamList').datagrid('reload')
-              })
-            }
-          })
-        }
-      })
-    }
-  }]
+      ]
+    })
+  })
 </script>

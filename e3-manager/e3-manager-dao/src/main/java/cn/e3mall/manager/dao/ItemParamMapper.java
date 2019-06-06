@@ -24,7 +24,7 @@ public interface ItemParamMapper extends tk.mybatis.mapper.common.Mapper<ItemPar
     /**
      * 根据商品类目id查询商品规格模版列表
      *
-     * @param itemCatId
+     * @param itemCatId 商品类目id
      * @return
      */
     ItemParam findItemParamByItemCatId(@Param("itemCatId") Long itemCatId);

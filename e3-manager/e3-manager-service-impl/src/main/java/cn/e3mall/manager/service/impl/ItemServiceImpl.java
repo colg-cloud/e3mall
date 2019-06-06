@@ -170,14 +170,10 @@ public class ItemServiceImpl extends BaseServiceImpl implements ItemService {
      * @param itemId
      */
     private void sendMsg(Destination destination, long itemId) {
-        jmsTemplate.send(destination, new MessageCreator() {
-            
-            @Override
-            public Message createMessage(Session session) throws JMSException {
-                String text = itemId + "";
-                log.info("activemq 发送消息: {}", text);
-                return session.createTextMessage(text);
-            }
+        jmsTemplate.send(destination, session -> {
+            String text = itemId + "";
+            log.info("activemq 发送消息: {}", text);
+            return session.createTextMessage(text);
         });
     }
     

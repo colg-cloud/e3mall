@@ -1,22 +1,29 @@
 /**
- *
+ * 格式化日期
  * @param format
- * @return {*}
+ * @return {void | string}
  */
 Date.prototype.format = function (format) {
-  var o = {
-    'M+': this.getMonth() + 1, //month
-    'd+': this.getDate(), //day
-    'h+': this.getHours(), //hour
-    'm+': this.getMinutes(), //minute
-    's+': this.getSeconds(), //second
-    'q+': Math.floor((this.getMonth() + 3) / 3), //quarter
-    'S': this.getMilliseconds() //millisecond
+  const o = {
+    // month
+    'M+': this.getMonth() + 1,
+    // day
+    'd+': this.getDate(),
+    // hour
+    'h+': this.getHours(),
+    // minute
+    'm+': this.getMinutes(),
+    // second
+    's+': this.getSeconds(),
+    // quarter
+    'q+': Math.floor((this.getMonth() + 3) / 3),
+    // millisecond
+    'S': this.getMilliseconds()
   }
   if (/(y+)/.test(format)) {
     format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length))
   }
-  for (var k in o) {
+  for (let k in o) {
     if (new RegExp('(' + k + ')').test(format)) {
       format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length))
     }
@@ -24,7 +31,11 @@ Date.prototype.format = function (format) {
   return format
 }
 
-var E3 = {
+/**
+ * 定义E3对象
+ * @type {{init: E3.init, closeCurrentWindow: E3.closeCurrentWindow, formatUrl: (function(*): string), initItemCat: E3.initItemCat, kingEditorParams: {filePostName: string, uploadJson: string, dir: string}, initOnePicUpload: E3.initOnePicUpload, createEditor: (function(*=): select), changeItemParam: E3.changeItemParam, getSelections: (function(*=): (jQuery|*)), initPicUpload: E3.initPicUpload, createWindow: E3.createWindow, closeWindow: E3.closeWindow, formatPrice: (function(*): string), formatItemParamData: (function(*=): string), getItemParamData: (function(*): string), getSelectionsCategoryId: (function(*=): *), getSelectionsIds: (function(*=): string), formatItemStatus: E3.formatItemStatus}}
+ */
+const E3 = {
   // 编辑器参数
   kingEditorParams: {
     //指定上传文件参数名称
@@ -41,41 +52,52 @@ var E3 = {
     // 初始化选择类目组件
     this.initItemCat(data)
   },
-  // 初始化图片上传组件
-  initPicUpload: function (data) {
-    $('.picFileUpload').each(function (i, e) {
-      var _ele = $(e)
+  /**
+   * 初始化图片上传组件
+   * @param data
+   */
+  initPicUpload: data => {
+    $('.picFileUpload').each((i, e) => {
+      let _ele = $(e)
       // 选择兄弟节点
       _ele.siblings('div.pics').remove()
       _ele.after('<div class="pics"><ul></ul></div>')
       // 回显图片
       if (data && data.pics) {
-        var imgs = data.pics.split(',')
-        imgs.forEach(function (img) {
+        let imgS = data.pics.split(',')
+        imgS.forEach(img => {
           if ($.trim(img).length > 0) {
             _ele.siblings('.pics')
                 .find('ul')
-                .append('<li><a href="' + img + '" target="_blank"><img src="' + img + '" width="80" height="50"></a></li>')
+                .append(`<li>
+                          <a href="${img}" target="_blank">
+                            <img src="${img}" width="80" height="50" alt="">
+                          </a>
+                         </li>`)
           }
         })
       }
       // 给"上传图片按钮"绑定click事件
       $(e).click(function () {
-        var form = $(this).parentsUntil('form').parent('form')
+        let form = $(this).parentsUntil('form').parent('form')
         // 打开图片上传窗口
         KindEditor.editor(E3.kingEditorParams).loadPlugin('multiimage', function () {
-          var editor = this
-          editor.plugin.multiImageDialog({
-            clickFn: function (urlList) {
-              var imgArray = []
-              KindEditor.each(urlList, function (i, data) {
-                var url = data.url
+          const self = this
+          self.plugin.multiImageDialog({
+            clickFn: urlList => {
+              let imgArray = []
+              KindEditor.each(urlList, (i, data) => {
+                const {url} = data
                 imgArray.push(url)
                 form.find('.pics ul')
-                    .append('<li><a href="' + url + '" target="_blank"><img src="' + url + '" width="80" height="50"></a></li>')
+                    .append(`<li>
+                              <a href="${url}" target="_blank">
+                                <img src="${url}" width="80" height="50" alt="">
+                              </a>
+                             </li>`)
               })
               form.find('[name=image]').val(imgArray.join(','))
-              editor.hideDialog()
+              self.hideDialog()
             }
           })
         })
@@ -83,16 +105,19 @@ var E3 = {
     })
   },
 
-  // 初始化选择类目组件
-  initItemCat: function (data) {
-    $('.selectItemCat').each(function (i, e) {
-      var _ele = $(e)
+  /**
+   * 初始化选择类目组件
+   * @param data
+   */
+  initItemCat: data => {
+    $('.selectItemCat').each((i, e) => {
+      let _ele = $(e)
       if (data && data.cname) {
-        _ele.after('<span style="margin-left: 10px;">' + data.cname + '</span>')
+        _ele.after('<span style="margin-left: 100px;">' + data.cname + '</span>')
       } else {
         _ele.after('<span style="margin-left: 10px;"></span>')
       }
-      _ele.unbind('click').click(function () {
+      _ele.unbind('click').click(() => {
         $('<div>').css({padding: '5px'}).html('<ul>').window({
           width: '500',
           height: '450',
@@ -101,8 +126,8 @@ var E3 = {
           iconCls: 'icon-save',
           title: '选择类目',
           onOpen: function () {
-            var _win = this
-            $('ul', _win).tree({
+            const self = this
+            $('ul', self).tree({
               url: '/manager/item/cat/list',
               animate: true,
               onClick: function (node) {
@@ -110,7 +135,7 @@ var E3 = {
                   // 填写到cid中
                   _ele.parent().find('[name=cid]').val(node.id)
                   _ele.next().text(node.text).attr('cid', node.id)
-                  $(_win).window('close')
+                  $(self).window('close')
                   if (data && data.fun) {
                     data.fun.call(this, node)
                   }
@@ -149,18 +174,19 @@ var E3 = {
    * onLoad : function 加载完窗口内容后执行<br/>
    */
   createWindow: params => {
+    const {width, height, title, url, onLoad} = params
     $('<div>').css({padding: '5px'}).window({
-      width: params.width ? params.width : '80%',
-      height: params.height ? params.height : '80%',
-      title: params.title ? params.title : ' ',
-      href: params.url,
+      width: width ? width : '80%',
+      height: height ? height : '80%',
+      title: title ? title : ' ',
+      href: url,
       modal: true,
       onClose: function () {
         $(this).window('destroy')
       },
       onLoad: function () {
-        if (params.onLoad) {
-          params.onLoad.call(this)
+        if (onLoad) {
+          onLoad.call(this)
         }
       }
     }).window('open')
@@ -181,23 +207,32 @@ var E3 = {
     $('.panel-tool-close').click()
   },
 
+  /**
+   * 生成商品规格模版
+   * @param node
+   * @param formId
+   */
   changeItemParam: (node, formId) => {
-    $.getJSON('/manager/item/param/select/' + node.id, data => {
+    const {id} = node
+    $.getJSON(`/manager/item/param/select/${id}`, data => {
       if (data.status === 200 && data.data) {
         $('#' + formId + ' .params').show()
         let paramData = JSON.parse(data.data.paramData)
-        let html = '<ul style="margin-left: -40px">'
+        let html = `<ul style="margin-left: -40px">`
         paramData.forEach(pd => {
           const {group, params} = pd
-          html += '<li><table>'
-          html += '<tr><td colspan="2" class="group">' + group + '</td></tr>'
+          html += `<li><table>`
+          html += `<tr><td colspan="2" class="group">${group}</td></tr>`
 
           params.forEach(ps => {
-            html += '<tr><td class="param"><span>' + ps + '</span>: </td><td><input class="easyui-textbox" style="width: 200px;" type="text"/></td></tr>'
+            html += `<tr>
+                      <td class="param"><span>${ps}</span>: </td>
+                      <td><input type="text" class="easyui-textbox" style="width: 200px;"/></td>
+                     </tr>`
           })
-          html += '</table></li>'
+          html += `</table></li>`
         })
-        html += '</ul>'
+        html += `</ul>`
         $('#' + formId + ' .params td').eq(1).html(html)
       } else {
         $('#' + formId + ' .params').hide()
@@ -211,8 +246,8 @@ var E3 = {
    */
   getItemParamData: select => {
     let paramJson = []
-    $(select + ' .params li').each(function (i, e) {
-      var trs = $(e).find('tr')
+    $(select + ' .params li').each((i, e) => {
+      let trs = $(e).find('tr')
       let group = trs.eq(0).text()
       let params = []
       // 从第二个tr开始
@@ -266,6 +301,7 @@ var E3 = {
     return selS[0].categoryId
   },
 
+
   /**
    * 初始化单图片上传组件 <br/>
    * 选择器为：.onePicUpload <br/>
@@ -273,15 +309,17 @@ var E3 = {
    */
   initOnePicUpload: () => {
     $('.onePicUpload').click(function () {
-      const _self = $(this)
+      const self = $(this)
       KindEditor.editor(E3.kingEditorParams).loadPlugin('image', function () {
         this.plugin.imageDialog({
           showRemote: false,
           clickFn: function (url, title, width, height, border, align) {
-            let input = _self.siblings('input')
+            let input = self.siblings('input')
             input.parent().find('img').remove()
             input.val(url)
-            input.after('<a href="' + url + '" target="_blank"><img src="' + url + '" width="80" height="50"></a>')
+            input.after(`<a href="${url}" target="_blank">
+                          <img src="${url}" width="80" height="50" alt="">
+                         </a>`)
             this.hideDialog()
           }
         })
@@ -324,9 +362,9 @@ var E3 = {
    * @returns {string}
    */
   formatItemParamData: val => {
-    let json = JSON.parse(val)
+    const json = JSON.parse(val)
     let array = []
-    $.each(json, (i, e) => {
+    json.forEach(e => {
       const {group} = e
       array.push(group)
     })

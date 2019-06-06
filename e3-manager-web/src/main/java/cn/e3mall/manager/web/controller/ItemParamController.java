@@ -22,9 +22,11 @@ public class ItemParamController extends BaseController {
     /**
      * 分页查询商品规格模版列表
      *
+     * @param page 页码
+     * @param rows 每页记录数
      * @return
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     public EasyUIDataGridResult getList(Integer page, Integer rows) {
         return itemParamService.getItemParamList(page, rows);
     }
@@ -32,7 +34,7 @@ public class ItemParamController extends BaseController {
     /**
      * 根据商品类目id查询商品规格模版列表
      *
-     * @param itemCatId
+     * @param itemCatId 商品类目id
      * @return
      */
     @GetMapping("/select/{itemCatId}")
@@ -51,7 +53,7 @@ public class ItemParamController extends BaseController {
     public E3Result save(@PathVariable Long itemCatId, String paramData) {
         return itemParamService.addItemParam(itemCatId, paramData);
     }
-    
+
     /**
      * 修改商品规格模版
      *
@@ -63,16 +65,16 @@ public class ItemParamController extends BaseController {
     public E3Result update(Long id, String paramData) {
         return itemParamService.updateItemParam(id, paramData);
     }
-    
+
     /**
      * 批量删除商品规格模版
      *
-     * @param ids
+     * @param ids 商品规格参数ids
      * @return
      */
     @PostMapping("/delete")
     public E3Result delete(String ids) {
         return itemParamService.deleteItemParam(ids);
     }
-    
+
 }

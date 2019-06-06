@@ -5,25 +5,23 @@ import cn.e3mall.common.base.pojo.E3Result;
 import cn.e3mall.common.base.pojo.EasyUIDataGridResult;
 
 /**
- * 
- *
  * @author colg
  */
 public interface ItemService {
 
-	/**
-	 * 根据商品id获取商品
-	 *
-	 * @param id
-	 * @return
-	 */
-	Item getTbItemById(Long id);
+    /**
+     * 根据商品id获取商品
+     *
+     * @param id
+     * @return
+     */
+    Item getTbItemById(Long id);
 
     /**
      * 分页查询商品列表
      *
-     * @param page
-     * @param rows
+     * @param page 页码
+     * @param rows 每页记录数
      * @return
      */
     EasyUIDataGridResult selectItemList(Integer page, Integer rows);
@@ -31,8 +29,8 @@ public interface ItemService {
     /**
      * 添加商品
      *
-     * @param item 商品信息
-     * @param desc 商品详情
+     * @param item      商品信息
+     * @param desc      商品详情
      * @param paramData 商品规格参数
      * @return
      */
@@ -41,11 +39,11 @@ public interface ItemService {
     /**
      * 修改商品
      *
-     * @param itemId 商品id
-     * @param item 商品信息
-     * @param desc 商品详情
-     * @param itemParamId 商品规格id 
-     * @param paramData 商品规格参数 
+     * @param itemId      商品id
+     * @param item        商品信息
+     * @param desc        商品详情
+     * @param itemParamId 商品规格id
+     * @param paramData   商品规格参数
      * @return
      */
     E3Result updateItem(Long itemId, Item item, String desc, Long itemParamId, String paramData);

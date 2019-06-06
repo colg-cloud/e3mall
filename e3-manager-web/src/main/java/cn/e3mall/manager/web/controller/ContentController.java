@@ -22,16 +22,16 @@ public class ContentController extends BaseController {
     /**
      * 根据内容类目id分页查询内容列表
      *
-     * @param page
-     * @param rows
-     * @param categoryId
+     * @param page       页码
+     * @param rows       每页记录数
+     * @param categoryId 内容类目id
      * @return
      */
-    @GetMapping("/query/list")
+    @PostMapping("/query/list")
     public EasyUIDataGridResult queryListByCategoryId(Integer page, Integer rows, Long categoryId) {
         return contentService.queryListByCategoryId(page, rows, categoryId);
     }
-    
+
     /**
      * 新增内容
      *
@@ -42,7 +42,7 @@ public class ContentController extends BaseController {
     public E3Result saveContent(Content content) {
         return contentService.saveContent(content);
     }
-    
+
     /**
      * 修改内容
      *
@@ -54,12 +54,12 @@ public class ContentController extends BaseController {
     public E3Result editContent(Long id, Content content) {
         return contentService.editContent(id, content);
     }
-    
+
     /**
      * 批量删除内容
      *
-     * @param categoryId
-     * @param ids
+     * @param categoryId 内容类目id
+     * @param ids        内容ids
      * @return
      */
     @PostMapping("/delete")

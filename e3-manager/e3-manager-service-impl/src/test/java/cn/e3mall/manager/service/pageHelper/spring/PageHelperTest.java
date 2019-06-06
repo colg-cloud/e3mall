@@ -1,7 +1,8 @@
-package cn.e3mall.manager.service.spring;
+package cn.e3mall.manager.service.pageHelper.spring;
 
 import java.util.List;
 
+import cn.e3mall.manager.service.BaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring/applicationContext-dao.xml")
-public class PageHelperTest {
+public class PageHelperTest extends BaseTest {
 
     @Autowired
     private ItemMapper itemMapper;

@@ -1,40 +1,48 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/static/js/kindeditor-4.1.10/themes/default/default.css">
-<script src="/static/js/kindeditor-4.1.10/kindeditor-all-min.js"></script>
-<script src="/static/js/kindeditor-4.1.10/lang/zh_CN.js"></script>
-<div style="padding:10px 10px 10px 10px">
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="common/kindeditor.jsp" %>
+<div style="padding: 10px;">
   <form id="itemAddForm" class="itemForm" method="post">
-    <table cellpadding="5">
+    <table style="padding: 5px;">
       <tr>
         <td>商品类目:</td>
         <td>
           <a href="javascript:" class="easyui-linkbutton selectItemCat">选择类目</a>
-          <input type="hidden" name="cid" style="width: 280px;"></input>
+          <input type="hidden" name="cid" style="width: 280px;"/>
         </td>
       </tr>
       <tr>
         <td>商品标题:</td>
-        <td><input class="easyui-textbox" type="text" name="title" data-options="required:true" style="width: 280px;"></input></td>
+        <td>
+          <input class="easyui-textbox" type="text" name="title" data-options="required:true" style="width: 280px;"/>
+        </td>
       </tr>
       <tr>
         <td>商品卖点:</td>
-        <td><input class="easyui-textbox" name="sellPoint" data-options="multiline:true,validType:'length[0,150]'" style="height: 60px; width: 280px;"></input>
+        <td>
+          <input class="easyui-textbox" name="sellPoint" style="height: 60px; width: 280px;"
+                 data-options="multiline:true, validType:'length[0,150]'"/>
         </td>
       </tr>
       <tr>
         <td>商品价格:</td>
-        <td><input class="easyui-numberbox" type="text" name="priceView" data-options="min:1,max:99999999,precision:2,required:true"/>
+        <td>
+          <input class="easyui-numberbox" type="text" name="priceView"
+                 data-options="required:true, min:1, max:99999999, precision:2"/>
           <input type="hidden" name="price"/>
         </td>
       </tr>
       <tr>
         <td>库存数量:</td>
-        <td><input class="easyui-numberbox" type="text" name="num" data-options="min:1,max:99999999,precision:0,required:true"/></td>
+        <td>
+          <input class="easyui-numberbox" type="text" name="num"
+                 data-options="required:true, min:1, max:99999999, precision:0"/>
+        </td>
       </tr>
       <tr>
         <td>条形码:</td>
         <td>
-          <input class="easyui-textbox" type="text" name="barcode" data-options="validType:'length[1,30]'"/>
+          <input class="easyui-textbox" type="text" name="barcode"
+                 data-options="validType:'length[1,30]'"/>
         </td>
       </tr>
       <tr>
@@ -47,14 +55,12 @@
       <tr>
         <td>商品描述:</td>
         <td>
-          <textarea style="width:800px;height:300px;visibility:hidden;" name="desc"></textarea>
+          <textarea name="desc" style="width: 800px; left: 300px; visibility: hidden;"></textarea>
         </td>
       </tr>
       <tr class="params hide">
         <td>商品规格:</td>
-        <td>
-
-        </td>
+        <td></td>
       </tr>
     </table>
     <input type="hidden" name="itemParams"/>
@@ -64,15 +70,16 @@
     <a href="javascript:" class="easyui-linkbutton" onclick="clearForm()">重置</a>
   </div>
 </div>
+
 <script>
-  var itemAddEditor
+  let itemAddEditor
   //页面初始化完毕后执行此方法
-  $(function () {
+  $(() => {
     // 创建富文本编辑器
     itemAddEditor = E3.createEditor('#itemAddForm [name=desc]')
     // 初始化类目选择和图片上传器
     E3.init({
-      fun: function (node) {
+      fun: node => {
         // 根据商品分类id获取商品规格模版, 生成规格信息
         E3.changeItemParam(node, 'itemAddForm')
       }
@@ -82,8 +89,9 @@
   //提交表单
   function submitForm() {
     //有效性验证
-    if (!$('#itemAddForm').form('validate')) {
-      $.messager.alert('提示', '表单还未填写完成!')
+    let $itemAddForm = $('#itemAddForm')
+    if (!$itemAddForm.form('validate')) {
+      $.messager.alert('提示', '表单还未填写完成!', 'warning')
       return
     }
     // 取商品价格, 单位为"分"
@@ -92,15 +100,15 @@
     itemAddEditor.sync()
 
     // 获取商品规格参数
-    var paramData = E3.getItemParamData('#itemAddForm')
+    let paramData = E3.getItemParamData('#itemAddForm')
     $('#itemAddForm [name=itemParams]').val(paramData)
 
     // ajax的post方式提交表单
     // $("#itemAddForm").serialize()将表单序列号为key-value形式的字符串
-    $.post('/manager/item/save', $('#itemAddForm').serialize(), function (data) {
+    $.post('/manager/item/save', $itemAddForm.serialize(), data => {
       if (data.status === 200) {
-        $.messager.alert('提示', '新增商品成功!')
-        setTimeout(function () {
+        $.messager.alert('提示', '新增商品成功!', 'info')
+        setTimeout(() => {
           window.location.href = '/manager/index'
         }, 500)
       }

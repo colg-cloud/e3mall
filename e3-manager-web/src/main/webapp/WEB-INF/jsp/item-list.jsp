@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <table id="itemList" class="easyui-datagrid"
-       data-options="title:'编辑商品'">
+       data-options="title:'商品列表', pagination:true, pageNumber:1, pageSize:30, rownumbers:true, fitColumns:true, striped:true">
 </table>
 
 <div id="itemEditWindow" class="easyui-window" style="width: 80%; height: 80%; padding: 10px;"
-     data-options="title:'编辑商品', closed:true">
+     data-options="title:'编辑商品', closed:true, modal:true, iconCls:'icon-save'">
 </div>
 
 <script>
@@ -12,17 +12,9 @@
     // 加载表格
     $('#itemList').datagrid({
       url: '/manager/item/list',
-      method: 'get',
-      pagination: true,
-      pageNumber: 1,
-      pageSize: 30,
-      rownumbers: true,
-      fitColumns: true,
-      striped: true,
-      idField: 'id',
       columns: [[
         {field: 'ck', checkbox: true},
-        {field: 'id', title: '商品ID', width: 180},
+        {field: 'id', title: '商品ID', width: 130},
         {field: 'title', title: '商品标题', width: 280},
         {field: 'cid', title: '商品类目ID', width: 80},
         {field: 'cname', title: '商品类目名称', width: 100},
@@ -39,7 +31,8 @@
           text: '新增', iconCls: 'icon-add', handler: () => {
             $('.tree-title:contains("新增商品")').parent().click()
           }
-        }, {
+        },
+        {
           text: '编辑', iconCls: 'icon-edit', handler: () => {
             let ids = E3.getSelectionsIds('#itemList')
             if (ids.length === 0) {
@@ -53,8 +46,6 @@
 
             $('#itemEditWindow').window({
               href: '/manager/item-edit',
-              modal: true,
-              iconCls: 'icon-save',
               onLoad: () => {
                 // 回显数据
                 let data = E3.getSelections('#itemList')[0]
@@ -108,14 +99,15 @@
               }
             }).window('open')
           }
-        }, {
+        },
+        {
           text: '删除', iconCls: 'icon-cancel', handler: () => {
             let ids = E3.getSelectionsIds('#itemList')
             if (ids.length === 0) {
-              $.messager.alert('提示', '未选中商品!')
+              $.messager.alert('提示', '未选中商品!', 'warning')
               return
             }
-            $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的商品吗？', r => {
+            $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的商品吗?', r => {
               if (r) {
                 $.post('/manager/item/delete', {ids}, data => {
                   if (data.status === 200) {
@@ -127,7 +119,8 @@
               }
             })
           }
-        }, {
+        },
+        {
           text: '下架', iconCls: 'icon-remove', handler: () => {
             let ids = E3.getSelectionsIds('#itemList')
             if (ids.length === 0) {
@@ -146,7 +139,8 @@
               }
             })
           }
-        }, {
+        },
+        {
           text: '上架', iconCls: 'icon-remove', handler: () => {
             let ids = E3.getSelectionsIds('#itemList')
             if (ids.length === 0) {

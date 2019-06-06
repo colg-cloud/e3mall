@@ -4,8 +4,6 @@ import cn.e3mall.common.base.pojo.E3Result;
 import cn.e3mall.common.base.pojo.EasyUIDataGridResult;
 
 /**
- * 
- *
  * @author colg
  */
 public interface ItemParamService {
@@ -13,8 +11,8 @@ public interface ItemParamService {
     /**
      * 分页查询商品规格模版列表
      *
-     * @param page
-     * @param rows
+     * @param page 页码
+     * @param rows 每页记录数
      * @return
      */
     EasyUIDataGridResult getItemParamList(Integer page, Integer rows);
@@ -22,7 +20,7 @@ public interface ItemParamService {
     /**
      * 根据商品类目id查询商品规格模版列表
      *
-     * @param itemCatId
+     * @param itemCatId 商品类目id
      * @return
      */
     E3Result findItemParamByItemCatId(Long itemCatId);
@@ -48,7 +46,7 @@ public interface ItemParamService {
     /**
      * 批量删除商品规格模版
      *
-     * @param ids
+     * @param ids 商品规格参数ids
      * @return
      */
     E3Result deleteItemParam(String ids);

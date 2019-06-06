@@ -19,12 +19,15 @@
     </resultMap>
     
     <update id="updateItemStatus">
-        UPDATE tb_item ti
-        SET ti.status = #{status}, ti.updated = NOW()
-        WHERE ti.id IN (
-        <foreach collection="ids" item="id" separator=",">
-            #{id}
-        </foreach>
+        UPDATE
+            tb_item ti
+        SET
+            ti.status = #{status}, ti.updated = NOW()
+        WHERE
+            ti.id IN (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
         )
     </update>
     

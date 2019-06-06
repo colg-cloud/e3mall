@@ -54,7 +54,7 @@
             <artifactId>spring-jms</artifactId>
         </dependency>
         
-        <!--duboo-->
+        <!--dubbo-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>

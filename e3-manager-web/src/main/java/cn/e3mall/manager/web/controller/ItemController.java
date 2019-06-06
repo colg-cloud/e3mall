@@ -34,7 +34,7 @@ public class ItemController extends BaseController {
      * @param rows 每页记录数
      * @return
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     public EasyUIDataGridResult selectItemList(@RequestParam Integer page, @RequestParam Integer rows) {
         // 调用服务查询商品列表
         return itemService.selectItemList(page, rows);
@@ -68,9 +68,9 @@ public class ItemController extends BaseController {
     /**
      * 添加商品
      *
-     * @param item
-     * @param desc
-     * @param itemParams
+     * @param item       商品信息
+     * @param desc       商品描述
+     * @param itemParams 商品规格参数
      * @return
      */
     @PostMapping("/save")

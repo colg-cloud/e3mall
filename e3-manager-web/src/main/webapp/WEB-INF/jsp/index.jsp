@@ -20,7 +20,7 @@
   </div>
 
   <div style="width: 180px;"
-       data-options="region:'west', title:'系统菜单', split:true">
+       data-options="title:'系统菜单', region:'west', split:true">
     <ul id="menu" class="easyui-tree" style="margin-top: 10px; margin-left: 5px;">
       <li>
         <span>商品管理</span>
@@ -48,14 +48,16 @@
 
   <div data-options="region:'center'">
     <div id="tabs" class="easyui-tabs">
-      <div title="首页" style="padding: 20px;">
+      <div style="padding: 20px;"
+           data-options="title:'首页'">
         <img src="${pageContext.request.contextPath}/static/images/welcome.gif" alt="" style="width: 145px; height: 46px;">
       </div>
     </div>
   </div>
 
   <!--页脚信息-->
-  <div data-options="region: 'south', border: false" style="height: 20px; background: #F3F3F3; padding: 2px; vertical-align: middle;">
+  <div style="height: 20px; background: #F3F3F3; padding: 2px; vertical-align: middle;"
+       data-options="title:'', region:'south', border:false">
     <span id="sysVersion">系统版本: V1.0</span>
     <span id="nowTime"></span>
   </div>

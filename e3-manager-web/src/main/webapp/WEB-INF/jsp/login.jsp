@@ -20,13 +20,14 @@
       <div style="margin-bottom:20px">
         <div>
           密&nbsp;&nbsp;码: &nbsp;
-          <input class="easyui-textbox" name="password" type="password" value="123456" style="width: 200px; height: 32px;"
+          <input class="easyui-textbox" name="password" value="123456" style="width: 200px; height: 32px;"
                  data-options="required:true, iconCls:'icon-lock', iconWidth:38"/>
         </div>
       </div>
       <div>
-        <a id="login" class="easyui-linkbutton" iconCls="icon-ok" style="padding: 5px 0; width: 80%;">
-          <span style="font-size: 14px;">登录</span>
+        <a id="login" class="easyui-linkbutton" style="padding: 5px 0; width: 80%; font-size: 14px;"
+           data-options="iconCls:'icon-ok'">
+          登录
         </a>
       </div>
     </div>
@@ -38,7 +39,7 @@
       const password = $('[name=password]').val()
 
       if (username !== 'admin' || password !== '123456') {
-        $.messager.alert('错误', '用户名或密码不正确!')
+        $.messager.alert('错误', '用户名或密码不正确!', 'warning')
         return
       }
       window.location.href = '/manager/index'
