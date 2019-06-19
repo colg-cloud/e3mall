@@ -1,17 +1,18 @@
 package cn.e3mall.common.base.util;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-
-import cn.hutool.core.util.CharsetUtil;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 字符串工具类
  *
  * @author colg
  */
-public class StringUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class StringUtil {
 
     /**
      * ISO8859-1 转换为 UTF-8 编码，防止GET请求乱码

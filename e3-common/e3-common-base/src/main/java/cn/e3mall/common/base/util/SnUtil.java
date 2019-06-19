@@ -4,13 +4,16 @@ import java.util.Date;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * 序号生成工具
  *
  * @author colg
  */
-public class SnUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class SnUtil {
 
     /**
      * 图片名称生成

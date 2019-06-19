@@ -74,4 +74,5 @@ public class TencentCosClient {
     public void deleteFile(String key) {
         cosClient.deleteObject(BUCKET_NAME, key);
     }
+
 }

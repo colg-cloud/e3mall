@@ -42,7 +42,7 @@ public class FreemarkerTest {
         // 6. 关闭流
         out.close();
         
-        log.info("模版路径: {}", pathname + "\\htllo.ftl");
+        log.info("模版路径: {}", pathname + "\\hello.ftl");
         log.info("输出路径: {}", fileName);
     }
     

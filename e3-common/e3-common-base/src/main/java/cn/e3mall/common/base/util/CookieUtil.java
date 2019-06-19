@@ -8,6 +8,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,6 +21,7 @@ import cn.hutool.core.util.StrUtil;
  *
  * @author colg
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CookieUtil {
 
     /** 本机地址 */
