@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * resid 客户端
+ * redis 客户端
  * <p>
  * 采用策略模式，封装了redis的两种配置方式（单机，集群），可以更方便的切换。
  * </p>

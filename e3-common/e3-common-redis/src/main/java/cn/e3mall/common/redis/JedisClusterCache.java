@@ -38,10 +38,11 @@ public class JedisClusterCache implements JedisClient {
         Properties prop = Props.getProp("conf/redis.properties", CharsetUtil.CHARSET_UTF_8);
         String clusterNodes = prop.getProperty("redis.cluster.nodes");
         Set<HostAndPort> nodes = new HashSet<>(9);
-        StrUtil.split(clusterNodes, ',').forEach(clusterNode -> {
-            List<String> node = StrUtil.split(clusterNode, ':');
-            nodes.add(new HostAndPort(node.get(0), Integer.parseInt(node.get(1))));
-        });
+        StrUtil.split(clusterNodes, ',')
+               .forEach(clusterNode -> {
+                   List<String> node = StrUtil.split(clusterNode, ':');
+                   nodes.add(new HostAndPort(node.get(0), Integer.parseInt(node.get(1))));
+               });
         log.info("Redis 集群: {}", clusterNodes);
         return new JedisCluster(nodes);
     }

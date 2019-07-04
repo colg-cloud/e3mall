@@ -1,5 +1,6 @@
 package cn.e3mall.common.redis.spring;
 
+import cn.e3mall.common.redis.BaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring/redis-02-cloud.xml")
-public class JedisClient02CloudTest {
+public class JedisClient02CloudTest extends BaseTest {
 
-    private static final String KEY = "e3-jedis";
+    private static final String KEY = "e3-redis";
 
     @Autowired
     private JedisClient jedisClient;
