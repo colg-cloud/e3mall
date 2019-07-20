@@ -1,9 +1,13 @@
 package cn.e3mall.generator.plugin;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import cn.hutool.core.lang.Console;
+import com.alibaba.fastjson.JSON;
+import org.junit.Test;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -22,12 +26,12 @@ import tk.mybatis.mapper.generator.MapperCommentGenerator;
  * @author colg
  */
 public class E3LombokPlugin extends FalseMethodPlugin {
-    private Set<String> mappers = new HashSet<String>();
+    private Set<String> mappers = new HashSet<>();
     private boolean caseSensitive = false;
     private boolean useMapperCommentGenerator = true;
-    /** 开始的分隔符，例如mysql为`，sqlserver为[ */
+    /** 开始的分隔符，例如mysql为`，sqlServer为[ */
     private String beginningDelimiter = "";
-    /** 结束的分隔符，例如mysql为`，sqlserver为] */
+    /** 结束的分隔符，例如mysql为`，sqlServer为] */
     private String endingDelimiter = "";
     /** 数据库模式 */
     private String schema;
@@ -49,7 +53,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * Generate mapper interface
+     * 生成Mapper接口
      *
      * @param interfaze
      * @param topLevelClass
@@ -64,7 +68,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
         interfaze.addJavaDocLine(" *");
         interfaze.addJavaDocLine(" * @author colg");
         interfaze.addJavaDocLine(" */");
-        
+
         // 获取实体类
         FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         // import接口
@@ -75,11 +79,10 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * Process packages and @Table annotations for entity class
+     * 处理实体类的包和@Table注解
      *
      * @param topLevelClass
      * @param introspectedTable
-     * @author colg
      */
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         // doc
@@ -103,24 +106,28 @@ public class E3LombokPlugin extends FalseMethodPlugin {
         topLevelClass.addAnnotation("@Accessors(chain = true)");
 
         String tableName = introspectedTable.getFullyQualifiedTableNameAtRuntime();
-        // 如果包含空格，或者需要分隔符，需要完善
+        // 如果包含空格, 或者需要分隔符, 需要完善
         if (StrUtil.containsBlank(tableName)) {
             tableName = context.getBeginningDelimiter() + tableName + context.getEndingDelimiter();
         }
         // 是否忽略大小写，对于区分大小写的数据库，会有用
-        if (caseSensitive && !topLevelClass.getType().getShortName().equals(tableName)) {
+        String shortName = topLevelClass.getType()
+                                        .getShortName();
+        if (caseSensitive && !tableName.equals(shortName)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
-        } else if (!topLevelClass.getType().getShortName().equalsIgnoreCase(tableName)) {
+        } else if (!tableName.equalsIgnoreCase(shortName)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
-        } else if (StringUtility.stringHasValue(schema) || StringUtility.stringHasValue(beginningDelimiter) || StringUtility.stringHasValue(endingDelimiter)) {
+        } else if (!StrUtil.hasBlank(schema, beginningDelimiter, endingDelimiter)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
         } else if (forceAnnotation) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
         }
+
+
     }
 
     /**
-     * Generate base entity class
+     * 生成基础实体类
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -133,7 +140,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * modelPrimaryKeyClassGenerated: 生成实体类注解KEY对象
+     * 生成实体类注解KEY对象
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -146,7 +153,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * modelRecordWithBLOBsClassGenerated: 生成带BLOB字段的对象
+     * 生成带BLOB字段的对象
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -169,7 +176,8 @@ public class E3LombokPlugin extends FalseMethodPlugin {
             context.setCommentGeneratorConfiguration(commentCfg);
         }
         // 支持oracle获取注释#114
-        context.getJdbcConnectionConfiguration().addProperty("remarksReporting", "true");
+        context.getJdbcConnectionConfiguration()
+               .addProperty("remarksReporting", "true");
     }
 
     @Override
@@ -177,10 +185,7 @@ public class E3LombokPlugin extends FalseMethodPlugin {
         super.setProperties(properties);
         String mappers = this.properties.getProperty("mappers");
         if (StringUtility.stringHasValue(mappers)) {
-            String comma = ",";
-            for (String mapper : mappers.split(comma)) {
-                this.mappers.add(mapper);
-            }
+            Collections.addAll(this.mappers, mappers.split(","));
         } else {
             throw new RuntimeException("Mapper插件缺少必要的mappers属性!");
         }
@@ -212,4 +217,5 @@ public class E3LombokPlugin extends FalseMethodPlugin {
             commentCfg.addProperty("endingDelimiter", this.endingDelimiter);
         }
     }
+
 }

@@ -17,18 +17,25 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  */
 public class GeneratorTest {
 
-    /** 配置文件路径 */
-    private static final String GENERATOR_XML_PATH = "src/main/resources/generatorInv.xml";
+    /**
+     * Project Base Path
+     */
+    private static final String PROJECT_PATH = System.getProperty("user.dir");
+
+    /**
+     * 配置文件路径
+     */
+    private static final String GENERATOR_XML_PATH = "/src/main/resources/conf/generatorInv.xml";
 
     @Test
     public void testGenerator() throws Exception {
-        List<String> warnings = new ArrayList<String>();
-        boolean overwrite = true;
-        File configFile = new File(GENERATOR_XML_PATH);
+        List<String> warnings = new ArrayList<>();
+        File configFile = new File(PROJECT_PATH + GENERATOR_XML_PATH);
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
-        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+        DefaultShellCallback callback = new DefaultShellCallback(true);
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
         myBatisGenerator.generate(null);
     }
+
 }

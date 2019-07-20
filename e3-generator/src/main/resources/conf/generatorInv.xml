@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+    <classPathEntry location="E:\Maven\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar" />
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8" />
+        <!--Mapper插件-->
+        <plugin type="cn.e3mall.generator.plugin.E3LombokPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+            <property name="forceAnnotation" value="true" />
+        </plugin>
+        <!--实现Serializable接口-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+        <!--数据库连接的信息: 驱动类, 连接地址, 用户名, 密码-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/e3mall?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false"
+                        userId="root"
+                        password="123456" />
+
+        <!--默认false, 把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer, 为 true 时把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true" />
+        </javaTypeResolver>
+
+        <!--targetProject: entityClass生成的位置-->
+        <javaModelGenerator targetProject="src/main/java" targetPackage="cn.e3mall.common.base.entity">
+            <property name="rootClass" value="cn.e3mall.common.base.core.BaseEntity" />
+        </javaModelGenerator>
+
+        <!--targetProject: mapper映射文件生成的位置-->
+        <sqlMapGenerator targetProject="src/main/resources" targetPackage="/mybatis/mapper" />
+
+        <!--targetPackage：mapper接口生成的位置-->
+        <!--<javaClientGenerator targetProject="src/main/java" targetPackage="cn.colg.dao" type="XMLMAPPER" />-->
+        <javaClientGenerator targetProject="src/main/java" targetPackage="cn.e3mall.sso.dao" type="XMLMAPPER" />
+
+        <!--指定数据库表以及对应的[实体类]-->
+        <!--<table tableName="%" />-->
+        <!--<table tableName="table_emp" domainObjectName="Employee" />-->
+
+        <!--<table tableName="tb_content" domainObjectName="Content" />-->
+        <!--<table tableName="tb_content_category" domainObjectName="ContentCategory" />-->
+        <!--<table tableName="tb_item" domainObjectName="Item" />-->
+        <!--<table tableName="tb_item_cat" domainObjectName="ItemCat" />-->
+        <!--<table tableName="tb_item_desc" domainObjectName="ItemDesc" />-->
+        <!--<table tableName="tb_item_param" domainObjectName="ItemParam" />-->
+        <!--<table tableName="tb_item_param_item" domainObjectName="ItemParamItem" />-->
+        <!--<table tableName="tb_order" domainObjectName="Order" />-->
+        <!--<table tableName="tb_order_item" domainObjectName="OrderItem" />-->
+        <!--<table tableName="tb_order_shipping" domainObjectName="OrderShipping" />-->
+
+        <table tableName="tb_user" domainObjectName="User" />
+
+    </context>
+</generatorConfiguration>
