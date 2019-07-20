@@ -12,6 +12,8 @@ SHOW FULL COLUMNS FROM tb_item;
 SHOW FULL COLUMNS FROM tb_item_cat;
 SHOW FULL COLUMNS FROM tb_content;
 SHOW FULL COLUMNS FROM tb_content_category;
+SHOW FULL COLUMNS FROM tb_item_param;
+SHOW FULL COLUMNS FROM tb_item_param_item;
 
 -- EasyUI tree
 -- 树控件数据格式化
@@ -99,20 +101,13 @@ FROM tb_item ti
 LEFT JOIN tb_item_cat tbc ON tbc.id = ti.cid
 WHERE ti.status = 1;
 
-SHOW FULL COLUMNS FROM tb_item;
-SHOW FULL COLUMNS FROM tb_item_cat;
-SHOW FULL COLUMNS FROM tb_content;
-SHOW FULL COLUMNS FROM tb_content_category;
-SHOW FULL COLUMNS FROM tb_item_param;
-SHOW FULL COLUMNS FROM tb_item_param_item;
+        
+SHOW INDEX FROM tb_item_param;
+SHOW INDEX FROM tb_item_cat;
 
+SHOW CREATE TABLE tb_item_param;
+        
+-- 添加索引
+DROP INDEX idx_item_cat_id ON tb_item_param;
 
-SELECT * FROM tb_order;
-SELECT * FROM tb_order_item;
-SELECT * FROM tb_order_shipping;
-
-        SELECT
-            c.*
-        FROM
-            tb_content c
-        WHERE c.category_id = #{categoryId}
+ALTER TABLE tb_item_param ADD INDEX idx_item_cat_id(item_cat_id);

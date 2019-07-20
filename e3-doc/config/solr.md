@@ -1,9 +1,10 @@
+- solr 配置
 ```xml
-  <!-- 添加fieldType -->
+  <!--添加fieldType-->
   <fieldType name="text_ik" class="solr.TextField">
     <analyzer class="org.wltea.analyzer.lucene.IKAnalyzer"/>
   </fieldType>
-  <!-- 配置业务域，设置业务系统field -->
+  <!--配置业务域，设置业务系统field-->
   <field name="item_title" type="text_ik" indexed="true" stored="true"/>
   <field name="item_sell_point" type="text_ik" indexed="true" stored="true"/>
   <field name="item_price"  type="long" indexed="true" stored="true"/>

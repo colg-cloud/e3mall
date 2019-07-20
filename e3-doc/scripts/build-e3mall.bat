@@ -2,7 +2,7 @@
 rem ----------------------------------------------------------------------------------------------------
 rem  本脚本用于编译安装: e3mall
 rem  环境要求: Maven + JDK8
-rem  运行方式: cmd -> cd D:\workspace-all\iheima\e3mall\e3-doc\scripts
+rem  运行方式: cmd -> cd D:\workspaces\idea\iheima\e3mall\e3-doc\scripts
 rem ----------------------------------------------------------------------------------------------------
 
 
@@ -16,8 +16,6 @@ call mvn clean install
 echo ">>>> 2. e3-common"
 cd ../e3-common
 call mvn clean install
-
-
 
 echo ">>>> 3. e3-manager"
 cd ../e3-manager

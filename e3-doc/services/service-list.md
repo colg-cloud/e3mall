@@ -120,7 +120,7 @@ http://192.168.21.110/
 
 ```ini
 # nginx 配置html静态服务器
-cd D:\workspace-all\iheima\e3mall\e3-doc\nginx-1.14.0
+cd D:\workspaces\idea\iheima\e3mall\e3-doc\nginx-1.14.0
 
 nginx
 nginx -s quit
