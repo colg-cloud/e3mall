@@ -174,7 +174,7 @@ public final class CookieUtil {
      * @param cookieMaxage cookie生效的最大秒数
      * @param isEncode
      */
-    private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, boolean isEncode) {
+    private static void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, boolean isEncode) {
         if (cookieValue == null) {
             cookieValue = "";
         } else {
@@ -210,7 +210,7 @@ public final class CookieUtil {
      * @param cookieMaxage cookie 有效时间: 秒
      * @param encodeString
      */
-    private static final void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, String encodeString) {
+    private static void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, String encodeString) {
         if (cookieValue == null) {
             cookieValue = "";
         } else {
@@ -242,15 +242,17 @@ public final class CookieUtil {
      * @param request
      * @return
      */
-    private static final String getDomainName(HttpServletRequest request) {
-        String domainName = null;
+    private static String getDomainName(HttpServletRequest request) {
+        String domainName;
 
-        String serverName = request.getRequestURL().toString();
+        String serverName = request.getRequestURL()
+                                   .toString();
         if (StrUtil.isBlank(serverName)) {
             domainName = "";
         } else {
             // http://
-            serverName = serverName.toLowerCase().substring(7);
+            serverName = serverName.toLowerCase()
+                                   .substring(7);
             final int end = serverName.indexOf("/");
             serverName = serverName.substring(0, end);
             final String[] domains = serverName.split("\\.");
@@ -259,7 +261,7 @@ public final class CookieUtil {
             if (len > domainLength) {
                 // www.xxx.com.cn
                 domainName = "." + domains[len - domainLength] + "." + domains[len - 2] + "." + domains[len - 1];
-            } else if (len <= domainLength && len > 1) {
+            } else if (len > 1) {
                 // xxx.com or xxx.cn
                 domainName = "." + domains[len - 2] + "." + domains[len - 1];
             } else {
@@ -268,8 +270,8 @@ public final class CookieUtil {
         }
 
         String colon = ":";
-        if (domainName != null && domainName.indexOf(colon) > 0) {
-            String[] ary = domainName.split("\\:");
+        if (domainName.indexOf(colon) > 0) {
+            String[] ary = domainName.split(":");
             domainName = ary[0];
         }
         return domainName;

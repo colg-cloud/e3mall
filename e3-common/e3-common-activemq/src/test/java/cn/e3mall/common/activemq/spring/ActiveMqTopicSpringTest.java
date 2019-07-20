@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class ActiveMqTopicTest extends BaseTest {
+public class ActiveMqTopicSpringTest extends BaseTest {
 
     /** 初始化Spring容器 */
     private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/activemq-topic.xml");

@@ -25,4 +25,5 @@
     <bean id="destination" class="org.apache.activemq.command.ActiveMQTopic">
         <constructor-arg name="name" value="${mq.topic.name}" />
     </bean>
+
 </beans>

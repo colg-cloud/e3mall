@@ -52,4 +52,5 @@ public class TencentCosTest {
         // 关闭客户端
         cosclient.shutdown();
     }
+
 }

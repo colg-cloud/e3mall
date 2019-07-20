@@ -26,4 +26,5 @@
         <!--设置消息队列名称-->
         <constructor-arg name="name" value="${mq.queue.name}" />
     </bean>
+
 </beans>

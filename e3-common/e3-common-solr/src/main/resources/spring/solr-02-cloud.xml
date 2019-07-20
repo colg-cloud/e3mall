@@ -13,4 +13,5 @@
         <constructor-arg name="zkHost" value="${zkHost}" />
         <property name="defaultCollection" value="${defaultCollection}" />
     </bean>
+
 </beans>

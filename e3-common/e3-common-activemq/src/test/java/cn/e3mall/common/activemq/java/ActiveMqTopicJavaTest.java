@@ -1,4 +1,4 @@
-package cn.e3mall.common.activemq;
+package cn.e3mall.common.activemq.java;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -11,7 +11,9 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
+import cn.e3mall.common.activemq.BaseTest;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.command.ActiveMQTextMessage;
 import org.junit.Test;
 
 import cn.hutool.core.date.DateUtil;
@@ -24,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class ActiveMqTopicTest extends BaseTest {
+public class ActiveMqTopicJavaTest extends BaseTest {
 
     /** tcp:// 规定写法; 61616: activemq服务监控端口 */
     private static final String BROKER_URL = "tcp://192.168.21.102:61616";
@@ -53,14 +55,14 @@ public class ActiveMqTopicTest extends BaseTest {
         Topic topic = session.createTopic(TOPIC_NAME);
 
         // 6. 创建消息生产者
-        MessageProducer producer = session.createProducer(topic);
+        MessageProducer messageProducer = session.createProducer(topic);
         // 7. 创建消息对象, 可以使用文本消息
         TextMessage textMessage = session.createTextMessage("ActiveMq Queue Test: " + DateUtil.now());
         // 8. 发送消息
-        producer.send(textMessage);
+        messageProducer.send(textMessage);
 
         // 9. 关闭资源
-        producer.close();
+        messageProducer.close();
         session.close();
         connection.close();
     }
@@ -83,18 +85,20 @@ public class ActiveMqTopicTest extends BaseTest {
         // 5. 创建消息队列.
         Topic topic = session.createTopic(TOPIC_NAME);
         // 6. 创建消息消费者
-        MessageConsumer consumer = session.createConsumer(topic);
+        MessageConsumer messageConsumer = session.createConsumer(topic);
         // 7. 接收消息
-        consumer.setMessageListener(new MessageListener() {
+        messageConsumer.setMessageListener(new MessageListener() {
 
             @Override
             public void onMessage(Message message) {
-                // 获取消息内容
-                try {
-                    String result = ((TextMessage)message).getText();
-                    log.info("发布/订阅模式接收到的消息: {}", result);
-                } catch (JMSException e) {
-                    e.printStackTrace();
+                if (message instanceof ActiveMQTextMessage) {
+                    ActiveMQTextMessage textMessage = (ActiveMQTextMessage)message;
+                    try {
+                        String result = textMessage.getText();
+                        log.info("发布/订阅模式接收到的消息: {}", result);
+                    } catch (JMSException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -104,7 +108,7 @@ public class ActiveMqTopicTest extends BaseTest {
         // 8. 等待键盘输入; 否则一直监听着
         System.in.read();
         // 9. 关闭资源
-        consumer.close();
+        messageConsumer.close();
         session.close();
         connection.close();
     }

@@ -92,16 +92,15 @@ public class Solr01Test {
      */
     @Test
     public void testSolrQuery() throws Exception {
-        // 查询
-        SolrQuery solrQuery = new SolrQuery();
+        // 搜索条件; 分页; 高亮; 高亮字段; 高亮样式/标签
+        SolrQuery solrQuery = new SolrQuery().setQuery("手机")
+                                             .setStart(0)
+                                             .setRows(10)
+                                             .setHighlight(true)
+                                             .setHighlightSimplePre("<em>")
+                                             .setHighlightSimplePost("</em>");
         // 搜索域
         solrQuery.set("df", "item_title");
-        // 条件
-        solrQuery.setQuery("手机");
-        // 分页
-        solrQuery.setStart(0).setRows(10);
-        // 高示; 高亮字段; 高亮样式/标签
-        solrQuery.setHighlight(true).setHighlightSimplePre("<em>").setHighlightSimplePost("</em>");
 
         // 执行查询
         QueryResponse queryResponse = solrServer.query(solrQuery);
@@ -117,4 +116,5 @@ public class Solr01Test {
         Map<String, Map<String, List<String>>> map = queryResponse.getHighlighting();
         log.info("高亮结果集: {}", JSON.toJSONString(map));
     }
+
 }

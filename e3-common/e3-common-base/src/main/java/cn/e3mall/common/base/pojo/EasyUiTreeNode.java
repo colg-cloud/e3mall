@@ -23,8 +23,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class EasyUiTreeNode extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     /** 节点id */
     private Long id;
 
@@ -35,4 +33,5 @@ public class EasyUiTreeNode extends BaseEntity implements Serializable {
     @JSONField(ordinal = 1)
     private String state;
 
+    private static final long serialVersionUID = 1L;
 }

@@ -1,4 +1,4 @@
-package cn.e3mall.common.activemq;
+package cn.e3mall.common.base;
 
 import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;

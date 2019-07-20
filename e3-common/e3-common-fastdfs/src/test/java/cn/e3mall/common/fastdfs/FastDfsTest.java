@@ -1,13 +1,18 @@
 package cn.e3mall.common.fastdfs;
 
-import org.csource.fastdfs.ClientGlobal;
-import org.csource.fastdfs.StorageClient1;
-import org.csource.fastdfs.StorageServer;
-import org.csource.fastdfs.TrackerClient;
-import org.csource.fastdfs.TrackerServer;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Console;
+import cn.hutool.core.lang.Dict;
+import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.csource.fastdfs.*;
 import org.junit.Test;
 
-import lombok.extern.slf4j.Slf4j;
+import java.math.BigDecimal;
+import java.util.List;
+
+import static cn.hutool.core.comparator.CompareUtil.compare;
+import static cn.hutool.core.util.NumberUtil.add;
 
 /**
  * FastDfs 测试
@@ -15,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class FastDfsTest extends BaseTest{
+public class FastDfsTest extends BaseTest {
 
     /** Project Base Path */
     public static final String PROJECT_PATH = System.getProperty("user.dir");

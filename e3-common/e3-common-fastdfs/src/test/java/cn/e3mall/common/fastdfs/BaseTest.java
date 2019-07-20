@@ -25,4 +25,5 @@ public abstract class BaseTest {
         log.info("Junit: [{}ms]", DateUtil.spendMs(time));
         log.info("----------------------------------------------------------------------------------------------------");
     }
+    
 }

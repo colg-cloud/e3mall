@@ -1,5 +1,6 @@
 package cn.e3mall.common.base.util;
 
+import cn.e3mall.common.base.BaseTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +14,7 @@ import static org.junit.Assert.*;
  * @author colg
  */
 @Slf4j
-public class SnUtilTest {
+public class SnUtilTest extends BaseTest {
 
     /**
      * Test method for {@link cn.e3mall.common.base.util.SnUtil#genImageName()}.

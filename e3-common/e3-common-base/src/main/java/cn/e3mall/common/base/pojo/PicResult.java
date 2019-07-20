@@ -21,16 +21,18 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PicResult extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    /** 上传图片返回值, 成功(0), 失败(1) */
-    private Integer error;
+    /** 上传图片响应状态 */
+    private Integer status;
 
     /** 回显图片使用的url */
     private String url;
 
     /** 错误时的错误消息 */
     private String message;
+
+    private static final long serialVersionUID = 1L;
+
+    /// ----------------------------------------------------------------------------------------------------
 
     /**
      * 上传成功
@@ -39,7 +41,7 @@ public class PicResult extends BaseEntity implements Serializable {
      * @return PicResult
      */
     public static PicResult ok(String url) {
-        return new PicResult(0, url, null);
+        return new PicResult(E3Result.OK, url, null);
     }
 
     /**
@@ -49,7 +51,7 @@ public class PicResult extends BaseEntity implements Serializable {
      * @return PicResult
      */
     public static PicResult fail(String message) {
-        return new PicResult(1, null, message);
+        return new PicResult(E3Result.FAIL, null, message);
     }
 
 }

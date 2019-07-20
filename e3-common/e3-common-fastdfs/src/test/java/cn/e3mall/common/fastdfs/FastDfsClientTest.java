@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class FastDfsClientTest extends BaseTest{
+public class FastDfsClientTest extends BaseTest {
 
     /** Project Base Path */
     public static final String PROJECT_PATH = System.getProperty("user.dir");

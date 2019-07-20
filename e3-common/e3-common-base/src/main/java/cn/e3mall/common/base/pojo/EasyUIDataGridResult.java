@@ -29,15 +29,16 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class EasyUIDataGridResult extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    /** 总记录数 */
+    private Long total;
 
-	/** 总记录数 */
-	private Long total;
+    /** 结果集 */
+    @JSONField(ordinal = 1)
+    private List<?> rows;
 
-	/** 结果集 */
-	@JSONField(ordinal = 1)
-	private List<?> rows;
+    private static final long serialVersionUID = 1L;
 
+    /// ----------------------------------------------------------------------------------------------------
 
     /**
      * 构造表格数据
@@ -45,18 +46,18 @@ public class EasyUIDataGridResult extends BaseEntity implements Serializable {
      * @param data 数据
      * @return easyUIDataGridResult
      */
-	public static EasyUIDataGridResult ok(Object data) {
-		EasyUIDataGridResult easyUIDataGridResult = new EasyUIDataGridResult();
-		if (data instanceof Page<?>) {
-			Page<?> page = (Page<?>) data;
-			easyUIDataGridResult.setRows(page.getResult())
-			                    .setTotal(page.getTotal());
-		} else {
-			List<?> list = (List<?>) data;
-			easyUIDataGridResult.setRows(list)
-			                    .setTotal((long) list.size());
-		}
-		return easyUIDataGridResult;
-	}
+    public static EasyUIDataGridResult ok(Object data) {
+        EasyUIDataGridResult easyUIDataGridResult = new EasyUIDataGridResult();
+        if (data instanceof Page<?>) {
+            Page<?> page = (Page<?>)data;
+            easyUIDataGridResult.setRows(page.getResult())
+                                .setTotal(page.getTotal());
+        } else {
+            List<?> list = (List<?>)data;
+            easyUIDataGridResult.setRows(list)
+                                .setTotal((long)list.size());
+        }
+        return easyUIDataGridResult;
+    }
 
 }

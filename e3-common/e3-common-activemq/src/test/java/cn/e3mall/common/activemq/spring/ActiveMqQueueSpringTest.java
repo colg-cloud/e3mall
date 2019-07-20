@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class ActiveMqQueueTest extends BaseTest {
+public class ActiveMqQueueSpringTest extends BaseTest {
 
     /** 初始化Spring容器 */
     private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/activemq-queue.xml");
@@ -32,30 +32,28 @@ public class ActiveMqQueueTest extends BaseTest {
 
     /**
      * 生产者; 发送消息
-     *
-     * @throws Exception
      */
     @Test
     public void testProducer() {
         jmsTemplate.send(destination, new MessageCreator() {
-
             @Override
             public Message createMessage(Session session) throws JMSException {
                 return session.createTextMessage("ActiveMq Queue Spring Test: " + DateUtil.now());
             }
         });
+        log.info("队列模式 生产者发布消息到ActiveMQ完成: {}", DateUtil.now());
     }
 
     /**
      * 消费者; 接收消息
      *
-     * @throws Exception
+     * @throws JMSException
      */
     @Test
-    public void testConsumer() throws Exception {
+    public void testConsumer() throws JMSException {
         Message message = jmsTemplate.receive(destination);
         String result = ((TextMessage)message).getText();
-        log.info("队列模式接收到的消息: {}", result);
+        log.info("队列模式 消费者接收到的消息: {}", result);
     }
 
 }
