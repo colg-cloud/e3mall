@@ -12,6 +12,7 @@ import javax.jms.TextMessage;
 import javax.jms.Topic;
 
 import cn.e3mall.common.activemq.BaseTest;
+import cn.hutool.core.thread.ThreadUtil;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.junit.Test;
@@ -31,7 +32,7 @@ public class ActiveMqTopicJavaTest extends BaseTest {
     /** tcp:// 规定写法; 61616: activemq服务监控端口 */
     private static final String BROKER_URL = "tcp://192.168.21.102:61616";
     /** 消息队列名称 */
-    private static final String TOPIC_NAME = "active_mq_topic_test";
+    private static final String TOPIC_NAME = "cn.e3mall.common.activemq.java.ActiveMqTopicJavaTest";
 
     /**
      * 生产者; 发布消息
@@ -57,14 +58,20 @@ public class ActiveMqTopicJavaTest extends BaseTest {
         // 6. 创建消息生产者
         MessageProducer messageProducer = session.createProducer(topic);
         // 7. 创建消息对象, 可以使用文本消息
-        TextMessage textMessage = session.createTextMessage("ActiveMq Queue Test: " + DateUtil.now());
-        // 8. 发送消息
-        messageProducer.send(textMessage);
+        TextMessage textMessage = session.createTextMessage();
+        for (int i = 1; i <= 3; i++) {
+            textMessage.setText("cn.e3mall.common.activemq.java.ActiveMqTopicJavaTest.testProducer -> " + i + ": " + DateUtil.now());
+            // 8. 发送消息
+            messageProducer.send(textMessage);
+            ThreadUtil.sleep(1000);
+        }
 
         // 9. 关闭资源
         messageProducer.close();
         session.close();
         connection.close();
+
+        log.info("发布/订阅模式 -> 生产者发布消息到ActiveMQ完成: {}", DateUtil.now());
     }
 
     /**
@@ -88,14 +95,13 @@ public class ActiveMqTopicJavaTest extends BaseTest {
         MessageConsumer messageConsumer = session.createConsumer(topic);
         // 7. 接收消息
         messageConsumer.setMessageListener(new MessageListener() {
-
             @Override
             public void onMessage(Message message) {
                 if (message instanceof ActiveMQTextMessage) {
                     ActiveMQTextMessage textMessage = (ActiveMQTextMessage)message;
                     try {
                         String result = textMessage.getText();
-                        log.info("发布/订阅模式接收到的消息: {}", result);
+                        log.info("发布/订阅模式 -> 接收到的消息: {}", result);
                     } catch (JMSException e) {
                         e.printStackTrace();
                     }
@@ -104,7 +110,7 @@ public class ActiveMqTopicJavaTest extends BaseTest {
         });
 
         // 启动多次: 发布/订阅模式, 即一个生产者产生消息并进行发送后, 可以由多个消费者进行接收
-        log.info("{} 已经启动: {}", topic.getTopicName(), RandomUtil.randomInt(1, 100));
+        log.info("{} 已经启动: {}", topic.getTopicName(), RandomUtil.randomInt(1, 10));
         // 8. 等待键盘输入; 否则一直监听着
         System.in.read();
         // 9. 关闭资源

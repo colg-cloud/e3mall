@@ -1,9 +1,11 @@
 package cn.e3mall.common.base.entity;
 
 import cn.e3mall.common.base.core.BaseEntity;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 

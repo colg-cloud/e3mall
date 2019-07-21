@@ -1,5 +1,6 @@
-package cn.e3mall.common.fastdfs;
+package cn.e3mall.common.fastdfs.java;
 
+import cn.e3mall.common.fastdfs.BaseTest;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.lang.Dict;
@@ -22,7 +23,9 @@ import static cn.hutool.core.util.NumberUtil.add;
 @Slf4j
 public class FastDfsTest extends BaseTest {
 
-    /** Project Base Path */
+    /**
+     * Project Base Path
+     */
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     /**
@@ -36,9 +39,9 @@ public class FastDfsTest extends BaseTest {
         TrackerClient trackerClient = new TrackerClient();
         // 通过TrackerClient获取一个TrackerServer对象
         TrackerServer trackerServer = trackerClient.getConnection();
-        // 创建一个StroageServer的引用，可以是null
+        // 创建一个StorageServer的引用，可以是null
         StorageServer storageServer = null;
-        // 创建一个StorageClient，参数需要TrackerServer和StroageServer
+        // 创建一个StorageClient，参数需要TrackerServer和StorageServer
         StorageClient1 storageClient = new StorageClient1(trackerServer, storageServer);
         // 使用StorageClient上传文件
         String uploadFile = storageClient.upload_file1(PROJECT_PATH + "\\src\\test\\resources\\images\\FastDfs架构.png", "png", null);

@@ -12,6 +12,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import cn.e3mall.common.activemq.BaseTest;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ObjectUtil;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQTextMessage;
@@ -31,10 +32,15 @@ import java.io.IOException;
 @Slf4j
 public class ActiveMqQueueJavaTest extends BaseTest {
 
-    /** tcp:// 规定写法; 61616: activemq服务监控端口 {@value} */
+    /**
+     * tcp:// 规定写法; 61616: activemq服务监控端口
+     */
     private static final String BROKER_URL = "tcp://192.168.21.102:61616";
-    /** 消息队列名称 {@value} */
-    private static final String QUEUE_NAME = "active_mq_queue_test_java";
+
+    /**
+     * 消息队列名称
+     */
+    private static final String QUEUE_NAME = "cn.e3mall.common.activemq.java.ActiveMqQueueJavaTest";
 
     /**
      * 生产者; 发送消息
@@ -59,10 +65,12 @@ public class ActiveMqQueueJavaTest extends BaseTest {
         // 6. 创建消息生产者
         MessageProducer messageProducer = session.createProducer(queue);
         // 7. 创建消息对象, 可以使用文本消息
-        for (int i = 0; i < 3; i++) {
-            TextMessage textMessage = session.createTextMessage("ActiveMq Queue Java Test: " + DateUtil.now());
+        TextMessage textMessage = session.createTextMessage();
+        for (int i = 1; i <= 3; i++) {
+            textMessage.setText("cn.e3mall.common.activemq.java.ActiveMqQueueJavaTest.testProducer -> " + i + ": " + DateUtil.now());
             // 8. 发送消息
             messageProducer.send(textMessage);
+            ThreadUtil.sleep(1000);
         }
 
         // 9. 关闭资源
@@ -70,7 +78,7 @@ public class ActiveMqQueueJavaTest extends BaseTest {
         session.close();
         connection.close();
 
-        log.info("队列模式 生产者发布消息到ActiveMQ完成: {}", DateUtil.now());
+        log.info("队列模式 -> 生产者发布消息到ActiveMQ完成: {}", DateUtil.now());
     }
 
     /**
@@ -103,7 +111,7 @@ public class ActiveMqQueueJavaTest extends BaseTest {
                     ActiveMQTextMessage textMessage = (ActiveMQTextMessage)message;
                     try {
                         String result = ((TextMessage)message).getText();
-                        log.info("队列模式 消费者接收到的消息: {}", result);
+                        log.info("队列模式 -> 消费者接收到的消息: {}", result);
                     } catch (JMSException e) {
                         e.printStackTrace();
                     }

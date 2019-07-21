@@ -82,7 +82,7 @@ public class Solr01Test {
 
         log.info("当前记录数: {}", documentList.size());
         log.info("查询结果总记录数: {}", documentList.getNumFound());
-        log.info("查询的结果集: {}", JSON.toJSONString(documentList));
+        log.info("查询的结果集: \n{}", JSON.toJSONString(documentList, true));
     }
 
     /**
@@ -110,11 +110,11 @@ public class Solr01Test {
 
         log.info("当前记录数: {}", documentList.size());
         log.info("查询结果总记录数: {}", documentList.getNumFound());
-        log.info("查询的结果集: {}", JSON.toJSONString(documentList));
+        log.info("查询的结果集: \n{}", JSON.toJSONString(documentList, true));
 
         // 高亮结果
         Map<String, Map<String, List<String>>> map = queryResponse.getHighlighting();
-        log.info("高亮结果集: {}", JSON.toJSONString(map));
+        log.info("高亮结果集: \n{}", JSON.toJSONString(map, true));
     }
 
 }

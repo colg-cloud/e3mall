@@ -1,4 +1,4 @@
-package cn.e3mall.common.solr;
+package cn.e3mall.common.solr.java;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -23,7 +23,7 @@ public class Solr02CloudTest {
      * zkHost: zookeeper的地址列表
      *
      * <pre>
-     * 格式为 host:port 逗号分隔
+     *     格式为 host:port 逗号分隔
      * </pre>
      */
     private static final String ZK_HOST = "192.168.21.103:2181,192.168.21.103:2182,192.168.21.103:2183";
@@ -45,6 +45,6 @@ public class Solr02CloudTest {
 
         log.info("当前记录数: {}", documentList.size());
         log.info("查询结果总记录数: {}", documentList.getNumFound());
-        log.info("查询的结果集: {}", JSON.toJSONString(documentList));
+        log.info("查询的结果集: \n{}", JSON.toJSONString(documentList, true));
     }
 }

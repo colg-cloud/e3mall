@@ -1,7 +1,9 @@
 package cn.e3mall.common.base.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.github.pagehelper.Page;
@@ -29,12 +31,16 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class EasyUIDataGridResult extends BaseEntity implements Serializable {
 
-    /** 总记录数 */
+    /**
+     * 总记录数
+     */
     private Long total;
 
-    /** 结果集 */
+    /**
+     * 结果集
+     */
     @JSONField(ordinal = 1)
-    private List<?> rows;
+    private List rows;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,17 +53,17 @@ public class EasyUIDataGridResult extends BaseEntity implements Serializable {
      * @return easyUIDataGridResult
      */
     public static EasyUIDataGridResult ok(Object data) {
-        EasyUIDataGridResult easyUIDataGridResult = new EasyUIDataGridResult();
+        EasyUIDataGridResult easyUiDataGridResult = new EasyUIDataGridResult();
         if (data instanceof Page<?>) {
-            Page<?> page = (Page<?>)data;
-            easyUIDataGridResult.setRows(page.getResult())
+            Page page = (Page)data;
+            easyUiDataGridResult.setRows(page.getResult())
                                 .setTotal(page.getTotal());
-        } else {
-            List<?> list = (List<?>)data;
-            easyUIDataGridResult.setRows(list)
+        } else if (data instanceof List) {
+            List list = (List)data;
+            easyUiDataGridResult.setRows(list)
                                 .setTotal((long)list.size());
         }
-        return easyUIDataGridResult;
+        return easyUiDataGridResult;
     }
 
 }

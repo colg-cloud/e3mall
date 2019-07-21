@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
@@ -37,12 +38,11 @@ public class JedisClusterCache implements JedisClient {
     private JedisCluster initJedisCluster() {
         Properties prop = Props.getProp("conf/redis.properties", CharsetUtil.CHARSET_UTF_8);
         String clusterNodes = prop.getProperty("redis.cluster.nodes");
-        Set<HostAndPort> nodes = new HashSet<>(9);
-        StrUtil.split(clusterNodes, ',')
-               .forEach(clusterNode -> {
-                   List<String> node = StrUtil.split(clusterNode, ':');
-                   nodes.add(new HostAndPort(node.get(0), Integer.parseInt(node.get(1))));
-               });
+        Set<HostAndPort> nodes = StrUtil.split(clusterNodes, ',')
+                                        .stream()
+                                        .map(clusterNode -> StrUtil.split(clusterNode, ':'))
+                                        .map(node -> new HostAndPort(node.get(0), Integer.parseInt(node.get(1))))
+                                        .collect(Collectors.toCollection(() -> new HashSet<>(9)));
         log.info("Redis 集群: {}", clusterNodes);
         return new JedisCluster(nodes);
     }

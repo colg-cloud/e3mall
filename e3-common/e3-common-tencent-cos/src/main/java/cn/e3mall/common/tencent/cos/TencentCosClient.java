@@ -18,25 +18,35 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TencentCosClient {
 
-    /** 密钥 */
-    public static final String ACCESSKEY = "AKIDUvjV6VEvvjS4Vliw360iEYpvpgMrqMKF";
-    public static final String SECRETKEY = "sY3NVSL8kLk8KK8lIftzud9VggU5Vkne";
-    /** 存储桶可用区域简称: 广州（华南）   ap-guangzhou */
+    /**
+     * 密钥
+     */
+    public static final String ACCESS_KEY = "AKIDUvjV6VEvvjS4Vliw360iEYpvpgMrqMKF";
+    public static final String SECRET_KEY = "sY3NVSL8kLk8KK8lIftzud9VggU5Vkne";
+    /**
+     * 存储桶可用区域简称: 广州（华南）   ap-guangzhou
+     */
     public static final String REGION_NAME = "ap-guangzhou";
-    /** 存储桶名称: 自定义字符串-APPID */
+    /**
+     * 存储桶名称: 自定义字符串 APP_ID
+     */
     public static final String BUCKET_NAME = "colg-1256242877";
-    /** 文件列表: 目录 */
+    /**
+     * 文件列表: 目录
+     */
     public static final String KEY_PRE = "e3mall/";
 
     public static final String SERVER_URL = "https://colg-1256242877.cos.ap-guangzhou.myqcloud.com/";
 
-    /** 单例模式 */
+    /**
+     * 单例模式
+     */
     private static volatile TencentCosClient tencentCosClient = null;
 
     private COSClient cosClient;
 
     public TencentCosClient() {
-        COSCredentials cred = new BasicCOSCredentials(ACCESSKEY, SECRETKEY);
+        COSCredentials cred = new BasicCOSCredentials(ACCESS_KEY, SECRET_KEY);
         ClientConfig clientConfig = new ClientConfig(new Region(REGION_NAME));
         cosClient = new COSClient(cred, clientConfig);
         log.info("腾讯云 - 对象存储初始化完成!");

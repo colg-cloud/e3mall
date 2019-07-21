@@ -1,5 +1,6 @@
 package cn.e3mall.common.tencent.cos;
 
+import cn.e3mall.common.base.util.SnUtil;
 import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TencentCosClientTest {
 
-    /** 项目基础路径 */
+    /**
+     * 项目基础路径
+     */
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     /**
@@ -21,7 +24,8 @@ public class TencentCosClientTest {
     @Test
     public final void testUploadFile() {
         TencentCosClient tencentCosClient = TencentCosClient.create();
-        String uploadFile = tencentCosClient.uploadFile(PROJECT_PATH + "\\src\\test\\resources\\images\\FastDfs文件上传流程.png", TencentCosClient.KEY_PRE + "123.jpg");
+        String filename = SnUtil.genImageName() + ".jpg";
+        String uploadFile = tencentCosClient.uploadFile(PROJECT_PATH + "\\src\\test\\resources\\images\\FastDfs文件上传流程.png", TencentCosClient.KEY_PRE + filename);
         log.info("图片路径: {}", uploadFile);
     }
 
@@ -31,7 +35,8 @@ public class TencentCosClientTest {
     @Test
     public final void testDeleteFile() {
         TencentCosClient tencentCosClient = TencentCosClient.create();
-        tencentCosClient.deleteFile(TencentCosClient.KEY_PRE + "123.jpg");
+        String filename = "2019-07-21_0674.jpg";
+        tencentCosClient.deleteFile(TencentCosClient.KEY_PRE + filename);
     }
 
 }

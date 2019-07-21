@@ -1,13 +1,13 @@
 package cn.e3mall.common.freemarker.model;
 
 import cn.e3mall.common.base.core.BaseEntity;
+
 import java.io.Serializable;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
- * 
- *
  * @author colg
  */
 @NoArgsConstructor

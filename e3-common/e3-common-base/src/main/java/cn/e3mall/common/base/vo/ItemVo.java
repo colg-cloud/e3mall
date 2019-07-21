@@ -19,7 +19,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ItemVo extends Item {
 
-    /** 商品类目名称 */
+    /**
+     * 商品类目名称
+     */
     private String cname;
 
     private static final long serialVersionUID = 1L;

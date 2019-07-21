@@ -24,8 +24,10 @@ import cn.hutool.core.util.StrUtil;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CookieUtil {
 
-    /** 本机地址 */
-    private static final String HOST = "127.0.0.1";
+    /**
+     * 本机地址
+     */
+    private static final String LOCAL_HOST = "127.0.0.1";
 
     /**
      * 根据cookie名称获取Cookie的值, 不编码
@@ -132,11 +134,11 @@ public final class CookieUtil {
      * @param response
      * @param cookieName
      * @param cookieValue
-     * @param cookieMaxage
+     * @param cookieMaxAge
      * @param isEncode     true: UTF-8编码, false: 不编码
      */
-    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, boolean isEncode) {
-        doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, isEncode);
+    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxAge, boolean isEncode) {
+        doSetCookie(request, response, cookieName, cookieValue, cookieMaxAge, isEncode);
     }
 
     /**
@@ -146,11 +148,11 @@ public final class CookieUtil {
      * @param response
      * @param cookieName
      * @param cookieValue
-     * @param cookieMaxage
+     * @param cookieMaxAge
      * @param encodeString
      */
-    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, String encodeString) {
-        doSetCookie(request, response, cookieName, cookieValue, cookieMaxage, encodeString);
+    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxAge, String encodeString) {
+        doSetCookie(request, response, cookieName, cookieValue, cookieMaxAge, encodeString);
     }
 
     /**
@@ -171,10 +173,10 @@ public final class CookieUtil {
      * @param response
      * @param cookieName
      * @param cookieValue
-     * @param cookieMaxage cookie生效的最大秒数
+     * @param cookieMaxAge cookie生效的最大秒数
      * @param isEncode
      */
-    private static void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, boolean isEncode) {
+    private static void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxAge, boolean isEncode) {
         if (cookieValue == null) {
             cookieValue = "";
         } else {
@@ -186,13 +188,13 @@ public final class CookieUtil {
         }
 
         Cookie cookie = new Cookie(cookieName, cookieValue);
-        if (cookieMaxage > 0) {
-            cookie.setMaxAge(cookieMaxage);
+        if (cookieMaxAge > 0) {
+            cookie.setMaxAge(cookieMaxAge);
         }
         if (null != request) {
             // 设置域名的cookie
             String domainName = getDomainName(request);
-            if (!HOST.equals(domainName)) {
+            if (!LOCAL_HOST.equals(domainName)) {
                 cookie.setDomain(domainName);
             }
         }
@@ -207,10 +209,10 @@ public final class CookieUtil {
      * @param response
      * @param cookieName
      * @param cookieValue
-     * @param cookieMaxage cookie 有效时间: 秒
+     * @param cookieMaxAge cookie 有效时间: 秒
      * @param encodeString
      */
-    private static void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage, String encodeString) {
+    private static void doSetCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxAge, String encodeString) {
         if (cookieValue == null) {
             cookieValue = "";
         } else {
@@ -222,13 +224,13 @@ public final class CookieUtil {
         }
 
         Cookie cookie = new Cookie(cookieName, cookieValue);
-        if (cookieMaxage > 0) {
-            cookie.setMaxAge(cookieMaxage);
+        if (cookieMaxAge > 0) {
+            cookie.setMaxAge(cookieMaxAge);
         }
         if (null != request) {
             // 设置域名的cookie
             String domainName = getDomainName(request);
-            if (!HOST.equals(domainName)) {
+            if (!LOCAL_HOST.equals(domainName)) {
                 cookie.setDomain(domainName);
             }
         }

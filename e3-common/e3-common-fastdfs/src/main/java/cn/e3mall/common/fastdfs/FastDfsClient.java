@@ -26,20 +26,28 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FastDfsClient {
 
-    /** Path separator */
+    /**
+     * Path separator
+     */
     public static final String SEPARATOR = "/";
 
-    /** server的IP和端口用冒号':'分隔, server之间用逗号','分隔; 例如："10.0.11.245:22122,10.0.11.246:22122" */
+    /**
+     * server的IP和端口用冒号':'分隔, server之间用逗号','分隔; 例如："10.0.11.245:22122,10.0.11.246:22122"
+     */
     @Getter
     @Setter
     private String trackerServers = "192.168.21.110:22122";
 
-    /** imageServer http://ip; http://域名 */
+    /**
+     * imageServer http://ip; http://域名
+     */
     @Getter
     @Setter
     private String imageServer = "http://192.168.21.110";
 
-    /** Storage client */
+    /**
+     * Storage client
+     */
     private StorageClient1 storageClient = null;
 
     /**
@@ -53,7 +61,7 @@ public class FastDfsClient {
         if (StrUtil.isEmpty(trackerServers)) {
             ClientGlobal.initByTrackers(this.trackerServers);
         } else {
-            // 处理运行环境配置
+            /// 处理运行环境配置
             /*
             String classpath = "classpath:";
             if (confFilename.contains(classpath)) {

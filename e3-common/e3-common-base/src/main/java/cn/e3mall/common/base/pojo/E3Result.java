@@ -23,18 +23,28 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class E3Result extends BaseEntity implements Serializable {
 
-    /** 成功状态 {@value} */
+    /**
+     * 成功状态
+     */
     public static final Integer OK = 200;
-    /** 失败状态 {@value} */
+    /**
+     * 失败状态
+     */
     public static final Integer FAIL = 500;
 
-    /** 响应业务状态 */
+    /**
+     * 响应业务状态
+     */
     private Integer status;
 
-    /** 响应消息 */
+    /**
+     * 响应消息
+     */
     private String msg;
 
-    /** 响应中的数据 */
+    /**
+     * 响应中的数据
+     */
     @JSONField(ordinal = 1)
     private Object data;
 

@@ -22,17 +22,29 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ItemParamVo extends BaseEntity implements Serializable {
 
-    /** 商品规格参数id */
+    /**
+     * 商品规格参数id
+     */
     private String id;
-    /** 商品类目id */
+    /**
+     * 商品类目id
+     */
     private String itemCatId;
-    /** 商品类目名称 */
+    /**
+     * 商品类目名称
+     */
     private String itemCatName;
-    /** 商品规格参数 */
+    /**
+     * 商品规格参数
+     */
     private String paramData;
-    /** 创建日期 */
+    /**
+     * 创建日期
+     */
     private Date created;
-    /** 更新日期 */
+    /**
+     * 更新日期
+     */
     private Date updated;
 
     private static final long serialVersionUID = 1L;

@@ -22,31 +22,37 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SearchResult extends BaseEntity implements Serializable {
 
-    /** 总记录数 */
-    private Long recourdCount;
-    /** 总页数 */
-    private Integer totalPages;
-    /** 结果集 */
-    private List<ItemSearch> itemSearchs;
+    /**
+     * 总记录数
+     */
+    private Long recordCount;
+    /**
+     * 总页数
+     */
+    private Integer totalPage;
+    /**
+     * 结果集
+     */
+    private List<ItemSearch> itemSearchList;
 
     private static final long serialVersionUID = 1L;
 
     /// ----------------------------------------------------------------------------------------------------
 
-    public static SearchResult ok(Long recourdCount, List<ItemSearch> itemSearchs) {
-        return ok(recourdCount, null, itemSearchs);
+    public static SearchResult ok(Long recordCount, List<ItemSearch> itemSearchList) {
+        return ok(recordCount, null, itemSearchList);
     }
 
     /**
      * 构造全文检索返回结果
      *
-     * @param recourdCount
-     * @param totalPages
-     * @param itemSearchs
+     * @param recordCount
+     * @param totalPage
+     * @param itemSearchList
      * @return
      */
-    public static SearchResult ok(Long recourdCount, Integer totalPages, List<ItemSearch> itemSearchs) {
-        return new SearchResult(recourdCount, totalPages, itemSearchs);
+    public static SearchResult ok(Long recordCount, Integer totalPage, List<ItemSearch> itemSearchList) {
+        return new SearchResult(recordCount, totalPage, itemSearchList);
     }
 
 }

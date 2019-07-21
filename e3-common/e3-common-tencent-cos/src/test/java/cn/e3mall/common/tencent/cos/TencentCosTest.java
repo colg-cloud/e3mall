@@ -23,9 +23,11 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class TencentCosTest {
+public class TencentCosTest extends BaseTest {
 
-    /** 项目基础路径 */
+    /**
+     * 项目基础路径
+     */
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     @Test
@@ -34,7 +36,7 @@ public class TencentCosTest {
         // 采用了新的region名字，可用region的列表可以在官网文档中获取，也可以参考下面的XML SDK和JSON SDK的地域对照表
         ClientConfig clientConfig = new ClientConfig(new Region("ap-guangzhou"));
         COSClient cosclient = new COSClient(cred, clientConfig);
-        // bucket的名字需要的包含appid
+        // bucket的名字需要的包含appId
         String bucketName = "colg-1256242877";
 
         // 上传文件

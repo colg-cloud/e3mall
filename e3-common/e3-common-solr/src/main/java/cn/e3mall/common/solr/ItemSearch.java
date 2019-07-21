@@ -22,17 +22,29 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ItemSearch extends BaseEntity implements Serializable {
 
-    /** id */
+    /**
+     * id
+     */
     private String id;
-    /** 名称 */
+    /**
+     * 名称
+     */
     private String title;
-    /** 卖点 */
+    /**
+     * 卖点
+     */
     private String sellPoint;
-    /** 价格 */
+    /**
+     * 价格
+     */
     private Long price;
-    /** 图片路径 */
+    /**
+     * 图片路径
+     */
     private String image;
-    /** 类目名称 */
+    /**
+     * 类目名称
+     */
     private String categoryName;
 
     private static final long serialVersionUID = 1L;

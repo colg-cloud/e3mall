@@ -21,13 +21,19 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PicResult extends BaseEntity implements Serializable {
 
-    /** 上传图片响应状态 */
+    /**
+     * 上传图片响应状态
+     */
     private Integer status;
 
-    /** 回显图片使用的url */
+    /**
+     * 回显图片使用的url
+     */
     private String url;
 
-    /** 错误时的错误消息 */
+    /**
+     * 错误时的错误消息
+     */
     private String message;
 
     private static final long serialVersionUID = 1L;

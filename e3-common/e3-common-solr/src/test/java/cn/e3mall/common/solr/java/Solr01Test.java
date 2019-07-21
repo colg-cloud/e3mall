@@ -1,5 +1,6 @@
-package cn.e3mall.common.solr;
+package cn.e3mall.common.solr.java;
 
+import cn.e3mall.common.solr.BaseTest;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class Solr01Test {
+public class Solr01Test extends BaseTest {
 
     /**
      * Solr服务器的URL
@@ -44,6 +45,6 @@ public class Solr01Test {
 
         log.info("当前记录数: {}", documentList.size());
         log.info("查询结果总记录数: {}", documentList.getNumFound());
-        log.info("查询的结果集: {}", JSON.toJSONString(documentList));
+        log.info("查询的结果集: \n{}", JSON.toJSONString(documentList, true));
     }
 }

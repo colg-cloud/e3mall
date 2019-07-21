@@ -12,12 +12,13 @@ public abstract class BaseEntity {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(
-                this,
+        return JSON.toJSONString(this,
+                // 日期时间毫秒 -> "yyyy-MM-dd HH:mm:ss"
                 SerializerFeature.WriteDateUseDateFormat,
+                // 输出值为null的字段
                 SerializerFeature.WriteMapNullValue,
-                SerializerFeature.DisableCircularReferenceDetect
-        );
+                // 消除对同一对象循环引用
+                SerializerFeature.DisableCircularReferenceDetect);
     }
 
 }
