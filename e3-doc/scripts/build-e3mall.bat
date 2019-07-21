@@ -1,13 +1,15 @@
 @echo off
+chcp 65001
 rem ----------------------------------------------------------------------------------------------------
-rem  ±¾½Å±¾ÓÃÓÚ±àÒë°²×°: e3mall
-rem  »·¾³ÒªÇó: Maven + JDK8
-rem  ÔËĞĞ·½Ê½: cmd -> cd D:\workspaces\idea\iheima\e3mall\e3-doc\scripts
+rem  æœ¬è„šæœ¬ç”¨äºç¼–è¯‘å®‰è£…: e3mall
+rem  ç¯å¢ƒè¦æ±‚: Maven + JDK8
+rem  è¿è¡Œæ–¹å¼: cmd -> cd D:\workspaces\idea\iheima\e3mall\e3-doc\scripts
 rem ----------------------------------------------------------------------------------------------------
+
 
 
 cls
-echo [INFO] ¿ªÊ¼±àÒë°²×°: 1. e3-parent, 2. e3-common, 3. e3-manager, 4. e3-content, 5. e3-search, 6.e3-sso
+echo [INFO] å¼€å§‹ç¼–è¯‘å®‰è£…: 1. e3-parent, 2. e3-common, 3. e3-manager, 4. e3-content, 5. e3-search, 6.e3-sso
 
 echo ">>>> 1. e3-parent"
 cd ../../e3-parent
@@ -33,7 +35,7 @@ echo ">>>> 6. e3-sso"
 cd ../e3-sso
 call mvn clean install
 
-echo [INFO] ½áÊø±àÒë°²×°: 1. e3-parent, 2. e3-common, 3. e3-manager, 4. e3-content, 5. e3-search, 6.e3-sso
+echo [INFO] ç»“æŸç¼–è¯‘å®‰è£…: 1. e3-parent, 2. e3-common, 3. e3-manager, 4. e3-content, 5. e3-search, 6.e3-sso
 
 cd ../e3-doc/scripts
 
