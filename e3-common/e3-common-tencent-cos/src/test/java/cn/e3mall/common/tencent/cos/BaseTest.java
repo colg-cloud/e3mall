@@ -15,13 +15,18 @@ public abstract class BaseTest {
 
     private long time;
 
+    /**
+     * 项目基础路径
+     */
+    protected static final String PROJECT_PATH = System.getProperty("user.dir");
+
     @Before
-    public void before() {
+    public void setUp() {
         time = System.currentTimeMillis();
     }
 
     @After
-    public void after() {
+    public void tearDown() {
         log.info("Junit: [{}ms]", DateUtil.spendMs(time));
         log.info("----------------------------------------------------------------------------------------------------");
     }

@@ -2,9 +2,8 @@ package cn.e3mall.common.fastdfs.java;
 
 import cn.e3mall.common.fastdfs.BaseTest;
 import cn.e3mall.common.fastdfs.FastDfsClient;
-import org.junit.Test;
-
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 
 /**
  * FastDfsClient 测试
@@ -13,11 +12,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class FastDfsClientTest extends BaseTest {
-
-    /**
-     * Project Base Path
-     */
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     /**
      * Test method for {@link cn.e3mall.common.fastdfs.FastDfsClient#uploadFile(java.lang.String)}.

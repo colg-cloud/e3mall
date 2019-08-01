@@ -1,15 +1,13 @@
 package cn.e3mall.common.solr.java;
 
+import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.junit.Test;
-
-import com.alibaba.fastjson.JSON;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Solr 测试
@@ -47,4 +45,5 @@ public class Solr02CloudTest {
         log.info("查询结果总记录数: {}", documentList.getNumFound());
         log.info("查询的结果集: \n{}", JSON.toJSONString(documentList, true));
     }
+
 }

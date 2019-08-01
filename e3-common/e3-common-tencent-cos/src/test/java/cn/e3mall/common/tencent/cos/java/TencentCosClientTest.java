@@ -1,9 +1,10 @@
-package cn.e3mall.common.tencent.cos;
+package cn.e3mall.common.tencent.cos.java;
 
 import cn.e3mall.common.base.util.SnUtil;
-import org.junit.Test;
-
+import cn.e3mall.common.tencent.cos.BaseTest;
+import cn.e3mall.common.tencent.cos.TencentCosClient;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 
 /**
  * 腾讯云 - 对象存储空间 测试
@@ -11,12 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author colg
  */
 @Slf4j
-public class TencentCosClientTest {
-
-    /**
-     * 项目基础路径
-     */
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
+public class TencentCosClientTest extends BaseTest {
 
     /**
      * Test method for {@link cn.e3mall.common.tencent.cos.TencentCosClient#uploadFile(java.lang.String, java.lang.String)}.

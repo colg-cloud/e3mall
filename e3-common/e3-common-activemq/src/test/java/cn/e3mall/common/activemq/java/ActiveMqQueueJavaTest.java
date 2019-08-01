@@ -1,27 +1,15 @@
 package cn.e3mall.common.activemq.java;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-
 import cn.e3mall.common.activemq.BaseTest;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.RandomUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.junit.Test;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.RandomUtil;
-import lombok.extern.slf4j.Slf4j;
-
+import javax.jms.*;
 import java.io.IOException;
 
 /**
@@ -96,7 +84,7 @@ public class ActiveMqQueueJavaTest extends BaseTest {
         // 3. 开启连接
         connection.start();
 
-        // 4. 创建一个Session对象. 
+        // 4. 创建一个Session对象
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         // 5. 创建消息队列.
         Queue queue = session.createQueue(QUEUE_NAME);
@@ -123,7 +111,7 @@ public class ActiveMqQueueJavaTest extends BaseTest {
         log.info("{} 已经启动: {}", queue.getQueueName(), RandomUtil.randomInt(1, 10));
         // 8. 等待键盘输入; 否则一直监听着
 
-        System.in.read();
+        int read = System.in.read();
         // 9. 关闭资源
         messageConsumer.close();
         session.close();

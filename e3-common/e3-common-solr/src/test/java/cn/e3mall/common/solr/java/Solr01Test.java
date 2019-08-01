@@ -1,16 +1,14 @@
 package cn.e3mall.common.solr.java;
 
 import cn.e3mall.common.solr.BaseTest;
+import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.junit.Test;
-
-import com.alibaba.fastjson.JSON;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Solr 测试
@@ -47,4 +45,5 @@ public class Solr01Test extends BaseTest {
         log.info("查询结果总记录数: {}", documentList.getNumFound());
         log.info("查询的结果集: \n{}", JSON.toJSONString(documentList, true));
     }
+
 }

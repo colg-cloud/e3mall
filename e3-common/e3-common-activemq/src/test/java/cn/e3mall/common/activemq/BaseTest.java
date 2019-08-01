@@ -16,12 +16,12 @@ public abstract class BaseTest {
     private long time;
 
     @Before
-    public void before() {
+    public void setUp() {
         time = System.currentTimeMillis();
     }
 
     @After
-    public void after() {
+    public void tearDown() {
         log.info("Junit: [{}ms]", DateUtil.spendMs(time));
         log.info("----------------------------------------------------------------------------------------------------");
     }

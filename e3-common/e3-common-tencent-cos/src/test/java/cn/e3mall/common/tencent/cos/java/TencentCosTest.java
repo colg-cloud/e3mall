@@ -1,21 +1,18 @@
-package cn.e3mall.common.tencent.cos;
+package cn.e3mall.common.tencent.cos.java;
 
-import java.io.File;
-
-import org.junit.Test;
-
+import cn.e3mall.common.tencent.cos.BaseTest;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
-import com.qcloud.cos.exception.CosClientException;
-import com.qcloud.cos.exception.CosServiceException;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.model.StorageClass;
 import com.qcloud.cos.region.Region;
-
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+
+import java.io.File;
 
 /**
  * 腾讯云 - 对象存储测试
@@ -24,11 +21,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class TencentCosTest extends BaseTest {
-
-    /**
-     * 项目基础路径
-     */
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
 
     @Test
     public void testName() {

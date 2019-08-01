@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="spring-config.xml" />
+    <import resource="spring-conf.xml" />
 
     <!--配置 ActiveMQ 连接工厂-->
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">

@@ -1,25 +1,15 @@
 package cn.e3mall.common.activemq.java;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.jms.Topic;
-
 import cn.e3mall.common.activemq.BaseTest;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.RandomUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.junit.Test;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.RandomUtil;
-import lombok.extern.slf4j.Slf4j;
+import javax.jms.*;
 
 /**
  * ActiveMq 发布/订阅模式 测试
@@ -112,7 +102,7 @@ public class ActiveMqTopicJavaTest extends BaseTest {
         // 启动多次: 发布/订阅模式, 即一个生产者产生消息并进行发送后, 可以由多个消费者进行接收
         log.info("{} 已经启动: {}", topic.getTopicName(), RandomUtil.randomInt(1, 10));
         // 8. 等待键盘输入; 否则一直监听着
-        System.in.read();
+        int read = System.in.read();
         // 9. 关闭资源
         messageConsumer.close();
         session.close();
