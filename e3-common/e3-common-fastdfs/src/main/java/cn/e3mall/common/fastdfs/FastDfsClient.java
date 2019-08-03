@@ -1,21 +1,19 @@
 package cn.e3mall.common.fastdfs;
 
-import java.io.IOException;
-
-import org.csource.common.MyException;
-import org.csource.common.NameValuePair;
-import org.csource.fastdfs.ClientGlobal;
-import org.csource.fastdfs.StorageClient1;
-import org.csource.fastdfs.StorageServer;
-import org.csource.fastdfs.TrackerClient;
-import org.csource.fastdfs.TrackerServer;
-
 import cn.hutool.core.util.StrUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.csource.common.MyException;
+import org.csource.common.NameValuePair;
+import org.csource.fastdfs.ClientGlobal;
+import org.csource.fastdfs.StorageClient1;
+import org.csource.fastdfs.TrackerClient;
+import org.csource.fastdfs.TrackerServer;
+
+import java.io.IOException;
 
 /**
  * FastDfs 分布式文件系统
@@ -25,11 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FastDfsClient {
-
-    /**
-     * Path separator
-     */
-    public static final String SEPARATOR = "/";
 
     /**
      * server的IP和端口用冒号':'分隔, server之间用逗号','分隔; 例如："10.0.11.245:22122,10.0.11.246:22122"
@@ -48,7 +41,7 @@ public class FastDfsClient {
     /**
      * Storage client
      */
-    private StorageClient1 storageClient = null;
+    private StorageClient1 storageClient1 = null;
 
     /**
      * Initialization FastDfsClient
@@ -59,7 +52,7 @@ public class FastDfsClient {
      */
     private FastDfsClient(String trackerServers) throws IOException, MyException {
         if (StrUtil.isEmpty(trackerServers)) {
-            ClientGlobal.initByTrackers(this.trackerServers);
+            ClientGlobal.initByTrackers(this.getTrackerServers());
         } else {
             /// 处理运行环境配置
             /*
@@ -76,7 +69,7 @@ public class FastDfsClient {
         TrackerClient trackerClient = new TrackerClient();
         // Tracker Server Info
         TrackerServer trackerServer = trackerClient.getConnection();
-        storageClient = new StorageClient1(trackerServer, null);
+        storageClient1 = new StorageClient1(trackerServer, null);
 
         log.info("FastDFS: 初始化完成!");
         log.info("FastDFS: \n{}", ClientGlobal.configInfo());
@@ -119,7 +112,7 @@ public class FastDfsClient {
      * @author colg
      */
     public String uploadFile(String localFilename, String extName, NameValuePair[] metas) throws IOException, MyException {
-        return this.getImageServer() + SEPARATOR + storageClient.upload_file1(localFilename, extName, metas);
+        return this.getImageServer() + StorageClient1.SPLIT_GROUP_NAME_AND_FILENAME_SEPERATOR + storageClient1.upload_file1(localFilename, extName, metas);
     }
 
     public String uploadFile(String localFilename, String extName) throws IOException, MyException {
@@ -141,7 +134,7 @@ public class FastDfsClient {
      * @throws MyException
      */
     public String uploadFile(byte[] fileBuff, String extName, NameValuePair[] metas) throws IOException, MyException {
-        return this.getImageServer() + SEPARATOR + storageClient.upload_file1(fileBuff, extName, metas);
+        return this.getImageServer() + StorageClient1.SPLIT_GROUP_NAME_AND_FILENAME_SEPERATOR + storageClient1.upload_file1(fileBuff, extName, metas);
     }
 
     public String uploadFile(byte[] fileBuff, String extName) throws IOException, MyException {
@@ -161,7 +154,7 @@ public class FastDfsClient {
      * @throws MyException
      */
     public int deleteFile(String fileId) throws IOException, MyException {
-        return storageClient.delete_file1(fileId);
+        return storageClient1.delete_file1(fileId);
     }
 
 }

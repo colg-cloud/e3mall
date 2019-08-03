@@ -1,15 +1,13 @@
 package cn.e3mall.common.base.pojo;
 
-import java.io.Serializable;
-
-import com.alibaba.fastjson.annotation.JSONField;
-
 import cn.e3mall.common.base.core.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * e3 商城自定义响应结构
@@ -45,7 +43,6 @@ public class E3Result extends BaseEntity implements Serializable {
     /**
      * 响应中的数据
      */
-    @JSONField(ordinal = 1)
     private Object data;
 
     private static final long serialVersionUID = 1L;

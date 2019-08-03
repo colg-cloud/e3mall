@@ -34,7 +34,7 @@ public class FastDfsTest extends BaseTest {
         // 服务路径: http://192.168.21.110
         // 图片路径: 组名/磁盘/存储目录/文件名
         // 图片完整路径: http://192.168.21.110/group1/M00/00/01/wKgVblx1OW2AEO0nAAHsodtdFiY723.png
-        log.info("图片路径: {}", "http://192.168.21.110" + "/" + uploadFile);
+        log.info("图片路径: {}", "http://192.168.21.110" + StorageClient1.SPLIT_GROUP_NAME_AND_FILENAME_SEPERATOR + uploadFile);
     }
 
 }

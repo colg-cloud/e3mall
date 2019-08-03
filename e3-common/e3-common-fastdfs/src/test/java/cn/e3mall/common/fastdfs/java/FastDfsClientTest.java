@@ -19,18 +19,8 @@ public class FastDfsClientTest extends BaseTest {
     @Test
     public final void testUpload() throws Exception {
         FastDfsClient fastDfsClient = FastDfsClient.create();
-        String uploadFile = fastDfsClient.uploadFile(PROJECT_PATH + "\\src\\test\\resources\\images\\FastDfs文件上传流程.png");
+        String uploadFile = fastDfsClient.uploadFile(PROJECT_PATH + "\\src\\test\\resources\\images\\FastDfs架构.png");
         log.info("图片路径: {}", uploadFile);
-    }
-
-    /**
-     * Test method for {@link cn.e3mall.common.fastdfs.FastDfsClient#deleteFile(java.lang.String)}.
-     */
-    @Test
-    public final void testDeleteFile() throws Exception {
-        FastDfsClient fastDfsClient = FastDfsClient.create();
-        int deleteFile = fastDfsClient.deleteFile("group1/M00/00/01/wKgVbl0z42KAXwBTAACyH0DVQw8372.png");
-        log.info("图片路径: {}", deleteFile);
     }
 
 }
