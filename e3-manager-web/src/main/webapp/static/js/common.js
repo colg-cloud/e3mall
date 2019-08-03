@@ -1,24 +1,17 @@
 /**
  * 格式化日期
  * @param format
- * @return {void | string}
+ * @returns {void | string}
  */
 Date.prototype.format = function (format) {
   const o = {
-    // month
-    'M+': this.getMonth() + 1,
-    // day
-    'd+': this.getDate(),
-    // hour
-    'h+': this.getHours(),
-    // minute
-    'm+': this.getMinutes(),
-    // second
-    's+': this.getSeconds(),
-    // quarter
-    'q+': Math.floor((this.getMonth() + 3) / 3),
-    // millisecond
-    'S': this.getMilliseconds()
+    'M+': this.getMonth() + 1,    // month
+    'd+': this.getDate(),         // day
+    'h+': this.getHours(),        // hour
+    'm+': this.getMinutes(),      // minute
+    's+': this.getSeconds(),      // second
+    'q+': Math.floor((this.getMonth() + 3) / 3),  // quarter
+    'S': this.getMilliseconds()   // millisecond
   }
   if (/(y+)/.test(format)) {
     format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length))
@@ -40,9 +33,9 @@ const E3 = {
   kingEditorParams: {
     //指定上传文件参数名称
     filePostName: 'uploadFile',
-    //指定上传文件请求的url。
-    uploadJson: '/manager/item/pic/upload',
-    //上传类型，分别为image、flash、media、file
+    //指定上传文件请求的url
+    uploadJson: 'item/pic/upload',
+    //上传类型, 分别为image, flash, media, file
     dir: 'image'
   },
 
@@ -56,7 +49,9 @@ const E3 = {
    * 初始化图片上传组件
    * @param data
    */
+  // TODO: colg [返回异常]
   initPicUpload: data => {
+    console.log(data)
     $('.picFileUpload').each((i, e) => {
       let _ele = $(e)
       // 选择兄弟节点
@@ -78,13 +73,14 @@ const E3 = {
         })
       }
       // 给"上传图片按钮"绑定click事件
-      $(e).click(function () {
+      $(e).on('click', function () {
         let form = $(this).parentsUntil('form').parent('form')
         // 打开图片上传窗口
         KindEditor.editor(E3.kingEditorParams).loadPlugin('multiimage', function () {
-          const self = this
+          let self = this
           self.plugin.multiImageDialog({
             clickFn: urlList => {
+              console.log(urlList)
               let imgArray = []
               KindEditor.each(urlList, (i, data) => {
                 const {url} = data
@@ -96,10 +92,35 @@ const E3 = {
                               </a>
                              </li>`)
               })
-              form.find('[name=image]').val(imgArray.join(','))
+              form.find('[name="image"]').val(imgArray.join(','))
               self.hideDialog()
             }
           })
+        })
+      })
+    })
+  },
+
+  /**
+   * 初始化单图片上传组件 <br/>
+   * 选择器为：.onePicUpload <br/>
+   * 上传完成后会设置input内容以及在input后面追加<img>
+   */
+  initOnePicUpload: () => {
+    $('.onePicUpload').on('click', function () {
+      const self = $(this)
+      KindEditor.editor(E3.kingEditorParams).loadPlugin('image', function () {
+        this.plugin.imageDialog({
+          showRemote: false,
+          clickFn: function (url, title, width, height, border, align) {
+            let input = self.siblings('input')
+            input.parent().find('img').remove()
+            input.val(url)
+            input.after(`<a href="${url}" target="_blank">
+                           <img src="${url}" width="80" height="50" alt="">
+                         </a>`)
+            this.hideDialog()
+          }
         })
       })
     })
@@ -118,9 +139,35 @@ const E3 = {
         _ele.after('<span style="margin-left: 10px;"></span>')
       }
       _ele.unbind('click').click(() => {
-        $('<div>').css({padding: '5px'}).html('<ul>').window({
-          width: '500',
-          height: '450',
+        E3.createWindow({
+          title: '选择类目',
+          width: '40%',
+          height: '70%',
+          html: '<ul>',
+          onOpen: function () {
+            const self = this
+            $('ul', self).tree({
+              url: 'item/cat/list',
+              animate: true,
+              onClick: function (node) {
+                const {target, id, text} = node
+                if ($(this).tree('isLeaf', target)) {
+                  // 填写到cid中
+                  _ele.parent().find('[name="cid"]').val(id)
+                  _ele.next().text(text).attr('cid', id)
+                  $(self).window('close')
+                  if (data && data.fun) {
+                    data.fun.call(this, node)
+                  }
+                }
+              }
+            })
+          }
+        })
+
+        /*$('<div>').css({padding: '10px'}).html('<ul>').window({
+          width: '30%',
+          height: '60%',
           modal: true,
           closed: true,
           iconCls: 'icon-save',
@@ -128,7 +175,7 @@ const E3 = {
           onOpen: function () {
             const self = this
             $('ul', self).tree({
-              url: '/manager/item/cat/list',
+              url: 'item/cat/list',
               animate: true,
               onClick: function (node) {
                 if ($(this).tree('isLeaf', node.target)) {
@@ -146,7 +193,7 @@ const E3 = {
           onClose: function () {
             $(this).window('destroy')
           }
-        }).window('open')
+        }).window('open')*/
       })
     })
   },
@@ -159,62 +206,13 @@ const E3 = {
   createEditor: select => KindEditor.create(select, E3.kingEditorParams),
 
   /**
-   * 创建一个窗口，关闭窗口后销毁该窗口对象。<br/>
-   *
-   * 默认：<br/>
-   * width : 80% <br/>
-   * height : 80% <br/>
-   * title : (空字符串) <br/>
-   *
-   * 参数：<br/>
-   * width : <br/>
-   * height : <br/>
-   * title : <br/>
-   * url : 必填参数 <br/>
-   * onLoad : function 加载完窗口内容后执行<br/>
-   */
-  createWindow: params => {
-    const {width, height, title, url, onLoad} = params
-    $('<div>').css({padding: '5px'}).window({
-      width: width ? width : '80%',
-      height: height ? height : '80%',
-      title: title ? title : ' ',
-      href: url,
-      modal: true,
-      onClose: function () {
-        $(this).window('destroy')
-      },
-      onLoad: function () {
-        if (onLoad) {
-          onLoad.call(this)
-        }
-      }
-    }).window('open')
-  },
-
-  /**
-   * 关闭窗口
-   * @param select
-   */
-  closeWindow: select => {
-    $(select).window('close')
-  },
-
-  /**
-   * 关闭当前窗口
-   */
-  closeCurrentWindow: () => {
-    $('.panel-tool-close').click()
-  },
-
-  /**
    * 生成商品规格模版
    * @param node
    * @param formId
    */
   changeItemParam: (node, formId) => {
     const {id} = node
-    $.getJSON(`/manager/item/param/select/${id}`, data => {
+    $.post(`/manager/item/param/select/${id}`, data => {
       if (data.status === 200 && data.data) {
         $('#' + formId + ' .params').show()
         let paramData = JSON.parse(data.data.paramData)
@@ -226,8 +224,8 @@ const E3 = {
 
           params.forEach(ps => {
             html += `<tr>
-                      <td class="param"><span>${ps}</span>: </td>
-                      <td><input type="text" class="easyui-textbox" style="width: 200px;"/></td>
+                       <td class="param"><span>${ps}</span>: </td>
+                       <td><input type="text" style="width: 200px; height: 28px; border: 1px solid #95B8E7; border-radius: 5px;"/></td>
                      </tr>`
           })
           html += `</table></li>`
@@ -240,6 +238,7 @@ const E3 = {
       }
     })
   },
+
   /**
    * 获取商品规格参数
    * @return {string}
@@ -265,67 +264,83 @@ const E3 = {
     return paramJson
   },
 
+
+  /**
+   * 创建一个窗口, 关闭窗口后销毁该窗口对象
+   * @param params
+   * <pre>
+   *   参数:
+   *    title: 窗口标题, 默认''
+   *    width: 窗口宽度, 默认 80%
+   *    height: 窗口高度, 默认 80%
+   *    url: 必填
+   *    onLoad: function, 当远程数据被加载时触发
+   *    onOpen: function, 面板（panel）打开后触发
+   * </pre>
+   */
+  createWindow: params => {
+    const {title, width, height, url, iconCls, onLoad, onOpen, html} = params
+    $('<div>').css({padding: '10px'}).html(html).window({
+      title: title ? title : '',
+      width: width ? width : '80%',
+      height: height ? height : '80%',
+      href: url ? url : '',
+      closed: true,
+      modal: true,
+      minimizable: false,
+      iconCls: iconCls ? iconCls : 'icon-save',
+      onClose: function () {
+        $(this).window('destroy')
+      },
+      onLoad: function () {
+        if (onLoad) {
+          onLoad.call(this)
+        }
+      },
+      onOpen: function () {
+        if (onOpen) {
+          onOpen.call(this)
+        }
+      }
+    }).window('open')
+  },
+
+
+  /**
+   * 关闭窗口
+   * @param select
+   */
+  closeWindow: select => {
+    $(select).window('close')
+  },
+
+  /**
+   * 关闭当前窗口
+   */
+  closeCurrentWindow: () => {
+    $('.panel-tool-close').click()
+  },
+
   /**
    * 获取表格选中的行
    * @param select
    */
-  getSelections: select => {
-    const $list = $(select)
-    return $list.datagrid('getSelections')
-  },
+  getSelections: select => $(select).datagrid('getSelections'),
 
   /**
-   * 获取表格选中的ids
+   * 获取选中表格的ids
    * @param select
-   * @return {string}
+   * @param id
+   * @returns {string | jQuery}
    */
-  getSelectionsIds: select => {
-    const $list = $(select)
-    const selS = $list.datagrid('getSelections')
-    let ids = []
-    selS.forEach(e => {
-      ids.push(e.id)
-    })
-    ids = ids.join(',')
-    return ids
-  },
+  getSelectionsIds: (select, id = 'id') => E3.getSelections(select).map(e => e[id]).join(','),
 
   /**
    * 获取表格选中的categoryId
    * @param select
    * @return {*}
    */
-  getSelectionsCategoryId: select => {
-    const $list = $(select)
-    const selS = $list.datagrid('getSelections')
-    return selS[0].categoryId
-  },
-
-
-  /**
-   * 初始化单图片上传组件 <br/>
-   * 选择器为：.onePicUpload <br/>
-   * 上传完成后会设置input内容以及在input后面追加<img>
-   */
-  initOnePicUpload: () => {
-    $('.onePicUpload').click(function () {
-      const self = $(this)
-      KindEditor.editor(E3.kingEditorParams).loadPlugin('image', function () {
-        this.plugin.imageDialog({
-          showRemote: false,
-          clickFn: function (url, title, width, height, border, align) {
-            let input = self.siblings('input')
-            input.parent().find('img').remove()
-            input.val(url)
-            input.after(`<a href="${url}" target="_blank">
-                          <img src="${url}" width="80" height="50" alt="">
-                         </a>`)
-            this.hideDialog()
-          }
-        })
-      })
-    })
-  },
+  getSelectionsCategoryId: select => E3.getSelections(select)[0].categoryId,
 
   /**
    * 格式化链接
@@ -335,39 +350,28 @@ const E3 = {
   formatUrl: val => val ? '<a href="' + val + '" target="_blank">查看</a>' : '',
 
   /**
-   * 格式化价格
-   * @param val
-   * @returns {string}
-   */
-  formatPrice: val => (val / 100).toFixed(2),
-
-  /**
    * 格式化商品的状态
    * @param val
    * @returns {string}
    */
   formatItemStatus: val => {
+    // 商品状态, 1: 正常; 2: 下架; 3: 删除
+    let html = ''
     if (val === 1) {
-      return '<span style="color:green;">正常</span>'
+      html = '<span style="color:green;">正常</span>'
     } else if (val === 2) {
-      return '<span style="color:red;">下架</span>'
-    } else {
-      return '<span style="color:gray;">删除</span>'
+      html = '<span style="color:red;">下架</span>'
+    } else if (val === 3) {
+      html = '<span style="color:gray;">删除</span>'
     }
+    return html
   },
 
   /**
    * 格式化商品规格参数
    * @param val
-   * @returns {string}
+   * @returns {* | string}
    */
-  formatItemParamData: val => {
-    const json = JSON.parse(val)
-    let array = []
-    json.forEach(e => {
-      const {group} = e
-      array.push(group)
-    })
-    return array.join(',')
-  }
+  formatItemParamData: val => JSON.parse(val).map(e => e['group']).join(',')
+
 }

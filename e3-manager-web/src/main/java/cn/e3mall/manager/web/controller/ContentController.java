@@ -1,22 +1,21 @@
 package cn.e3mall.manager.web.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import cn.e3mall.common.base.entity.Content;
 import cn.e3mall.common.base.pojo.E3Result;
 import cn.e3mall.common.base.pojo.EasyUIDataGridResult;
 import cn.e3mall.manager.web.core.BaseController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 内容管理
+ * - 内容管理
  *
  * @author colg
  */
 @RestController
-@RequestMapping("/manager/content")
+@RequestMapping("/content")
 public class ContentController extends BaseController {
 
     /**
@@ -24,12 +23,14 @@ public class ContentController extends BaseController {
      *
      * @param page       页码
      * @param rows       每页记录数
+     * @param sort       排序字段
+     * @param order      排序方式
      * @param categoryId 内容类目id
      * @return
      */
     @PostMapping("/query/list")
-    public EasyUIDataGridResult queryListByCategoryId(Integer page, Integer rows, Long categoryId) {
-        return contentService.queryListByCategoryId(page, rows, categoryId);
+    public EasyUIDataGridResult queryListByCategoryId(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam String sort, @RequestParam String order, @RequestParam Long categoryId) {
+        return contentService.queryListByCategoryId(page, rows, sort, order, categoryId);
     }
 
     /**
@@ -66,4 +67,5 @@ public class ContentController extends BaseController {
     public E3Result deleteContent(Long categoryId, String ids) {
         return contentService.deleteContent(categoryId, ids);
     }
+
 }

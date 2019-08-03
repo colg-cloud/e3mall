@@ -1,29 +1,36 @@
 ul {
   list-style: none;
 }
+
 .hide {
   display: none;
 }
+
 .itemParam ul {
   padding-left: 0;
 }
+
 .itemParam li {
   line-height: 25px;
 }
+
 .itemForm .pics ul {
   list-style: none;
   padding-left: 0;
 }
+
 .itemForm .pics ul li {
   float: left;
   padding-right: 5px;
 }
-.itemForm .group {
+
+.itemForm .params .group {
   font-weight: bold;
   text-align: center;
   background-color: #EAEAEA;
 }
-.itemForm .param {
+
+.itemForm .params .param {
   width: 100px;
   text-align: left;
 }
